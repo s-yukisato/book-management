@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 
 const books = require('./routes/books');
+const api = require('./routes/api');
 
 require('dotenv').config();
 
@@ -31,6 +32,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/books', books);
+app.use('/api', api); 
 
 app.listen(port, (req, res) => {
     console.log(`listening on port ${port}!`);
