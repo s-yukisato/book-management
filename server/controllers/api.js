@@ -1,4 +1,5 @@
 const axios = require("axios");
+require('dotenv').config();
 
 const apiUrl =
   "https://app.rakuten.co.jp/services/api/BooksTotal/Search/20170404" +
