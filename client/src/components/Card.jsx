@@ -1,4 +1,5 @@
 import * as React from 'react';
+
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -11,6 +12,7 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import IconButton from '@mui/material/IconButton';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+
 import Modal from './Modal';
 
 const LightTooltip = styled(({ className, ...props }) => (
@@ -41,7 +43,7 @@ const MediaCard = ({ book }) => {
     return (
         <Card sx={{
             width: 210,
-            height: 300,
+            height: 280,
             mb: 1,
             p: 2,
             display: 'flex',
