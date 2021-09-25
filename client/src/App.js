@@ -26,9 +26,9 @@ function App() {
         <Route exact path="/projects" component={Project} />
         <Route exact path="/projects/new" component={NewProject} />
         <Route exact path="/project/:id" component={TextEditor} />
+        <Route exact path="/library" component={Library} />
         <Route path="/support" component={Support} />
         <Route path="/settings" component={Settings} />
-        <Route path="/library" component={Library} />
       </Router>
     </>
   );

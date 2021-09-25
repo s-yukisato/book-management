@@ -37,7 +37,7 @@ export const MainListItems = () => {
                     </ListItemIcon>
                     <ListItemText primary="プロジェクトへ" />
                 </ListItem>
-                <ListItem button component={RouterLink} to="/progress" key={4}>
+                <ListItem button component={RouterLink} to="/library" key={4}>
                     <ListItemIcon>
                         <StarsIcon />
                     </ListItemIcon>
