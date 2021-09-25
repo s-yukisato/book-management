@@ -6,7 +6,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Project from "./pages/Project";
 import NewProject from "./pages/NewProject";
-import TextEditor from "./pages/TextEditer";
+import TextEditor from "./pages/TextEditor";
 import Support from "./pages/Support";
 import Dashboard from "./pages/Dashboard";
 import Settings from "./pages/Settings";

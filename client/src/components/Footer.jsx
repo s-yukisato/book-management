@@ -9,6 +9,10 @@ import Copyright from './Copyright'
 
 
 const Footer = () => {
+<<<<<<< HEAD
+=======
+    // const color = "#06b632"
+>>>>>>> feature/library-page
     return (
         <>
             <Grid container sx={{ bgcolor: '#939597', p: 2 }}>
