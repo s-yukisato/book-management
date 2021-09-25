@@ -163,7 +163,7 @@ export default function PrimarySearchAppBar() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="fixed">
+      <AppBar position="fixed" sx={{ bgcolor: '#8DACD3' }}>
         <Toolbar>
           <IconButton
             size="large"
@@ -181,7 +181,7 @@ export default function PrimarySearchAppBar() {
             component="div"
             sx={{ display: { xs: 'none', sm: 'block' } }}
           >
-            Prolog
+            teelog
           </Typography>
           <Search>
             <SearchIconWrapper>

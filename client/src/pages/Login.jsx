@@ -1,10 +1,20 @@
+<<<<<<< Updated upstream
 import * as React from 'react';
+=======
+import { useState } from "react";
+import { Link as RouterLink } from "react-router-dom";
+
+// import { auth, provider } from "../firebase";
+// import { signInWithEmailAndPassword, signInWithPopup } from "@firebase/auth";
+
+>>>>>>> Stashed changes
 
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+<<<<<<< Updated upstream
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -29,27 +39,50 @@ function Copyright(props) {
         </Typography>
     );
 }
+=======
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
+
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+
+import Password from '../components/Password';
+import Email from '../components/Email';
+import Copyright from '../components/Copyright';
+>>>>>>> Stashed changes
 
 const theme = createTheme();
 
 export default function SignIn() {
+<<<<<<< Updated upstream
     const [values, setValues] = React.useState({
+=======
+    const [values, setValues] = useState({
+>>>>>>> Stashed changes
         firstName: '',
         lastName: '',
         email: '',
         password: '',
         showPassword: false,
     })
+<<<<<<< Updated upstream
     const handleSubmit = (event) => {
         event.preventDefault();
         if (values) {
             // axios.post('https://localhost:3000/')
         }
     };
+=======
+
+    const handleSubmit = () => {}
+>>>>>>> Stashed changes
 
     const handleChange = (prop) => (event) => {
         setValues({ ...values, [prop]: event.target.value });
     };
+<<<<<<< Updated upstream
     // const handleSubmit = (event) => {
     //     event.preventDefault();
     //     const data = new FormData(event.currentTarget);
@@ -59,6 +92,9 @@ export default function SignIn() {
     //         password: data.get('password'),
     //     });
     // };
+=======
+
+>>>>>>> Stashed changes
 
     return (
         <ThemeProvider theme={theme}>
@@ -95,6 +131,7 @@ export default function SignIn() {
                         </Button>
                         <Grid container>
                             <Grid item xs>
+<<<<<<< Updated upstream
                                 <Link href="#" variant="body2">
                                     Forgot password?
                                 </Link>
@@ -103,6 +140,16 @@ export default function SignIn() {
                                 <Link href="#" variant="body2">
                                     {"Don't have an account? Sign Up"}
                                 </Link>
+=======
+                                <RouterLink to="/account">
+                                    Forgot password?
+                                </RouterLink>
+                            </Grid>
+                            <Grid item>
+                                <RouterLink to="/signup">
+                                    {"Don't have an account? Sign Up"}
+                                </RouterLink>
+>>>>>>> Stashed changes
                             </Grid>
                         </Grid>
                     </Box>

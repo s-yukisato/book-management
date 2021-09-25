@@ -1,30 +1,17 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import Grid from '@mui/material/Grid';
 
 import Skeleton from './Skeleton';
 import Card from './Card';
 
-import Grid from '@mui/material/Grid';
+import { useFetch } from '../api/books'
+
 
 const ContentList = () => {
-    const [books, setBooks] = useState([]);
-    const [loadingCompleted, setLoadingCompleted] = useState(false);
-
-
-    useEffect(() => {
-        const getBookData = async () => {
-            await axios.get('http://localhost:3001/api')
-                .then(res => {
-                    setBooks(res.data)
-                })
-            setLoadingCompleted(true);
-        };
-        getBookData();
-    }, [])
+    const [books, loadingCompleted] = useFetch();
 
     return (
         <>
-            <Grid container sx={{ display: 'flex', justifyContent: 'center', p: 2, m: 1 }}>
+            <Grid container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', p: 2 }}>
                 {loadingCompleted ? (
                     books.map((book, index) => (
                         <Grid item sm sx={{ mb: 1, mr: 1 }}>

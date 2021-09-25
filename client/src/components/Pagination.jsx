@@ -14,9 +14,9 @@ export default function PaginationLink() {
             <Pagination
               page={page}
               count={10}
-              color="secondary"
               renderItem={(item) => (
                 <PaginationItem
+                  sx={{ color: '#AFA4CE' }}
                   component={Link}
                   to={`/inbox${item.page === 1 ? '' : `?page=${item.page}`}`}
                   {...item}

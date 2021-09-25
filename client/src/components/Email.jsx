@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import * as React from 'react';
 
 import TextField from '@mui/material/TextField'
@@ -15,11 +16,25 @@ const Email = ({ values, setValues }) => {
                 setInputError(false);
             }
         }
+=======
+import TextField from '@mui/material/TextField'
+
+import { useEmailValidate } from '../hooks/usePostValidate';
+
+const Email = ({ values, setValues }) => {
+    const [error, validateInput] = useEmailValidate()
+
+    const handleChange = (e) => {
+        const post = e.target.value;
+        setValues({...values, "email": post});
+        validateInput(post)
+>>>>>>> Stashed changes
     };
 
     return (
         <TextField
             required
+<<<<<<< Updated upstream
             fullWidth
             id="email"
             error={inputError}
@@ -29,6 +44,15 @@ const Email = ({ values, setValues }) => {
             label="Email Address"
             variant="outlined"
             helperText={inputRef?.current?.validationMessage}
+=======
+            id="email"
+            variant="outlined"
+            fullWidth
+            value={values.email}
+            label="メールアドレス"
+            error={error}
+            helperText={error}
+>>>>>>> Stashed changes
             onChange={handleChange}
         />
     )

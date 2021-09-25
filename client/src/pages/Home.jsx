@@ -1,17 +1,19 @@
 import AppBar from '../components/AppBar';
 import ContentsList from '../components/ContentsList';
 import Pagination from '../components/Pagination';
-import Box from '@mui/material/Box';
+import Footer from '../components/Footer';
 
+import Box from '@mui/material/Box';
 
 const Home = () => {
     return (
         <>
             <AppBar />
             <ContentsList />
-            <Box component="div" sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Box component="div" sx={{ display: 'flex', justifyContent: 'center', my: 3 }}>
                 <Pagination />
             </Box>
+            <Footer />
         </>
     )
 }
