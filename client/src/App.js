@@ -1,5 +1,3 @@
-// import SignUp from "./components/SignUp";
-// import { AuthProvider } from "./context/AuthContext";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -9,11 +7,9 @@ import NewProject from "./pages/NewProject";
 import TextEditor from "./pages/TextEditor";
 import Support from "./pages/Support";
 import Dashboard from "./pages/Dashboard";
-import Settings from "./pages/Settings";
+import Account from "./pages/Account";
 import Library from "./pages/Library";
 
-// import PrivateRoute from "./components/PrivateRoute";
-// import PublicRoute from "./components/PublicRoute";
 
 function App() {
   return (
@@ -28,7 +24,7 @@ function App() {
         <Route exact path="/project/:id" component={TextEditor} />
         <Route exact path="/library" component={Library} />
         <Route path="/support" component={Support} />
-        <Route path="/settings" component={Settings} />
+        <Route path="/myaccount" component={Account} />
       </Router>
     </>
   );

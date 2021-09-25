@@ -54,7 +54,7 @@ export const SecondaryListItems = () => {
         <>
             <List>
             <ListSubheader inset>アカウント</ListSubheader>
-                <ListItem button component={RouterLink} to="/settings" key={5}>
+                <ListItem button component={RouterLink} to="/myaccount" key={5}>
                     <ListItemIcon>
                         <SettingsIcon />
                     </ListItemIcon>

@@ -1,4 +1,6 @@
-import * as React from 'react';
+import { useState } from 'react'
+import { Link as RouterLink } from 'react-router-dom'
+
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -8,6 +10,7 @@ import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
+
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
@@ -58,10 +61,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function PrimarySearchAppBar() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
 
-  const [state, setState] = React.useState(false);
+  const [state, setState] = useState(false);
 
   const toggleDrawer = (open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -108,8 +111,8 @@ export default function PrimarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem component={RouterLink} to="/signup" onClick={handleMenuClose}>Sign Up</MenuItem>
+      <MenuItem component={RouterLink} to="/myaccount" onClick={handleMenuClose}>My account</MenuItem>
     </Menu>
   );
 
@@ -131,10 +134,10 @@ export default function PrimarySearchAppBar() {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+        <IconButton component={RouterLink} to="/dashboard" size="large" aria-label="show 4 new mails" color="inherit">
           <DashboardIcon />
         </IconButton>
-        <p>Messages</p>
+        <p>Dashboard</p>
       </MenuItem>
       <MenuItem>
         <IconButton
@@ -156,7 +159,7 @@ export default function PrimarySearchAppBar() {
         >
           <AccountCircle />
         </IconButton>
-        <p>Profile</p>
+        <p>My Account</p>
       </MenuItem>
     </Menu>
   );
@@ -194,7 +197,7 @@ export default function PrimarySearchAppBar() {
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+            <IconButton component={RouterLink} to="/dashboard" size="large" aria-label="show 4 new mails" color="inherit">
               <DashboardIcon />
             </IconButton>
             <IconButton
