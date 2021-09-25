@@ -1,7 +1,10 @@
-import * as React from 'react';
-import { Redirect } from 'react-router-dom';
+import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+
+import { v4 as uuidV4 } from "uuid";
 
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
@@ -12,19 +15,34 @@ import { ReactComponent as GoalLogo } from '../assets/undraw_stepping_up_g6oo.sv
 import { ReactComponent as ThinkingLogo } from '../assets/undraw_Organizing_projects_0p9a.svg';
 import { ReactComponent as TimeLogo } from '../assets/undraw_time_management_30iu.svg';
 
-const steps = ['目標設定', 'アイテム選択', '予定日設定'];
-const today = new Date().format('YYYY-MM-DD')
+const steps = ['目標設定', 'アイテム選択', '予定日設定', '最終確認'];
+
+function formatDate(dt) {
+    var y = dt.getFullYear();
+    var m = ('00' + (dt.getMonth() + 1)).slice(-2);
+    var d = ('00' + dt.getDate()).slice(-2);
+    return (y + '-' + m + '-' + d);
+}
+const today = formatDate(new Date())
 
 export default function HorizontalLinearStepper() {
-    const [activeStep, setActiveStep] = React.useState(0);
+    const [activeStep, setActiveStep] = useState(0);
+    const history = useHistory();
 
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        if (activeStep === steps.length - 1) {
+            createProject()
+        }
     };
 
     const handleBack = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
+
+    const createProject = () => {
+        history.push(`/project/${uuidV4()}`)
+    }
 
 
     return (
@@ -41,11 +59,7 @@ export default function HorizontalLinearStepper() {
                     );
                 })}
             </Stepper>
-            {activeStep === steps.length ? (
-                <>
-                    <Redirect to="/project/new" />
-                </>
-            ) : (
+            {(
                 <>
                     {activeStep === 0 && (
                         <Box sx={{ display: 'flex', flexDirection: 'column', p: 3 }} >
@@ -92,6 +106,13 @@ export default function HorizontalLinearStepper() {
                                 defaultValue={today}
                                 autoFocus
                             />
+                        </Box>
+                    )}
+                    {activeStep === steps.length - 1 && (
+                        <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                            <Typography>プロジェクト名</Typography>
+                            <Typography>アイテム</Typography>
+                            <Typography>期日</Typography>
                         </Box>
                     )}
                     <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
