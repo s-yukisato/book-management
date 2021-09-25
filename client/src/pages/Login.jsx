@@ -24,14 +24,9 @@ export default function SignIn() {
     const [values, setValues] = useState({
         email: '',
         password: '',
-        showPassword: false,
     })
 
     const handleSubmit = () => {}
-
-    const handleChange = (prop) => (event) => {
-        setValues({ ...values, [prop]: event.target.value });
-    };
 
 
     return (
