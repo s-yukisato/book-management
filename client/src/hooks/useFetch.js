@@ -1,17 +1,18 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-export const useFetch = () => {
+export const useFetch = (url) => {
   const [data, setData] = useState([]);
+  const [completed, setCompleted] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       await axios
-        .get('http://localhost:3001/api/v1/document')
+        .get(url)
         .then((res) => setData(res.data));
+      setCompleted(true);
     };
     fetchData();
-  }, []);
-
-  return data;
+  }, [url]);
+  return { data, completed };
 };

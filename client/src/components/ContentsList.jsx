@@ -3,16 +3,17 @@ import Grid from '@mui/material/Grid';
 import Skeleton from './Skeleton';
 import Card from './Card';
 
-import { useFetch } from '../api/books'
+import { useFetch } from '../hooks/useFetch'
 
 
 const ContentList = () => {
-    const [books, loadingCompleted] = useFetch();
+    const url = 'http://localhost:3001/api/data'
+    const { books, completed } = useFetch(url);
 
     return (
         <>
             <Grid container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', p: 2 }}>
-                {loadingCompleted ? (
+                {completed ? (
                     books.map((book, index) => (
                         <Grid item sm sx={{ mb: 1, mr: 1 }}>
                             <Card key={index} book={book} />

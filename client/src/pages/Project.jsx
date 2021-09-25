@@ -15,7 +15,9 @@ import { useFetch } from '../hooks/useFetch';
 import { ReactComponent as EmptyLogo } from '../assets/undraw_empty_street_sfxm.svg'
 
 const Project = () => {
-    const projects = useFetch();
+    const url = 'https://localhost:3001/api/v1/document'
+    const { projects } = useFetch(url);
+    console.log(projects)
 
     const history = useHistory();
 
@@ -27,7 +29,7 @@ const Project = () => {
         <>
             <AppBar />
             <Container>
-                {projects !== [] ? projects.map(project => (
+                {projects ? projects.map(project => (
                     <Grid container>
                         <Grid item sm key={project._id}>
                             <Box>
