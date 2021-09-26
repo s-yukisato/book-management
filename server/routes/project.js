@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { getAllDocuments, getDocument, updateDocument } = require('../controllers/document');
+const { getAllDocuments, getDocument, updateDocument } = require('../controllers/projectsController');
 
 
 const router = express.Router();
