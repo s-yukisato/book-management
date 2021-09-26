@@ -5,12 +5,10 @@ const BookSchema = new Schema({
         type: String,
         required: true,
     },
-    author: {
-        type: String,
-        required: true,
-    },
+    author: String,
     publisher: String,
     price: Number,
+    image: String,
 });
 
 module.exports = model('Book', BookSchema);
