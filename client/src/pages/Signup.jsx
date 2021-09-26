@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { Link as RouterLink } from "react-router-dom";
 
-import axios from 'axios';
-
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -20,6 +18,8 @@ import Email from '../components/Email';
 import Password from '../components/Password';
 import Copyright from '../components/Copyright';
 
+import { usePost } from '../hooks/usePost'
+
 const theme = createTheme();
 
 const SignUp = () => {
@@ -29,12 +29,10 @@ const SignUp = () => {
         password: '',
     });
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const { data, error } = await axios.post('http://localhost:3001/api/v1/user/signup', values);
-        console.log(data)
-        console.log(error)
-    };
+    const url = 'http://localhost:3001/api/v1/user/signup'
+    const to = '/dashboard'
+    const [error, handleSubmit] = usePost(url, values, to)
+
 
     return (
         <ThemeProvider theme={theme}>
@@ -52,7 +50,7 @@ const SignUp = () => {
                         <LockOutlinedIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        Sign up
+                        サインアップ
                     </Typography>
                     <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
                         <Grid container spacing={2}>
@@ -79,12 +77,13 @@ const SignUp = () => {
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
                         >
-                            Sign Up
+                            サインアップ
                         </Button>
+                        <Typography variant="body2" color="error">{error}</Typography>
                         <Grid container justifyContent="flex-end">
                             <Grid item>
                                 <RouterLink to="/signin">
-                                    Already have an account? Sign in
+                                    すでにアカウントがありますか？ サインインへ
                                 </RouterLink>
                             </Grid>
                         </Grid>

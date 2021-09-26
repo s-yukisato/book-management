@@ -19,7 +19,7 @@ const Password = ({ values, setValues }) => {
         const post = e.target.value;
         setValues({ ...values, 'password': post })
         validateInput(post)
-    }
+    };
 
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword)
@@ -31,7 +31,7 @@ const Password = ({ values, setValues }) => {
 
     return (
         <FormControl required fullWidth variant="outlined">
-            <InputLabel htmlFor="outlined-adornment-password" error={error}>Password</InputLabel>
+            <InputLabel htmlFor="outlined-adornment-password" error={error}>パスワード</InputLabel>
             <OutlinedInput
                 id="outlined-adornment-password"
                 type={showPassword ? 'text' : 'password'}
