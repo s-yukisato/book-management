@@ -10,6 +10,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
+import FormHelperText from '@mui/material/FormHelperText';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -18,16 +19,19 @@ import Password from '../components/Password';
 import Email from '../components/Email';
 import Copyright from '../components/Copyright';
 
+import { usePost } from '../hooks/usePost';
+
 const theme = createTheme();
 
 export default function SignIn() {
     const [values, setValues] = useState({
         email: '',
         password: '',
-    })
+    });
 
-    const handleSubmit = () => {}
-
+    const url = 'http://localhost:3001/api/v1/user/signin'
+    const to = '/dashboard'
+    const [error, handleSubmit] = usePost(url, values, to)
 
     return (
         <ThemeProvider theme={theme}>
@@ -45,14 +49,21 @@ export default function SignIn() {
                         <LockOutlinedIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        Sign in
+                        サインイン
                     </Typography>
-                    <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-                        <Email values={values} setValues={setValues} />
-                        <Password values={values} setValues={setValues} />
+                    <Box component="form" onSubmit={handleSubmit} sx={{ mt: 4 }}>
+                        <Grid container spacing={3}>
+                            <Grid item xs={12}>
+                                <Email values={values} setValues={setValues} />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Password values={values} setValues={setValues} />
+                            </Grid>
+                        </Grid>
                         <FormControlLabel
                             control={<Checkbox value="remember" color="primary" />}
                             label="Remember me"
+                            sx={{ mt: 2 }}
                         />
                         <Button
                             type="submit"
@@ -60,17 +71,13 @@ export default function SignIn() {
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
                         >
-                            Sign In
+                            サインイン
                         </Button>
-                        <Grid container>
-                            <Grid item xs>
-                                <RouterLink to="/account">
-                                    Forgot password?
-                                </RouterLink>
-                            </Grid>
+                        <FormHelperText error={error}>{error}</FormHelperText>
+                        <Grid container justifyContent="flex-end">
                             <Grid item>
                                 <RouterLink to="/signup">
-                                    {"Don't have an account? Sign Up"}
+                                    {"アカウントがありませんか？ サインアップへ"}
                                 </RouterLink>
                             </Grid>
                         </Grid>
