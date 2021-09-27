@@ -64,8 +64,8 @@ const PrettoSlider = styled(Slider)({
 
 export default function CustomizedSlider() {
   return (
-    <Box sx={{ width: 320 }}>
-      <Box sx={{ m: 3 }} />
+    <Box sx={{ width: "100%" }}>
+      <Box sx={{ m: 2 }} />
       <Typography gutterBottom></Typography>
       <PrettoSlider
         valueLabelDisplay="auto"

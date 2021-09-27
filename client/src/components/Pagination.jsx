@@ -1,31 +1,29 @@
-import * as React from 'react';
-import { Link, MemoryRouter, Route } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import Typography from '@mui/material/Typography';
 import Pagination from '@mui/material/Pagination';
-import PaginationItem from '@mui/material/PaginationItem';
+import Stack from '@mui/material/Stack';
 
-export default function PaginationLink() {
+export default function PaginationControlled() {
+  const [page, setPage] = useState(1);
+
+  // useEffect(() => {
+  //   // const options = {
+  //   //   keyword: "",
+  //   //   NGKeyword: "",
+  //   //   sort: "sales",
+  //   //   page: page
+  //   // }
+  //   // useFetch(url, options)
+  // }, [page])
+  const handleChange = (event, value) => {
+
+    setPage(value);
+  };
+
   return (
-    <MemoryRouter initialEntries={['/inbox']} initialIndex={0}>
-      <Route>
-        {({ location }) => {
-          const query = new URLSearchParams(location.search);
-          const page = parseInt(query.get('page') || '1', 10);
-          return (
-            <Pagination
-              page={page}
-              count={10}
-              renderItem={(item) => (
-                <PaginationItem
-                  sx={{ color: '#AFA4CE' }}
-                  component={Link}
-                  to={`/inbox${item.page === 1 ? '' : `?page=${item.page}`}`}
-                  {...item}
-                />
-              )}
-            />
-          );
-        }}
-      </Route>
-    </MemoryRouter>
+    <Stack spacing={2}>
+      <Typography>Page: {page}</Typography>
+      <Pagination count={10} page={page} variant="outlined" color="secondary" onChange={handleChange} />
+    </Stack>
   );
 }

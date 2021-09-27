@@ -14,5 +14,5 @@ export const useFetch = (url) => {
     };
     fetchData();
   }, [url]);
-  return { data, completed };
+  return [ data, completed ];
 };

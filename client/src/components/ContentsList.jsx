@@ -5,10 +5,9 @@ import Card from './Card';
 
 import { useFetch } from '../hooks/useFetch'
 
-
 const ContentList = () => {
     const url = 'http://localhost:3001/api/data'
-    const { books, completed } = useFetch(url);
+    const [books, completed] = useFetch(url);
 
     return (
         <>
