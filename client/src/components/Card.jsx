@@ -1,4 +1,5 @@
-import * as React from 'react';
+import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -13,12 +14,25 @@ import LightTooltip from './LightTooltip';
 import { useFavorite } from '../hooks/Favorite';
 import Favorite from './FavoriteDisplay';
 
-import { useRegister } from '../hooks/Register';
-import Register from './RegisterDisplay';
+import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
+import AddIcon from '@mui/icons-material/Add';
+import Modal from './Modal';
 
 
 const MediaCard = ({ book }) => {
-    const [registered, register, unregister] = useRegister(false);
+    const history = useHistory();
+    const [registered, setRegistered] = useState(false);
+
+    const [open, setOpen] = useState(false);
+
+    const register = () => {
+        setOpen(true);
+        setRegistered(true);
+    }
+
+    const unregister = () => {
+        history.push("/dashboard")
+    }
 
     const [favorited, toggleFavorited] = useFavorite(false);
 
@@ -54,8 +68,20 @@ const MediaCard = ({ book }) => {
                 </Typography>
             </CardContent>
             <CardActions>
-                <Register registered={registered} register={register} unregister={unregister} />
-                {/* <Modal open={open} setOpen={setOpen} book={book} /> */}
+                {registered ? (
+                    <LightTooltip title="本棚から削除する">
+                        <IconButton onClick={unregister}>
+                            <PlaylistAddCheckIcon color="primary" />
+                        </IconButton>
+                    </LightTooltip>
+                ) : (
+                    <LightTooltip title="本棚に登録する">
+                        <IconButton onClick={register}>
+                            <AddIcon color="primary" />
+                        </IconButton>
+                    </LightTooltip>
+                )}
+                <Modal open={open} setOpen={setOpen} book={book} />
                 <LightTooltip title="詳細を見る">
                     <IconButton>
                         <InfoOutlinedIcon />
