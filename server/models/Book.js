@@ -8,7 +8,7 @@ const BookSchema = new Schema({
     author: String,
     publisher: String,
     price: Number,
-    image: String,
+    image: String
 });
 
 module.exports = model('Book', BookSchema);
