@@ -72,7 +72,6 @@ const SignUp = () => {
                         <Button
                             type="submit"
                             fullWidth
-                            onClick={handleSubmit}
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
                         >
