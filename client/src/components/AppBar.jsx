@@ -70,8 +70,8 @@ export default function PrimarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem component={RouterLink} to="/signup" onClick={handleMenuClose}>Sign Up</MenuItem>
-      <MenuItem component={RouterLink} to="/myaccount" onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem component={RouterLink} to="/signup" onClick={handleMenuClose}>サインアップ</MenuItem>
+      <MenuItem component={RouterLink} to="/mypage" onClick={handleMenuClose}>マイページ</MenuItem>
     </Menu>
   );
 
@@ -93,20 +93,20 @@ export default function PrimarySearchAppBar() {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton component={RouterLink} to="/dashboard" size="large" aria-label="show 4 new mails" color="inherit">
+        <IconButton component={RouterLink} to="/dashboard" size="large" aria-label="dashboard" color="inherit">
           <DashboardIcon />
         </IconButton>
-        <p>Dashboard</p>
+        <p>ダッシュボードへ</p>
       </MenuItem>
       <MenuItem>
         <IconButton
           size="large"
-          aria-label="show 17 new notifications"
+          aria-label="notifications"
           color="inherit"
         >
           <NotificationsIcon />
         </IconButton>
-        <p>Notifications</p>
+        <p>お知らせ</p>
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
@@ -118,7 +118,7 @@ export default function PrimarySearchAppBar() {
         >
           <AccountCircle />
         </IconButton>
-        <p>My Account</p>
+        <p>マイページへ</p>
       </MenuItem>
     </Menu>
   );
