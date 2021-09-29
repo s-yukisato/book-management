@@ -11,15 +11,15 @@ const ContentList = () => {
 
     return (
         <>
-            <Grid container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', p: 2 }}>
+            <Grid container spacing={2} sx={{ justifyContent: 'space-evenly', m: 'auto', width: "90vw" }}>
                 {completed ? (
                     books.map((book, index) => (
-                        <Grid item sm sx={{ mb: 1, mr: 1 }}>
-                            <Card key={index} book={book} />
+                        <Grid item key={index}>
+                            <Card book={book} />
                         </Grid>
                     ))) : Array.from(new Array(30)).map(index => (
-                        <Grid item sm sx={{ mb: 1, mr: 1 }}>
-                            <Skeleton key={index} />
+                        <Grid item key={index} >
+                            <Skeleton />
                         </Grid>
                     ))}
             </Grid>
