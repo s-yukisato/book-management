@@ -33,7 +33,6 @@ const SignUp = () => {
     const to = '/dashboard'
     const [error, handleSubmit] = usePost(url, values, to)
 
-
     return (
         <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs">
@@ -79,7 +78,7 @@ const SignUp = () => {
                         >
                             サインアップ
                         </Button>
-                        <Typography variant="body2" color="error">{error}</Typography>
+                        <Typography variant="body2" color="error" sx={{ textAlign: 'center', m: 1 }}>{error}</Typography>
                         <Grid container justifyContent="flex-end">
                             <Grid item>
                                 <RouterLink to="/signin">

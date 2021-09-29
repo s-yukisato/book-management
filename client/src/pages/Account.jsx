@@ -8,11 +8,11 @@ import EditIcon from '@mui/icons-material/Edit';
 const Account = () => {
     return (
         <>
-            <Grid container>
-                <Grid container sm={12} sx={{ textAlign: 'center' }}>
+            <Grid container >
+                <Grid container sm={12}>
                     <Typography variant="h4">ようこそ！</Typography>
                 </Grid>
-                <Grid container sm={12} sx={{ display: 'flex', flexDirection: 'column' }}>
+                <Grid container sm={12} direction="column">
                     <Paper>
                         <Typography variant="h6">アカウント名</Typography>
                         <Fab size="small" variant="extended">

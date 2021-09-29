@@ -1,105 +1,114 @@
+import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import IconButton from '@mui/material/IconButton';
+import Button from '@mui/material/Button';
 
 import EditIcon from '@mui/icons-material/Edit';
-import ShareIcon from '@mui/icons-material/Share';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import { ReactComponent as BookLoverLogo } from '../assets/undraw_book_lover_mkck.svg';
 
 import LightTooltip from '../components/LightTooltip';
 import Slider from '../components/Slider';
-import Rating from '../components/Rating';
 import AppBar from '../components/AppBar';
+import Modal from '../components/Modal';
 
-const books = [
-    {
-        id: 1, title: 'Python'
-    },
-    {
-        id: 2, title: 'Java'
-    },
-    {
-        id: 3, title: 'Scala'
-    },
-    {
-        id: 1, title: 'Python'
-    },
-    {
-        id: 2, title: 'Java'
-    },
-    {
-        id: 3, title: 'Scala'
-    },
+const records = [
+    // {
+    //     _id: 1,
+    //     image: "https://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/0102/9784866430102.jpg?_ex=200x200",
+    // },
+    // {
+    //     _id: 2,
+    //     image: "https://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/0102/9784866430102.jpg?_ex=200x200",
+    // },
+    // {
+    //     _id: 3,
+    //     image: "https://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/0102/9784866430102.jpg?_ex=200x200",
+    // },
+    // {
+    //     _id: 4,
+    //     image: "https://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/0102/9784866430102.jpg?_ex=200x200",
+    // },
+
 ]
 
+const book = []
+
 const Library = () => {
+    const [open, setOpen] = useState(false);
+
+    const handleEdit = () => {
+        setOpen(true);
+    };
+
+    const history = useHistory();
+
+    const handleClick = () => {
+        history.push("/")
+    }
     return (
         <>
             <AppBar />
-            <Grid container sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', p: 2, width: '90%' }}>
-                <BookLoverLogo width="50%" height="70%" sx={{ p: 3 }} />
-                <Typography variant="body1" sx={{ textAlign: 'center' }}>Library</Typography>
-                <Grid container spacing={2}>
-                    {books.map(book => (
-                        <Card sx={{
-                            minWidth: 210,
-                            height: 160,
-                            mb: 1,
+            <Grid container direction="column" spacing={2} sx={{ my: 3, width: "90vw" }}>
+                {records.length > 0 ? records.map(record => (
+                    <Grid item key={record._id}>
+                        <Box sx={{
                             p: 2,
-                            display: 'flex',
+                            boxShadow: 2,
                             ":hover": {
                                 boxShadow: 6,
-                            },
+                            }
                         }}>
-                            <CardMedia
-                                component="img"
-                                image={book.image}
-                                alt="No image"
-                                sx={{
-                                    width: 97,
-                                    height: 130
-                                }}
-                            />
-                            <CardContent>
-                                <Typography variant="body2" component="div" sx={{
-                                    height: "30%",
-                                    overflow: 'hidden'
-                                }}>
-                                    {book ? book.title : "Not found"}
-                                </Typography>
-                                <Slider />
-                                <Rating />
-                            </CardContent>
-                            <CardActions sx={{ display: 'flex', flexDirection: 'column' }}>
-                                <Box sx={{ height: "70%" }}></Box>
-                                <Box sx={{ display: "flex" }}>
-                                    <LightTooltip title="編集する">
-                                        <IconButton>
-                                            <EditIcon />
-                                        </IconButton>
-                                    </LightTooltip>
-                                    <LightTooltip title="シェアする">
-                                        <IconButton>
-                                            <ShareIcon />
-                                        </IconButton>
-                                    </LightTooltip>
-                                    <LightTooltip title="削除する">
-                                        <IconButton>
-                                            <DeleteIcon />
-                                        </IconButton>
-                                    </LightTooltip>
+                            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                                <Box
+                                    component="img"
+                                    src={record.image}
+                                    alt="No image"
+                                    sx={{
+                                        width: 78,
+                                        height: 112
+                                    }} />
+                                <Box sx={{ p: 2 }}>
+                                    <Typography variant="h4">33%</Typography>
                                 </Box>
-                            </CardActions>
-                        </Card>
-                    ))}
-                </Grid>
+                                <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                                    <Box sx={{ flex: 2 }} />
+                                    <Box sx={{ display: { xs: 'block', sm: 'flex'}, flex: 1 }}>
+                                        <LightTooltip title="編集する" onClick={handleEdit}>
+                                            <IconButton>
+                                                <EditIcon />
+                                            </IconButton>
+                                        </LightTooltip>
+                                        <Modal open={open} setOpen={setOpen} book={book} />
+                                        <LightTooltip title="削除する">
+                                            <IconButton>
+                                                <DeleteIcon />
+                                            </IconButton>
+                                        </LightTooltip>
+                                    </Box>
+                                </Box>
+                            </Box>
+                            <Box>
+                                <Slider />
+                            </Box>
+                        </Box>
+                    </Grid>
+                )) : (
+                    <Grid item sx={{ display: { xs: 'block', sm: 'flex'}, justifyContent: 'center', alignItems: 'center', textAlign: 'center' }}>
+                        <Box>
+                            <BookLoverLogo width="80%" height="80%" />
+                        </Box>
+                        <Box sx={{ mx: 1, my: 3 }}>
+                            <Typography variant="h6">本棚に登録しましょう。</Typography>
+                            <Button onClick={handleClick}>探しに行く</Button>
+                        </Box>
+                    </Grid>
+                )}
             </Grid>
         </>
     )

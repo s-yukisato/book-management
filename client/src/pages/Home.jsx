@@ -10,7 +10,7 @@ const Home = () => {
         <>
             <AppBar />
             <ContentsList />
-            <Box component="div" sx={{ display: 'flex', justifyContent: 'center', my: 3 }}>
+            <Box sx={{ display: 'flex', justifyContent: 'center', my: 3 }}>
                 <Pagination />
             </Box>
             <Footer />
