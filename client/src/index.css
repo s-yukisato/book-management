@@ -8,9 +8,10 @@
 
 body {
   font-family: "Poppins", sans-serif;
-  /* display: flex;
+  position: relative;
+  display: flex;
   justify-content: center;
-  align-items: center; */
+  align-items: center;
   min-height: 100vh;
 }
 
