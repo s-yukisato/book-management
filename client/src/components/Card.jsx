@@ -31,7 +31,7 @@ const MediaCard = ({ book }) => {
     }
 
     const unregister = () => {
-        history.push("/dashboard")
+        history.push("/library");
     }
 
     const [favorited, toggleFavorited] = useFavorite(false);
