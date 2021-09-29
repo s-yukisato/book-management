@@ -18,7 +18,7 @@ import Email from '../components/Email';
 import Password from '../components/Password';
 import Copyright from '../components/Copyright';
 
-import { usePost } from '../hooks/usePost'
+import { useLogin } from '../hooks/useLogin'
 
 const theme = createTheme();
 
@@ -29,9 +29,7 @@ const SignUp = () => {
         password: '',
     });
 
-    const url = 'http://localhost:3001/api/v1/user/signup'
-    const to = '/dashboard'
-    const [error, handleSubmit] = usePost(url, values, to)
+    const [error, login] = useLogin(values);
 
     return (
         <ThemeProvider theme={theme}>
@@ -51,7 +49,7 @@ const SignUp = () => {
                     <Typography component="h1" variant="h5">
                         サインアップ
                     </Typography>
-                    <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
+                    <Box component="form" onSubmit={login} sx={{ mt: 3 }}>
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
                                 <UserName values={values} setValues={setValues} />
@@ -69,19 +67,19 @@ const SignUp = () => {
                                 />
                             </Grid>
                         </Grid>
+                        <Typography color="error" sx={{ textAlign: 'center', mt: 2 }}>{error}</Typography>
                         <Button
                             type="submit"
                             fullWidth
                             variant="contained"
-                            sx={{ mt: 3, mb: 2 }}
+                            sx={{ mt: 1, mb: 2 }}
                         >
                             サインアップ
                         </Button>
-                        <Typography variant="body2" color="error" sx={{ textAlign: 'center', m: 1 }}>{error}</Typography>
                         <Grid container justifyContent="flex-end">
                             <Grid item>
                                 <RouterLink to="/signin">
-                                    すでにアカウントがありますか？ サインインへ
+                                    アカウントがありますか？ サインインへ
                                 </RouterLink>
                             </Grid>
                         </Grid>

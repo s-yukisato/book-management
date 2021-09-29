@@ -10,7 +10,6 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
-import FormHelperText from '@mui/material/FormHelperText';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -19,7 +18,7 @@ import Password from '../components/Password';
 import Email from '../components/Email';
 import Copyright from '../components/Copyright';
 
-import { usePost } from '../hooks/usePost';
+import { useLogin } from '../hooks/useLogin';
 
 const theme = createTheme();
 
@@ -29,9 +28,7 @@ export default function SignIn() {
         password: '',
     });
 
-    const url = 'http://localhost:3001/api/v1/user/signin'
-    const to = '/dashboard'
-    const [error, handleSubmit] = usePost(url, values, to)
+    const [error, login] = useLogin(values)
 
     return (
         <ThemeProvider theme={theme}>
@@ -51,7 +48,7 @@ export default function SignIn() {
                     <Typography component="h1" variant="h5">
                         サインイン
                     </Typography>
-                    <Box component="form" onSubmit={handleSubmit} sx={{ mt: 4 }}>
+                    <Box component="form" onSubmit={login} sx={{ mt: 4 }}>
                         <Grid container spacing={3}>
                             <Grid item xs={12}>
                                 <Email values={values} setValues={setValues} />
@@ -65,15 +62,15 @@ export default function SignIn() {
                             label="Remember me"
                             sx={{ mt: 2 }}
                         />
+                        <Typography color="error" sx={{ textAlign: 'center', mt: 2 }}>{error}</Typography>
                         <Button
                             type="submit"
                             fullWidth
                             variant="contained"
-                            sx={{ mt: 3, mb: 2 }}
+                            sx={{ mt: 1, mb: 2 }}
                         >
                             サインイン
                         </Button>
-                        <FormHelperText error={error}>{error}</FormHelperText>
                         <Grid container justifyContent="flex-end">
                             <Grid item>
                                 <RouterLink to="/signup">
