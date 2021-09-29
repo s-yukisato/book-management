@@ -7,34 +7,28 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import IconButton from '@mui/material/IconButton';
-
-import LightTooltip from './LightTooltip';
-import { useFavorite } from '../hooks/Favorite';
-import Favorite from './FavoriteDisplay';
-
 import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
 import AddIcon from '@mui/icons-material/Add';
+
+import LightTooltip from './LightTooltip';
 import Modal from './Modal';
 
 
 const MediaCard = ({ book }) => {
     const history = useHistory();
+
     const [registered, setRegistered] = useState(false);
 
     const [open, setOpen] = useState(false);
 
     const register = () => {
         setOpen(true);
-        setRegistered(true);
     }
 
     const unregister = () => {
         history.push("/library");
     }
-
-    const [favorited, toggleFavorited] = useFavorite(false);
 
     return (
         <Card sx={{
@@ -71,7 +65,7 @@ const MediaCard = ({ book }) => {
                 {registered ? (
                     <LightTooltip title="本棚から削除する">
                         <IconButton onClick={unregister}>
-                            <PlaylistAddCheckIcon color="primary" />
+                            <PlaylistAddCheckIcon color="info" />
                         </IconButton>
                     </LightTooltip>
                 ) : (
@@ -81,13 +75,7 @@ const MediaCard = ({ book }) => {
                         </IconButton>
                     </LightTooltip>
                 )}
-                <Modal open={open} setOpen={setOpen} book={book} />
-                <LightTooltip title="詳細を見る">
-                    <IconButton>
-                        <InfoOutlinedIcon />
-                    </IconButton>
-                </LightTooltip>
-                <Favorite favorited={favorited} toggleFavorited={toggleFavorited} />
+                <Modal open={open} setOpen={setOpen} setRegistered={setRegistered} book={book} />
             </CardActions>
         </Card>
     );
