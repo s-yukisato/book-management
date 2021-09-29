@@ -5,15 +5,24 @@ const authenticate = (req, res, next) => {
     const regexp = /(token=.*(?=;)|token=.*$)/;
     token = regexp.exec(req.headers.cookie)[0].slice(6);
     if (token == null) {
-      return res.json({ status: 400, message: "Not found token" });
+      return res.json({
+        status: 400,
+        message: "Not found token",
+      });
     }
   } else {
-    return res.json({ status: 400, message: "Not found cookie" });
+    return res.json({
+      status: 400,
+      message: "Not found cookie",
+    });
   }
 
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
     if (err) {
-      res.json({ status: 400, message: err.message });
+      res.json({
+        status: 400,
+        message: err.message,
+      });
     } else {
       req.user = decoded;
       next();
@@ -21,4 +30,4 @@ const authenticate = (req, res, next) => {
   });
 };
 
-module.exports = authenticate
+module.exports = authenticate;

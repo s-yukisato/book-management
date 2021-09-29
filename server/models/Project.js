@@ -14,7 +14,12 @@ const ProjectSchema = new Schema({
     user: {
         type: Schema.Types.ObjectId,
         ref: "User"
-    }
+    },
+    createdAt: {
+        type: Date,
+        default: new Date()
+    },
+    deadline: Date,
 }, {
     timestamps: true
 });
