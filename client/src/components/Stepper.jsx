@@ -1,7 +1,4 @@
 import { useState } from 'react';
-import { useHistory } from 'react-router-dom';
-
-import { v4 as uuidV4 } from "uuid";
 
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -12,39 +9,27 @@ import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 
+import Selection from './Selection';
+
 import { ReactComponent as GoalLogo } from '../assets/undraw_stepping_up_g6oo.svg';
-import { ReactComponent as ThinkingLogo } from '../assets/undraw_Organizing_projects_0p9a.svg';
+import { ReactComponent as ChooseLogo } from '../assets/undraw_Choose_re_7d5a.svg';
 import { ReactComponent as TimeLogo } from '../assets/undraw_time_management_30iu.svg';
 
-const steps = ['目標設定', 'アイテム選択', '予定日設定', '最終確認'];
+const steps = ['目標設定', '書籍選択', '期日設定', '最終確認'];
 
-function formatDate(dt) {
-    var y = dt.getFullYear();
-    var m = ('00' + (dt.getMonth() + 1)).slice(-2);
-    var d = ('00' + dt.getDate()).slice(-2);
-    return (y + '-' + m + '-' + d);
-}
-const today = formatDate(new Date())
 
-export default function HorizontalLinearStepper() {
+export default function HorizontalLinearStepper({ values, setValues, create }) {
     const [activeStep, setActiveStep] = useState(0);
-
-    const [values, setValues] = useState({
-        goal: "",
-        items: [],
-        scheduledDate: today
-    });
 
     const handleChange = (prop) => (event) => {
         setValues({ ...values, [prop]: event.target.value });
+        console.log(values)
     };
-
-    const history = useHistory();
 
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
         if (activeStep === steps.length - 1) {
-            createProject()
+            create();
         }
         console.log(values)
     };
@@ -53,13 +38,9 @@ export default function HorizontalLinearStepper() {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
-    const createProject = () => {
-        history.push(`/project/${uuidV4()}`)
-    }
-
 
     return (
-        <Box sx={{ width: '100%' }}>
+        <>
             <Stepper activeStep={activeStep}>
                 {steps.map(label => {
                     const stepProps = {};
@@ -75,13 +56,14 @@ export default function HorizontalLinearStepper() {
             {(
                 <>
                     {activeStep === 0 && (
-                        <Box sx={{ display: 'flex', flexDirection: 'column', p: 3 }} >
-                            <GoalLogo width={200} height={200} />
+                        <Box sx={{ display: 'flex', flexDirection: 'column', my: 2 }} >
+                            <Box sx={{ textAlign: 'center', mb: 2 }}>
+                                <GoalLogo width={200} height={200} />
+                            </Box>
                             <TextField
                                 variant="standard"
                                 id="goal"
                                 required
-                                fullWidth
                                 label="目標"
                                 value={values.goal}
                                 onChange={handleChange('goal')}
@@ -91,50 +73,46 @@ export default function HorizontalLinearStepper() {
                         </Box>
                     )}
                     {activeStep === 1 && (
-                        <Box sx={{ display: 'flex', flexDirection: 'column', p: 3 }} >
-                            <ThinkingLogo width={200} height={200} />
-                            <TextField
-                                variant="standard"
-                                required
-                                fullWidth
-                                id="item"
-                                label="アイテム"
-                                value={values.items}
-                                onChange={handleChange('items')}
-                                autoFocus
-                            />
+                        <Box sx={{ display: 'flex', flexDirection: 'column', my: 2 }} >
+                            <Box sx={{ textAlign: 'center', mb: 2 }}>
+                                <ChooseLogo width={200} height={200} />
+                            </Box>
+                            <Box sx={{ textAlign: 'center' }}>
+                                <Selection values={values} setValues={setValues} />
+                            </Box>
                         </Box>
                     )}
                     {activeStep === 2 && (
-                        <Box sx={{ display: 'flex', flexDirection: 'column', p: 3 }} >
-                            <TimeLogo width={200} height={200} />
+                        <Box sx={{ display: 'flex', flexDirection: 'column', my: 3 }} >
+                            <Box sx={{ textAlign: 'center', mb: 2 }}>
+                                <TimeLogo width={200} height={200} />
+                            </Box>
                             <TextField
                                 variant="standard"
                                 required
-                                fullWidth
                                 id="deadline"
                                 label="期日"
                                 type="date"
-                                value={values.scheduledDate}
-                                onChange={handleChange('scheduledDate')}
+                                value={values.deadline}
+                                onChange={handleChange('deadline')}
                                 autoFocus
                             />
                         </Box>
                     )}
                     {activeStep === steps.length - 1 && (
                         <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                            <Grid container spacing={3}>
+                            <Grid container spacing={3} sx={{ justifyContent: 'center', alignItems: 'center' }}>
                                 <Grid item sm={12} sx={{ display: 'flex', justifyContent: 'space-between' }}>
                                     <Typography>プロジェクト名</Typography>
                                     <Typography>{values.goal}</Typography>
                                 </Grid>
                                 <Grid item sm={12} sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                                    <Typography>アイテム</Typography>
+                                    <Typography>書籍</Typography>
                                     <Typography>{values.items}</Typography>
                                 </Grid>
                                 <Grid item sm={12} sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                                    <Typography>予定日</Typography>
-                                    <Typography>{values.scheduledDate}</Typography>
+                                    <Typography>期日</Typography>
+                                    <Typography>{values.deadline}</Typography>
                                 </Grid>
                             </Grid>
                         </Box>
@@ -156,6 +134,6 @@ export default function HorizontalLinearStepper() {
                     </Box>
                 </>
             )}
-        </Box>
+        </>
     );
 }
