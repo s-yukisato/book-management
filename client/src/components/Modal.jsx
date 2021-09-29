@@ -1,8 +1,6 @@
 import * as React from 'react';
 
-import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Divider from '@mui/material/Divider';
@@ -17,19 +15,10 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 
 export default function AlertDialogSlide({ book, open, setOpen }) {
-    // const [open, setOpen] = useState(false);
-
-    // const handleClickOpen = () => {
-    //     setOpen(true);
-    // };
 
     const handleClose = () => {
         setOpen(false);
     };
-
-    const handleRegister = () => {
-        setOpen(false);
-    }
 
     return (
         <>
@@ -43,11 +32,8 @@ export default function AlertDialogSlide({ book, open, setOpen }) {
                 <DialogTitle>{book.title}</DialogTitle>
                 <Divider />
                 <DialogContent>
-                    <RegistrationForm book={book} />
+                    <RegistrationForm setModalOpen={setOpen} book={book} />
                 </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleRegister}>登録</Button>
-                </DialogActions>
             </Dialog>
         </>
     );

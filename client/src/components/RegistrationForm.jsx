@@ -11,11 +11,14 @@ import Select from '@mui/material/Select';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
+import FormHelperText from '@mui/material/FormHelperText';
 
-import Rating from '../components/Rating';
+import Rating from './Rating';
 
 
-const Record = ({ book }) => {
+const Record = ({ book, setModalOpen }) => {
+    const [error, setError] = useState(false);
+
     const bookValues = {
         title: book.title,
         author: book.author,
@@ -27,25 +30,28 @@ const Record = ({ book }) => {
         memo: '',
         status: '',
         rating: 3,
-        progress: '2',
+        progress: '0',
     });
 
     const handleChange = (prop) => (event) => {
         setValues({ ...values, [prop]: event.target.value });
-        console.log(values)
+        console.log(error)
     };
 
     const url = 'http://localhost:3001/api/v1/'
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError(false)
         let bookId;
         await axios.post(`${url}book`, bookValues)
-            .then(res => bookId = res.data)
-            .catch(err => console.error(err))
-        console.log(bookId)
+            .then(res => bookId = res.data.id)
+            .catch(err => setError(true))
         await axios.post(`${url}record`, { ...values, book: bookId, user: "614ff37b54f23a0274fde6b9" })
             .then(res => console.log(res))
-            .catch(err => console.error(err))
+            .catch(err => setError(true))
+
+        if (!error) setModalOpen(false)
     }
 
     return (
@@ -107,6 +113,7 @@ const Record = ({ book }) => {
                 >
                     登録する
                 </Button>
+                {!error && <FormHelperText error={error}>登録に失敗しました。</FormHelperText>}
             </Box>
         </>
     )
