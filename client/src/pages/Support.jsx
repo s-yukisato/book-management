@@ -1,4 +1,6 @@
-import { useState } from 'react'
+import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import axios from 'axios'
 
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
@@ -10,7 +12,6 @@ import Email from '../components/Email';
 import Fab from '@mui/material/Fab';
 import SendIcon from '@mui/icons-material/Send';
 
-import Navi from '../components/Navi';
 import AppBar from '../components/AppBar';
 import Footer from '../components/Footer';
 
@@ -21,40 +22,38 @@ const Support = () => {
         userName: '',
         email: '',
         contents: '',
-    })
-    // const handleSubmit = async () => {
-    //     await axios.post('http://localhost:3001/api/v1/user', values)
-    //         .then(response => response)
-    // };
+    });
 
     const handleChange = (prop) => (event) => {
         setValues({ ...values, [prop]: event.target.value });
     };
-    // const handleSubmit = (event) => {
-    //     event.preventDefault();
-    //     if (values) {
-    //         // axios.post('https://localhost:3000/')
-    //     }
-    // };
+
+    const history = useHistory();
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const url = 'http://localhost:3001/api/v1/contact'
+        await axios.post(url, values)
+            .then(response => console.log(response))
+            .catch(err => console.error(err))
+        history.push("/thanks")
+    };
 
     return (
         <>
             <AppBar />
-            <Grid container>
-                <Grid container sm={2}>
-                    <Navi />
+            <Grid container sx={{ m: 'auto', width: "90%" }}>
+                <Grid item sm={12} sx={{ textAlign: 'center', m: 3 }}>
+                    <Typography variant="h3" color="inherit">
+                        お困りですか?
+                    </Typography>
                 </Grid>
-                <Grid container sm={10}>
-                    <Grid item sm={12} sx={{ textAlign: 'center', m: 3 }}>
-                        <Typography variant="h3" color="inherit">
-                            お困りですか?
-                        </Typography>
-                    </Grid>
-                    <Grid item sm sx={{ borderRadius: 16, p: 2, bgcolor: 'background.paper' }}>
+                <Grid container spacing={3} sx={{ flexDirection: { xs: 'column', sm: 'row' }, justifyContent: 'space-evenly', p: 2 }}>
+                    <Grid item sx={{ justifyContent: 'center' }}>
                         <QuestionLogo width="90%" height="90%" />
                     </Grid>
-                    <Grid item sm sx={{ borderRadius: 16, p: 2, bgcolor: 'background.paper' }}>
-                        <Box>
+                    <Grid item flex='auto' sx={{ mb: 2 }}>
+                        <Box component="form" onSubmit={handleSubmit}>
                             <Box sx={{ mx: 1, my: 3 }}>
                                 <TextField
                                     name="userName"
@@ -77,7 +76,7 @@ const Support = () => {
                                 />
                             </Box>
                             <Box sx={{ m: 2, textAlign: 'center' }}>
-                                <Fab variant="extended" color="primary">
+                                <Fab type="submit" variant="extended" color="primary">
                                     <SendIcon />
                                     送信する
                                 </Fab>
@@ -86,6 +85,7 @@ const Support = () => {
                     </Grid>
                 </Grid>
             </Grid>
+
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                 <Footer />
             </Box>
