@@ -1,54 +1,52 @@
-import { useTheme } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
-import { LineChart, Line, XAxis, YAxis, Label, ResponsiveContainer } from 'recharts';
+import { Bar } from 'react-chartjs-2';
 
+const Graph = () => {
 
-// Generate Sales Data
-function createData(time, amount) {
-  return { time, amount };
-}
+  const data = {
+    labels: ['月', '火', '水', '木', '金', '土', '日'],
+    datasets: [{
+      label: 'Dataset',
+      data: [12, 19, 3, 5, 2, 3],
+      backgroundColor: [
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(255, 206, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(153, 102, 255, 0.2)',
+        'rgba(110, 172, 125, 0.2)',
+        'rgba(255, 159, 64, 0.2)'
+      ],
+      borderColor: [
+        'rgba(255, 99, 132, 1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(110, 172, 125, 1)',
+        'rgba(255, 159, 64, 1)'
+      ],
+      borderWidth: 1
+    }]
+  }
 
-const data = [
-  createData('00:00', 0),
-  createData('03:00', 300),
-  createData('06:00', 600),
-  createData('09:00', 800),
-  createData('12:00', 1500),
-  createData('15:00', 2000),
-  createData('18:00', 2400),
-  createData('21:00', 2400),
-  createData('24:00', undefined),
-];
-
-export default function Chart() {
-  const theme = useTheme();
+  const options = {
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }]
+    }
+  }
 
   return (
-    <>
-      <Typography variant="h6">今週の読書記録</Typography>
-      <ResponsiveContainer>
-        <LineChart
-          data={data}
-          margin={{
-            top: 16,
-            right: 16,
-            bottom: 0,
-            left: 24,
-          }}
-        >
-          <XAxis dataKey="time" stroke={theme.palette.text.secondary} />
-          <YAxis stroke={theme.palette.text.secondary}>
-            <Label
-              angle={270}
-              position="left"
-              style={{ textAnchor: 'middle', fill: theme.palette.text.primary }}
-            >
-              Sales ($)
-            </Label>
-          </YAxis>
-          <Line type="monotone" dataKey="amount" stroke={theme.palette.primary.main} dot={false} />
-        </LineChart>
-      </ResponsiveContainer>
-    </>
+    <Bar
+      data={data}
+      width={100}
+      height={50}
+      options={options}
+    />
   );
-}
+};
+
+export default Graph;
