@@ -1,37 +1,51 @@
-const Project = require('../models/Project');
-
-const defaultValue = "";
+const Project = require("../models/Project");
 
 const getAllProjects = async (req, res) => {
-    const id = req.user._id;
-    const Projects = await Project.find({_id: id});
-    res.status(200).json(Projects);
-}
+  const id = req.user._id;
+  const projects = await Project.find({ user: id });
+  res.status(200).json(projects);
+};
 
 const getProject = async (req, res) => {
-    const projectId = req.params.id;
-    const projectName = req.body.name
-    const Project = await findOrCreateProject(projectId, projectName);
-    res.status(200).json(Project);
-}
+  const projectId = req.params.id;
+  const project = await Project.findById(projectId);
+  if (project) {
+    res.status(200).json(project.document);
+  } else {
+    res.status(404).json({ message: "このページは表示できません"})
+  }
+};
+
+const createProject = async (req, res) => {
+  const userId = req.user._id;
+  const project = { ...req.body, user: userId };
+  await Project.create(project)
+    .then((newProject) => res.json(newProject))
+    .catch((error) => {
+      console.log(error._message);
+      res.status(404).json(error._message);
+    });
+};
 
 const updateProject = async (req, res) => {
-    const projectId = req.params.id;
-    const data = req.body.data;
-    await Project.findByIdAndUpdate(projectId, { data });
-    res.send("ok");
-}
+  const projectId = req.params.id;
+  const document = req.body;
+  await Project.findByIdAndUpdate(projectId, {
+    $set: { document: document },
+  });
+  res.status(200).json({message: 'ok'});
+};
 
-const findOrCreateProject = async (id, name) => {
-  if (id == null) return;
-
-  const Project = await Project.findById(id);
-  if (Project) return Project;
-  return await Project.create({ _id: id, name: name, data: defaultValue });
+const deleteProject = async (req, res) => {
+  const projectId = req.params.id;
+  await Project.findByIdAndDelete(projectId);
+  res.status(200).json({ messgae: "削除しました" });
 };
 
 module.exports = {
-    getAllProjects,
-    getProject,
-    updateProject,
+  getAllProjects,
+  getProject,
+  createProject,
+  updateProject,
+  deleteProject,
 };

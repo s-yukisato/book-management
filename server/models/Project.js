@@ -7,10 +7,7 @@ const ProjectSchema = new Schema({
         required: true
     },
     document: Object,
-    books: [{
-        type: Schema.Types.ObjectId,
-        ref: "Book"
-    }],
+    books: [],
     user: {
         type: Schema.Types.ObjectId,
         ref: "User"
