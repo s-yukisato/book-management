@@ -24,15 +24,18 @@ export function AuthProvider({ children }) {
         const authenticate = async () => {
 
             await axios.get("http://localhost:3001/api/v1/user/auth")
-                .then(response => setUser(response.data))
-                .catch(error => setError(error))
+                .then(response => {
+                    const data = response.data
+                    if (data.status === 200 || data.status === 201) {
+                        setUser(data.user);
+                    }
+                })
+                .catch(err => setError(err))
 
             setLoading(false);
         };
         authenticate();
-        console.log('auth')
-
     }, []);
 
-    return <AuthContext.Provider value={value}>{loading ? <Backdrop open={loading} /> : children}</AuthContext.Provider>;
+    return <AuthContext.Provider value={value}>{loading ? <Backdrop open={loading} /> : error ? <>現在メンテナンス中です</> : children}</AuthContext.Provider>;
 }
