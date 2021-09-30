@@ -11,47 +11,57 @@ import Select from '@mui/material/Select';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
-import FormHelperText from '@mui/material/FormHelperText';
+import Typography from '@mui/material/Typography';
 
 import Rating from './Rating';
 
 
-const Record = ({ book, setModalOpen }) => {
-    const [error, setError] = useState(false);
+const Record = ({ book, setModalOpen, setRegistered }) => {
+    const [error, setError] = useState(null);
 
-    const bookValues = {
-        title: book.title,
-        author: book.author,
-        publisher: book.publisher,
-        price: book.itemPrice,
-        image: book.largeImageUrl
-    };
+    // const bookValues = {
+    //     _id: book.isbn,
+    //     title: book.title,
+    //     author: book.author,
+    //     publisher: book.publisherName,
+    //     price: book.itemPrice,
+    //     image: book.largeImageUrl
+    // };
     const [values, setValues] = useState({
         memo: '',
-        status: '',
+        status: 'want',
         rating: 3,
         progress: '0',
+        book: {
+            isbn: book.isbn,
+            title: book.title,
+            image: book.largeImageUrl
+        }
     });
 
     const handleChange = (prop) => (event) => {
         setValues({ ...values, [prop]: event.target.value });
-        console.log(error)
     };
 
     const url = 'http://localhost:3001/api/v1/'
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (book.isbn === "") {
+            return setError("これは登録対象外です")
+        }
         setError(false)
-        let bookId;
-        await axios.post(`${url}book`, bookValues)
-            .then(res => bookId = res.data.id)
-            .catch(err => setError(true))
-        await axios.post(`${url}record`, { ...values, book: bookId, user: "614ff37b54f23a0274fde6b9" })
+        // await axios.post(`${url}book`, bookValues)
+        //     .then(res => console.log(res))
+        //     .catch(err => setError(true))
+        await axios.post(`${url}record`, values)
             .then(res => console.log(res))
             .catch(err => setError(true))
 
-        if (!error) setModalOpen(false)
+        if (!error) {
+            setModalOpen(false);
+            setRegistered(true);
+        }
     }
 
     return (
@@ -113,7 +123,7 @@ const Record = ({ book, setModalOpen }) => {
                 >
                     登録する
                 </Button>
-                {!error && <FormHelperText error={error}>登録に失敗しました。</FormHelperText>}
+                <Typography color="error" sx={{ textAlign: 'center', mt: 2 }}>{error}</Typography>
             </Box>
         </>
     )

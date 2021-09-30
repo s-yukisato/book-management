@@ -14,7 +14,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 
-export default function AlertDialogSlide({ book, open, setOpen }) {
+export default function AlertDialogSlide({ book, open, setOpen, setRegistered }) {
 
     const handleClose = () => {
         setOpen(false);
@@ -32,7 +32,7 @@ export default function AlertDialogSlide({ book, open, setOpen }) {
                 <DialogTitle>{book.title}</DialogTitle>
                 <Divider />
                 <DialogContent>
-                    <RegistrationForm setModalOpen={setOpen} book={book} />
+                    <RegistrationForm setModalOpen={setOpen} setRegistered={setRegistered} book={book} />
                 </DialogContent>
             </Dialog>
         </>
