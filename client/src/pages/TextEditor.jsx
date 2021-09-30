@@ -1,13 +1,17 @@
-import { useState, useEffect, useCallback } from 'react'
-import Quill from 'quill'
-import 'quill/dist/quill.snow.css'
-import axios from 'axios'
+import { useState, useEffect, useCallback } from 'react';
+import { useParams, useHistory } from 'react-router';
+
+import axios from 'axios';
+import Quill from 'quill';
+import 'quill/dist/quill.snow.css';
+
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+
+import SaveIcon from '@mui/icons-material/Save';
 
 import AppBar from '../components/AppBar';
 
-import { useParams } from 'react-router'
-
-// const SAVE_INTERVAL_MS = 2000
 
 const TOOLBAR_OPTIONS = [
     ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
@@ -25,37 +29,51 @@ const TOOLBAR_OPTIONS = [
 ]
 
 const TextEditor = () => {
-    const { id: documentId } = useParams();
-    console.log(documentId)
+    const { id: projectId } = useParams();
+
+    const history = useHistory();
+    history.block('このページを離れますか？');
+
+    const [result, setReuslt] = useState();
+    const [prevContent, setPrevContent] = useState();
 
     const [quill, setQuill] = useState();
 
     useEffect(() => {
         if (quill == null) return
 
-        const loadDocument = async () => {
-            await axios.get(`http://localhost:3001/api/v1/document/${documentId}`)
-                .then(response => {
-                    quill.setContents(response)
+        const loadproject = async () => {
+            await axios.get(`http://localhost:3001/api/v1/project/${projectId}`)
+                .then(res => {
+                    quill.setContents(res.data)
                     quill.enable()
                 })
+                .catch(err => {
+                    history.replace("/projects")
+                })
         }
-        loadDocument();
+        loadproject();
 
-    }, [quill, documentId])
+    }, [quill, projectId, history])
 
-    // useEffect(() => {
-    //     if (quill == null) return
+    const handleSave = async () => {
+        if (quill == null) return
+        const contents = quill.getContents();
+        const contentBody = contents.ops[0].insert
 
-    //     const interval = setInterval(() => {
 
-    //     }, SAVE_INTERVAL_MS)
+        if (prevContent !== contentBody) {
+            setReuslt("");
+            await axios
+                .put(`http://localhost:3001/api/v1/project/${projectId}`, contents)
+                .then((res) => setReuslt("保存しました"))
+                .catch((err) => setReuslt("エラーが発生しました"));
 
-    //     return () => {
-    //         clearInterval(interval)
-    //     }
-
-    // }, [quill])
+            setPrevContent(contentBody);
+        } else {
+            setReuslt("保存しました");
+        }
+    }
 
 
     const wrapperRef = useCallback((wrapper) => {
@@ -80,6 +98,16 @@ const TextEditor = () => {
         <>
             <AppBar />
             <div className="container" ref={wrapperRef}></div>
+            <Typography
+                variant="body2"
+                sx={{ position: "fixed", bottom: "70px", right: "30px" }}
+            >{result}</Typography>
+            <Button
+                onClick={handleSave}
+                variant="contained"
+                startIcon={<SaveIcon />}
+                sx={{ position: "fixed", bottom: "30px", right: "30px" }}
+            >保存</Button>
         </>
     )
 }
