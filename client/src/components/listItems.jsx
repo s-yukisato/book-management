@@ -19,25 +19,30 @@ export const MainListItems = () => {
     return (
         <>
             <List>
-                <ListItem button component={RouterLink} to="/" key={1}>
+                <ListSubheader inset>機能一覧</ListSubheader>
+
+                <ListItem button component={RouterLink} to="/" key="homePage">
                     <ListItemIcon>
                         <HomeIcon />
                     </ListItemIcon>
                     <ListItemText primary="ホームページへ" />
                 </ListItem>
-                <ListItem button component={RouterLink} to="/dashboard" key={2}>
+
+                <ListItem button component={RouterLink} to="/dashboard" key="dashboardPage">
                     <ListItemIcon>
                         <DashboardIcon />
                     </ListItemIcon>
                     <ListItemText primary="ダッシュボードへ" />
                 </ListItem>
-                <ListItem button component={RouterLink} to="/projects" key={3}>
+
+                <ListItem button component={RouterLink} to="/projects" key="projectPage">
                     <ListItemIcon>
                         <AppRegistrationIcon />
                     </ListItemIcon>
                     <ListItemText primary="プロジェクトへ" />
                 </ListItem>
-                <ListItem button component={RouterLink} to="/library" key={4}>
+
+                <ListItem button component={RouterLink} to="/library" key="libraryPage">
                     <ListItemIcon>
                         <StarsIcon />
                     </ListItemIcon>
@@ -53,22 +58,23 @@ export const SecondaryListItems = () => {
     return (
         <>
             <List>
-            <ListSubheader inset>アカウント</ListSubheader>
-                <ListItem button component={RouterLink} to="/myaccount" key={5}>
+                <ListSubheader inset>アカウント</ListSubheader>
+
+                <ListItem button component={RouterLink} to="/mypage" key="myPage">
                     <ListItemIcon>
                         <SettingsIcon />
                     </ListItemIcon>
-                    <ListItemText primary="設定ページへ" />
+                    <ListItemText primary="マイページへ" />
                 </ListItem>
 
-                <ListItem button component={RouterLink} to="/support" key={6}>
+                <ListItem button component={RouterLink} to="/support" key="supportPage">
                     <ListItemIcon>
                         <ContactSupportIcon />
                     </ListItemIcon>
                     <ListItemText primary="サポートページへ" />
                 </ListItem>
 
-                <ListItem button key={7}>
+                <ListItem button key="logout">
                     <ListItemIcon>
                         <LogoutIcon />
                     </ListItemIcon>
@@ -77,5 +83,4 @@ export const SecondaryListItems = () => {
             </List>
         </>
     )
-
 }
