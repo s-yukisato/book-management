@@ -15,34 +15,26 @@ import { ReactComponent as BookLoverLogo } from '../assets/undraw_book_lover_mkc
 import LightTooltip from '../components/LightTooltip';
 import Slider from '../components/Slider';
 import AppBar from '../components/AppBar';
-import Modal from '../components/Modal';
+import Snackbar from '../components/Snackbar';
+// import Modal from '../components/Modal';
 
-const records = [
-    // {
-    //     _id: 1,
-    //     image: "https://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/0102/9784866430102.jpg?_ex=200x200",
-    // },
-    // {
-    //     _id: 2,
-    //     image: "https://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/0102/9784866430102.jpg?_ex=200x200",
-    // },
-    // {
-    //     _id: 3,
-    //     image: "https://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/0102/9784866430102.jpg?_ex=200x200",
-    // },
-    // {
-    //     _id: 4,
-    //     image: "https://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/0102/9784866430102.jpg?_ex=200x200",
-    // },
-
-]
-
-const book = []
+import { useFetchRecordContext } from '../context/FetchContext';
+import { deleteRecord } from '../hooks/useDelete';
 
 const Library = () => {
+    const { dataState } = useFetchRecordContext();
+    let records = dataState.data;
+
     const [open, setOpen] = useState(false);
+    const [message, setMessage] = useState();
 
     const handleEdit = () => {
+        // setOpen(true);
+    };
+
+    const handleDelete = (prop) => async () => {
+        const { result } = await deleteRecord(prop);
+        setMessage(result);
         setOpen(true);
     };
 
@@ -54,7 +46,7 @@ const Library = () => {
     return (
         <>
             <AppBar />
-            <Grid container direction="column" spacing={2} sx={{ my: 3, width: "90vw" }}>
+            <Grid container direction="column" spacing={2} sx={{ my: 3, width: { sm: "90vw", md: "80vw" } }}>
                 {records.length > 0 ? records.map(record => (
                     <Grid item key={record._id}>
                         <Box sx={{
@@ -67,39 +59,44 @@ const Library = () => {
                             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                                 <Box
                                     component="img"
-                                    src={record.image}
+                                    src={record.book.image}
                                     alt="No image"
                                     sx={{
                                         width: 78,
                                         height: 112
                                     }} />
                                 <Box sx={{ p: 2 }}>
-                                    <Typography variant="h4">33%</Typography>
+                                    <Typography variant="h4">{Math.floor(record.progress / 300 * 100)}%</Typography>
                                 </Box>
                                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                                    <Box sx={{ flex: 2 }} />
-                                    <Box sx={{ display: { xs: 'block', sm: 'flex'}, flex: 1 }}>
-                                        <LightTooltip title="編集する" onClick={handleEdit}>
-                                            <IconButton>
+                                    <Box sx={{ flex: 2 }}>
+                                        <Typography variant="body2" sx={{ textAlign: 'end', mb: 1 }}>最終更新日</Typography>
+                                        <Typography variant="body2" sx={{ textAlign: 'end' }}>{record.updatedAt.slice(0, 10)}</Typography>
+                                        <Typography variant="body2" sx={{ textAlign: 'end' }}>{record.updatedAt.slice(11, 16)}</Typography>
+                                    </Box>
+                                    <Box sx={{ display: { xs: 'block', sm: 'flex' }, flex: 1 }}>
+                                        <LightTooltip title="編集する">
+                                            <IconButton onClick={handleEdit}>
                                                 <EditIcon />
                                             </IconButton>
                                         </LightTooltip>
-                                        <Modal open={open} setOpen={setOpen} book={book} />
+                                        {/* <Modal open={open} setOpen={setOpen} /> */}
                                         <LightTooltip title="削除する">
-                                            <IconButton>
+                                            <IconButton onClick={handleDelete(record._id)}>
                                                 <DeleteIcon />
                                             </IconButton>
                                         </LightTooltip>
+                                        <Snackbar open={open} setOpen={setOpen} message={message} />
                                     </Box>
                                 </Box>
                             </Box>
                             <Box>
-                                <Slider />
+                                <Slider value={record.progress} />
                             </Box>
                         </Box>
                     </Grid>
                 )) : (
-                    <Grid item sx={{ display: { xs: 'block', sm: 'flex'}, justifyContent: 'center', alignItems: 'center', textAlign: 'center' }}>
+                    <Grid item sx={{ display: { xs: 'block', sm: 'flex' }, justifyContent: 'center', alignItems: 'center', textAlign: 'center' }}>
                         <Box>
                             <BookLoverLogo width="80%" height="80%" />
                         </Box>
