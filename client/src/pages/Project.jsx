@@ -1,67 +1,73 @@
-import { useState } from 'react';
-import { useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom';
 
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
+import Paper from '@mui/material/Card';
+import Fab from '@mui/material/Fab';
 
-import IconButton from '@mui/material/IconButton';
 import AddIcon from '@mui/icons-material/Add';
 
 import AppBar from '../components/AppBar';
 
-import Dialog from '../components/Dialog';
-
-import { useFetch } from '../hooks/useFetch';
-import { useAuth } from '../hooks/useAuth';
+import { useFetchProjectContext } from '../context/FetchContext';
 
 import { ReactComponent as EmptyLogo } from '../assets/undraw_empty_street_sfxm.svg'
 
 const Project = () => {
-    const url = 'https://localhost:3001/api/v1/document'
-    const [projects, completed] = useFetch(url);
-    console.log(projects, completed)
-
-    const [open, setOpen] = useState(false);
-
-    const [user, error] = useAuth();
+    const { dataState } = useFetchProjectContext();
+    const projects = dataState.data;
 
     const history = useHistory();
 
     const handleClick = () => {
-        console.log(user, error)
-        // if (error == null) {
-        //     setOpen(true);
-        // } else {
         history.push("/projects/new");
-        // }
+    };
+
+    const handleOpenProject = (id) => () => {
+        history.push(`/project/${id}`);
     }
 
     return (
         <>
             <AppBar />
-            <Container>
+            <Grid container spacing={3} sx={{ justifyContent: "space-evenly", my: 3, mx: 'auto', width: "90vw" }}>
                 {projects.length > 0 ? projects.map(project => (
-                    <Grid container>
-                        <Grid item sm key={project._id}>
+                    <Grid item key={project._id}>
+                        <Paper sx={{
+                            width: 200,
+                            height: 200,
+                            p: 3,
+                            display: "flex",
+                            flexFlow: "column",
+                            justifyContent: "space-between",
+                            ":hover": {
+                                boxShadow: 6,
+                            }
+                        }} onClick={handleOpenProject(`${project._id}`)}>
+                            <Typography variant="body2">{project.title}</Typography>
                             <Box>
-                                <Typography variant="body2">{project._id}</Typography>
+                                <Typography variant="body2" align="right">{project.updatedAt.slice(0, 10)}</Typography>
+                                <Typography variant="body2" align="right">{project.updatedAt.slice(11, 16)}</Typography>
                             </Box>
-                        </Grid>
+                        </Paper>
                     </Grid>
                 )) : (
-                    <>
-                        <EmptyLogo width="80%" height="80%" />
-                        <Typography variant="h6">プロジェクトを作成しましょう</Typography>
-                    </>
+                    <Grid item sx={{ display: { xs: 'block', sm: 'flex' }, justifyContent: 'center', alignItems: 'center', textAlign: 'center' }}>
+                        <Box>
+                            <EmptyLogo width="80%" height="80%" />
+                        </Box>
+                        <Box sx={{ mx: 1, my: 3 }}>
+                            <Typography variant="h6">プロジェクトを作成しましょう</Typography>
+                        </Box>
+                    </Grid>
                 )}
-            </Container>
-            <Dialog open={open} setOpen={setOpen} />
-            <Box sx={{ position: "absolute", bottom: 50, right: 50, }}>
-                <IconButton onClick={handleClick} color="primary">
-                    <AddIcon size="large" />
-                </IconButton>
+            </Grid>
+
+            <Box sx={{ position: "fixed", bottom: 50, right: 50, }}>
+                <Fab onClick={handleClick} size="large" sx={{ color: "#FFFFFF", bgcolor: "#FF7066", ":hover": { bgcolor: "#F15B47" } }}>
+                    <AddIcon />
+                </Fab>
             </Box>
         </>
     )
