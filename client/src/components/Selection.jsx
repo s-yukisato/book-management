@@ -1,4 +1,5 @@
-import * as React from 'react';
+import { useState } from 'react';
+
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -9,6 +10,8 @@ import Select from '@mui/material/Select';
 import Chip from '@mui/material/Chip';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
+
+import { useFetchRecordContext } from '../context/FetchContext';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -21,52 +24,43 @@ const MenuProps = {
   },
 };
 
-const names = [
-  'Oliver Hansen',
-  'Van Henry',
-  'April Tucker',
-  'Ralph Hubbard',
-  'Omar Alexander',
-  'Carlos Abbott',
-  'Miriam Wagner',
-  'Bradley Wilkerson',
-  'Virginia Andrews',
-  'Kelly Snyder',
-];
-
-function getStyles(name, personName, theme) {
+function getStyles(book, selected, theme) {
   return {
     fontWeight:
-      personName.indexOf(name) === -1
+      selected.indexOf(book) === -1
         ? theme.typography.fontWeightRegular
         : theme.typography.fontWeightMedium,
   };
 }
 
-export default function MultipleSelectChip({values, setValues}) {
+export default function MultipleSelectChip({ values, setValues }) {
+  const { dataState } = useFetchRecordContext();
+
+  const records = dataState.data;
+  const books = records === [] ? [] : records.map(record => record.book);
+
   const theme = useTheme();
-  const [personName, setPersonName] = React.useState([]);
+  const [selected, setSelected] = useState(values.books);
 
   const handleChange = (event) => {
     const {
       target: { value },
     } = event;
-    setPersonName(
-      // On autofill we get a the stringified value.
+    setSelected(
       typeof value === 'string' ? value.split(',') : value,
     );
-    setValues({ ...values, 'items': [event.target.value] });
+    setValues({ ...values, 'books': event.target.value });
   };
 
   return (
-    <div>
+    <>
       <FormControl sx={{ m: 1, width: 300 }}>
-        <InputLabel id="demo-multiple-chip-label">本棚の本</InputLabel>
+        <InputLabel id="demo-multiple-chip-label">書籍一覧</InputLabel>
         <Select
           labelId="demo-multiple-chip-label"
           id="demo-multiple-chip"
           multiple
-          value={personName}
+          value={selected}
           onChange={handleChange}
           input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
           renderValue={(selected) => (
@@ -78,18 +72,18 @@ export default function MultipleSelectChip({values, setValues}) {
           )}
           MenuProps={MenuProps}
         >
-          {names.map((name) => (
+          {books.map((book) => (
             <MenuItem
-              key={name}
-              value={name}
-              style={getStyles(name, personName, theme)}
+              key={book.isbn}
+              value={book.title}
+              style={getStyles(book.title, selected, theme)}
             >
-              <Checkbox checked={personName.indexOf(name) > -1} />
-              <ListItemText primary={name} />
+              <Checkbox checked={selected.indexOf(book.title) > -1} />
+              <ListItemText primary={book.title} />
             </MenuItem>
           ))}
         </Select>
       </FormControl>
-    </div>
+    </>
   );
 }

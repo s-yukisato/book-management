@@ -20,13 +20,16 @@ const steps = ['目標設定', '書籍選択', '期日設定', '最終確認'];
 
 export default function HorizontalLinearStepper({ values, setValues, create }) {
     const [activeStep, setActiveStep] = useState(0);
+    const [error, setError] = useState(null);
 
     const handleChange = (prop) => (event) => {
         setValues({ ...values, [prop]: event.target.value });
-        console.log(values)
+        if (values.goal) setError(null)
     };
 
     const handleNext = () => {
+        if (!values.goal) return setError('この項目は必須です')
+        setError(null)
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
         if (activeStep === steps.length - 1) {
             create();
@@ -68,8 +71,10 @@ export default function HorizontalLinearStepper({ values, setValues, create }) {
                                 value={values.goal}
                                 onChange={handleChange('goal')}
                                 inputProps={{ minLength: 1 }}
+                                error={error}
                                 autoFocus
                             />
+                            <Typography color="error" sx={{ textAlign: 'center', mt: 2 }}>{error}</Typography>
                         </Box>
                     )}
                     {activeStep === 1 && (
@@ -108,7 +113,7 @@ export default function HorizontalLinearStepper({ values, setValues, create }) {
                                 </Grid>
                                 <Grid item sm={12} sx={{ display: 'flex', justifyContent: 'space-between' }}>
                                     <Typography>書籍</Typography>
-                                    <Typography>{values.items}</Typography>
+                                    <Typography>{values.books}</Typography>
                                 </Grid>
                                 <Grid item sm={12} sx={{ display: 'flex', justifyContent: 'space-between' }}>
                                     <Typography>期日</Typography>
