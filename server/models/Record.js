@@ -7,11 +7,11 @@ const RecordSchema = new Schema({
         type: Number,
         default: 3
     },
-    progress: String,
+    progress: Number,
     book: {
-        type: Schema.Types.ObjectId,
-        ref: "Book",
-        required: true,
+        isbn: String,
+        title: String,
+        image: String
     },
     user: {
         type: Schema.Types.ObjectId,

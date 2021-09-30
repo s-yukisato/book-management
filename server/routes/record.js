@@ -2,7 +2,6 @@ const router = require("express").Router();
 
 const {
   getAllRecords,
-  getRecord,
   createRecord,
   updateRecord,
   deleteRecord,
@@ -10,12 +9,10 @@ const {
 
 router.get("/", getAllRecords);
 
-router.get("/:id", getRecord);
-
 router.post("/", createRecord);
 
-router.post("/update", updateRecord);
+router.put("/:id", updateRecord);
 
-router.post("/delete", deleteRecord);
+router.delete("/:id", deleteRecord);
 
 module.exports = router;
