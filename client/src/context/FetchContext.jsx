@@ -1,10 +1,10 @@
 import { createContext, useEffect, useContext, useReducer } from "react";
+import axios from 'axios';
 
-import axios from 'axios'
 
 const initialState = {
     isLoading: true,
-    isError: '',
+    isError: false,
     data: []
 }
 
@@ -13,19 +13,19 @@ const dataFetchReducer = (dataState, action) => {
         case 'FETCH_INIT':
             return {
                 isLoading: true,
-                isError: '',
+                isError: false,
                 data: []
             }
         case 'FETCH_SUCCESS':
             return {
                 isLoading: false,
-                isError: '',
+                isError: false,
                 data: action.payload,
             }
         case 'FETCH_ERROR':
             return {
                 isLoading: false,
-                isError: '読み込みに失敗しました',
+                isError: true,
                 data: []
             }
         default:
@@ -33,18 +33,19 @@ const dataFetchReducer = (dataState, action) => {
     }
 }
 
-const FetchContext = createContext();
+const FetchRecordContext = createContext();
 
-export const useFetchContext = () => {
-    return useContext(FetchContext);
+export const useFetchRecordContext = () => {
+    return useContext(FetchRecordContext);
 }
 
-const FetchProvider = ({ children }) => {
+export const FetchRecordProvider = ({ children }) => {
     const [dataState, dispatch] = useReducer(dataFetchReducer, initialState)
 
     useEffect(() => {
+        console.log('fetch')
         axios
-            .get('')
+            .get('http://localhost:3001/api/v1/record')
             .then(res => {
                 dispatch({ type: 'FETCH_SUCCESS', payload: res.data })
             })
@@ -52,7 +53,31 @@ const FetchProvider = ({ children }) => {
                 dispatch({ type: 'FETCH_ERROR' })
             })
     }, []);
-    return <FetchContext.Provider value={{ dataState }}>{children}</FetchContext.Provider>
+
+    return <FetchRecordContext.Provider value={{ dataState }}>{children}</FetchRecordContext.Provider>
 }
 
-export default FetchProvider
+
+const FetchProjectContext = createContext();
+
+export const useFetchProjectContext = () => {
+    return useContext(FetchProjectContext);
+}
+
+export const FetchProjectProvider = ({ children }) => {
+    const [dataState, dispatch] = useReducer(dataFetchReducer, initialState)
+
+    useEffect(() => {
+        console.log('fetch')
+        axios
+            .get('http://localhost:3001/api/v1/project')
+            .then(res => {
+                dispatch({ type: 'FETCH_SUCCESS', payload: res.data })
+            })
+            .catch(err => {
+                dispatch({ type: 'FETCH_ERROR' })
+            })
+    }, []);
+
+    return <FetchProjectContext.Provider value={{ dataState }}>{children}</FetchProjectContext.Provider>
+}

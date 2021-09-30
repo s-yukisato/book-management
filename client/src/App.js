@@ -2,10 +2,6 @@ import { useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import axios from "axios";
 
-import { AuthProvider } from "./context/AuthContext";
-import PrivateRoute from "./components/PrivateRoute";
-import PublicRoute from "./components/PublicRoute";
-
 import Home from "./pages/Home";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
@@ -18,6 +14,14 @@ import Dashboard from "./pages/Dashboard";
 import Account from "./pages/Account";
 import Library from "./pages/Library";
 import Error from "./pages/Error";
+
+import { AuthProvider } from "./context/AuthContext";
+import PrivateRoute from "./components/PrivateRoute";
+import PublicRoute from "./components/PublicRoute";
+import {
+  FetchRecordProvider,
+  FetchProjectProvider,
+} from "./context/FetchContext";
 
 axios.defaults.withCredentials = true;
 
@@ -36,20 +40,30 @@ function App() {
       <AuthProvider>
         <Router>
           <Switch>
-            <PrivateRoute exact path="/">
-              <Home />
-            </PrivateRoute>
+            <Route exact path="/">
+              <FetchRecordProvider>
+                <Home />
+              </FetchRecordProvider>
+            </Route>
             <PrivateRoute exact path="/dashboard">
-              <Dashboard />
+              <FetchRecordProvider>
+                <Dashboard />
+              </FetchRecordProvider>
             </PrivateRoute>
             <PrivateRoute exact path="/library">
-              <Library />
+              <FetchRecordProvider>
+                <Library />
+              </FetchRecordProvider>
             </PrivateRoute>
             <PrivateRoute exact path="/projects">
-              <Project />
+              <FetchProjectProvider>
+                <Project />
+              </FetchProjectProvider>
             </PrivateRoute>
             <PrivateRoute exact path="/projects/new">
-              <NewProject />
+              <FetchRecordProvider>
+                <NewProject />
+              </FetchRecordProvider>
             </PrivateRoute>
             <PrivateRoute exact path="/project/:id">
               <TextEditor />
@@ -57,7 +71,7 @@ function App() {
             <PrivateRoute exact path="/mypage">
               <Account />
             </PrivateRoute>
-        
+
             <PublicRoute exact path="/signin">
               <Signin />
             </PublicRoute>
