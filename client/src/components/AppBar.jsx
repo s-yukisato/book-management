@@ -20,7 +20,6 @@ import Search from './Search';
 
 
 export default function PrimarySearchAppBar() {
-  const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
 
   const [state, setState] = useState(false);
@@ -33,47 +32,17 @@ export default function PrimarySearchAppBar() {
     setState(open);
   };
 
-  const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-  const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-    handleMobileMenuClose();
   };
 
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
-  const menuId = 'primary-search-account-menu';
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem component={RouterLink} to="/signup" onClick={handleMenuClose}>サインアップ</MenuItem>
-      <MenuItem component={RouterLink} to="/mypage" onClick={handleMenuClose}>マイページ</MenuItem>
-    </Menu>
-  );
 
   const mobileMenuId = 'primary-search-account-menu-mobile';
   const renderMobileMenu = (
@@ -92,33 +61,31 @@ export default function PrimarySearchAppBar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton component={RouterLink} to="/dashboard" size="large" aria-label="dashboard" color="inherit">
-          <DashboardIcon />
-        </IconButton>
-        <p>ダッシュボードへ</p>
+      <MenuItem
+        component={RouterLink}
+        to="/dashboard"
+        size="large"
+        aria-label="dashboard"
+        color="inherit"
+      >
+        <DashboardIcon />
+        <Typography variant="body2" m={1}>ダッシュボードへ</Typography>
       </MenuItem>
-      <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="notifications"
-          color="inherit"
-        >
-          <NotificationsIcon />
-        </IconButton>
-        <p>お知らせ</p>
+      <MenuItem
+        size="large"
+        aria-label="notifications"
+        color="inherit"
+      >
+        <NotificationsIcon />
+        <Typography variant="body2" m={1}>お知らせ</Typography>
       </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>マイページへ</p>
+      <MenuItem
+        component={RouterLink}
+        to="/mypage"
+        size="large"
+      >
+        <AccountCircle />
+        <Typography variant="body2" m={1}>マイページへ</Typography>
       </MenuItem>
     </Menu>
   );
@@ -148,23 +115,28 @@ export default function PrimarySearchAppBar() {
           <Search />
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton component={RouterLink} to="/dashboard" size="large" aria-label="show 4 new mails" color="inherit">
+            <IconButton
+              component={RouterLink}
+              to="/dashboard"
+              size="large"
+              aria-label="dashboard"
+              color="inherit"
+            >
               <DashboardIcon />
             </IconButton>
             <IconButton
               size="large"
-              aria-label="show 17 new notifications"
+              aria-label="notifications"
               color="inherit"
             >
               <NotificationsIcon />
             </IconButton>
             <IconButton
+              component={RouterLink}
+              to="/mypage"
               size="large"
               edge="end"
               aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
               color="inherit"
             >
               <AccountCircle />
@@ -186,7 +158,6 @@ export default function PrimarySearchAppBar() {
       </AppBar>
       <Toolbar />
       {renderMobileMenu}
-      {renderMenu}
       <Drawer state={state} setState={setState} toggleDrawer={toggleDrawer} />
     </Box>
   );
