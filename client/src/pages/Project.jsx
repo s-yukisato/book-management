@@ -31,7 +31,15 @@ const Project = () => {
     return (
         <>
             <AppBar />
-            <Grid container spacing={3} sx={{ justifyContent: "space-evenly", my: 3, mx: 'auto', width: "90vw" }}>
+            <Grid
+                container
+                textAlign="center"
+                alignContent="flex-start"
+                mx="auto"
+                my={3}
+                width="90vw"
+                spacing={3}
+            >
                 {projects.length > 0 ? projects.map(project => (
                     <Grid item key={project._id}>
                         <Paper sx={{
@@ -53,11 +61,16 @@ const Project = () => {
                         </Paper>
                     </Grid>
                 )) : (
-                    <Grid item sx={{ display: { xs: 'block', sm: 'flex' }, justifyContent: 'center', alignItems: 'center', textAlign: 'center' }}>
+                    <Grid
+                        container
+                        justifyContent="center"
+                        alignItems="center"
+                        sx={{ display: { xs: 'block', sm: 'flex' } }}
+                    >
                         <Box>
-                            <EmptyLogo width="80%" height="80%" />
+                            <EmptyLogo width="240px" height="120px" />
                         </Box>
-                        <Box sx={{ mx: 1, my: 3 }}>
+                        <Box sx={{ m: 3 }}>
                             <Typography variant="h6">プロジェクトを作成しましょう</Typography>
                         </Box>
                     </Grid>
