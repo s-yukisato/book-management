@@ -4,14 +4,13 @@ import { Link as RouterLink } from "react-router-dom";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 import UserName from '../components/UserName';
 import Email from '../components/Email';
@@ -27,6 +26,7 @@ const SignUp = () => {
         name: '',
         email: '',
         password: '',
+        confirmPassword: '',
     });
 
     const [error, login] = useLogin(values);
@@ -43,7 +43,7 @@ const SignUp = () => {
                         alignItems: 'center',
                     }}
                 >
-                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                    <Avatar sx={{ m: 1, bgcolor: '#CF5C78' }}>
                         <LockOutlinedIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
@@ -59,12 +59,6 @@ const SignUp = () => {
                             </Grid>
                             <Grid item xs={12}>
                                 <Password values={values} setValues={setValues} />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <FormControlLabel
-                                    control={<Checkbox value="allowExtraEmails" color="primary" />}
-                                    label="I want to receive inspiration, marketing promotions and updates via email."
-                                />
                             </Grid>
                         </Grid>
                         <Typography color="error" sx={{ textAlign: 'center', mt: 2 }}>{error}</Typography>
