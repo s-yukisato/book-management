@@ -1,7 +1,7 @@
-import * as React from 'react';
 import PropTypes from 'prop-types';
-import Slider from '@mui/material/Slider';
 import { styled } from '@mui/material/styles';
+
+import Slider from '@mui/material/Slider';
 import Typography from '@mui/material/Typography';
 import Tooltip from '@mui/material/Tooltip';
 import Box from '@mui/material/Box';
@@ -62,15 +62,15 @@ const PrettoSlider = styled(Slider)({
 });
 
 
-export default function CustomizedSlider() {
+export default function CustomizedSlider({ value }) {
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box sx={{ width: "90%" }}>
       <Box sx={{ m: 2 }} />
       <Typography gutterBottom></Typography>
       <PrettoSlider
         valueLabelDisplay="auto"
         aria-label="pretto slider"
-        defaultValue={20}
+        value={value}
       />
     </Box>
   );
