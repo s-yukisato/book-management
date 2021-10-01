@@ -1,41 +1,32 @@
+import Avatar from '@mui/material/Avatar';
+import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
-import Fab from '@mui/material/Fab';
-import Grid from '@mui/material/Grid';
 
-import EditIcon from '@mui/icons-material/Edit';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+
+import Table from '../components/Table';
+
+import { useAuthContext } from '../context/AuthContext';
 
 const Account = () => {
+    const { user } = useAuthContext();
+    console.log(user)
     return (
         <>
-            <Grid container >
-                <Grid container sm={12}>
-                    <Typography variant="h4">ようこそ！</Typography>
-                </Grid>
-                <Grid container sm={12} direction="column">
-                    <Paper>
-                        <Typography variant="h6">アカウント名</Typography>
-                        <Fab size="small" variant="extended">
-                            <EditIcon />
-                            編集する
-                        </Fab>
-                    </Paper>
-                    <Paper>
-                        <Typography variant="h6">メールアドレス</Typography>
-                        <Fab size="small" variant="extended">
-                            <EditIcon />
-                            編集する
-                        </Fab>
-                    </Paper>
-                    <Paper>
-                        <Typography variant="h6">パスワード</Typography>
-                        <Fab size="small" variant="extended">
-                            <EditIcon />
-                            編集する
-                        </Fab>
-                    </Paper>
-                </Grid>
-            </Grid>
+            <Box
+                sx={{
+                    my: 8,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                }}
+            >
+                <Avatar sx={{ m: 1, bgcolor: 'secondary.main', width: '56px', height: '56px' }}>
+                    <AccountCircleIcon fontSize="large" />
+                </Avatar>
+                <Typography variant="h6">ようこそ {user.name} !</Typography>
+            </Box>
+            <Table />
         </>
     )
 }
