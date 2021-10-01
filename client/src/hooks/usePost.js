@@ -14,7 +14,7 @@ export const usePost = (url, values, to) => {
     if (data.status === 201) {
       history.push(to);
     } else if (data.status === 400) {
-      setError(data.messgae);
+      setError(data.message);
     }
   };
 
