@@ -7,14 +7,17 @@ const { registerValidation, loginValidation } = require("../validation");
 const signup = async (req, res) => {
   const { error } = registerValidation(req.body);
   if (error)
-    return res.json({ status: 400, message: error.details[0].message });
+    return res.json({
+      status: 400,
+      message: error.details[0].message,
+    });
 
   // Checking if the user is alreadly in the database
   const emailExist = await User.findOne({ email: req.body.email });
   if (emailExist)
     return res.json({
       status: 400,
-      message: "Email alreadly exists",
+      message: "このメールアドレスは使用されています",
     });
 
   // Hash passwords
@@ -39,20 +42,35 @@ const signup = async (req, res) => {
       user: { id: newUser._id, name: newUser.name },
     });
   } catch (err) {
-    res.status(400).send(err);
+    res.json({
+      status: 400,
+      message: err.message,
+    });
   }
 };
 
 const signin = async (req, res) => {
   const { error } = loginValidation(req.body);
-  if (error) res.json({ status: 400, message: error.details[0].message });
+  if (error)
+    res.json({
+      status: 400,
+      message: error.details[0].message,
+    });
 
   const user = await User.findOne({ email: req.body.email });
-  if (!user) return res.json({ status: 400, message: "メールアドレスが見つかりません" });
+  if (!user)
+    return res.json({
+      status: 400,
+      message: "メールアドレスが見つかりません",
+    });
 
   // PASSWORD IS CORRECT
   const validPass = await bcrypt.compare(req.body.password, user.password);
-  if (!validPass) res.json({ status: 400, message: "パスワードが違います" });
+  if (!validPass)
+    res.json({
+      status: 400,
+      message: "パスワードが違います",
+    });
 
   // Create and assign a token
   const payload = {
@@ -60,14 +78,23 @@ const signin = async (req, res) => {
   };
   const token = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET);
   res.cookie("token", token, { httpOnly: true });
-  res.json({ user: { id: user._id, name: user.name } });
+  res.json({
+    status: 200,
+    user: { id: user._id, name: user.name },
+  });
 };
 
-
 const getInfo = async (req, res) => {
-  const id = req.decoded._id;
+  const id = req.user._id;
   const user = await User.findById(id);
-  res.json({ status: 200, user: { id: id, name: user.name, email: user.email } });
+  res.json({
+    status: 200,
+    user: {
+      id: id,
+      name: user.name,
+      email: user.email,
+    },
+  });
 };
 
 // アクセストークン生成
@@ -79,4 +106,4 @@ module.exports = {
   signup,
   signin,
   getInfo,
-}
+};
