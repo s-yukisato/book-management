@@ -1,3 +1,5 @@
+import { Link as RouterLink } from 'react-router-dom';
+
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
@@ -25,15 +27,46 @@ const CGrid = ({ children }) => (
 const listItems = [
     {
         title: "コンテンツ",
-        contents: ["ホーム", "ダッシュボード", "プロジェクト"]
+        contents: [
+            {
+                title: "ホーム",
+                link: "/"
+            },
+            {
+                title: "ダッシュボード",
+                link: "/dashboard"
+            },
+            {
+                title: "プロジェクト",
+                link: "/projects"
+            }
+        ]
     },
     {
         title: "コンタクト",
-        contents: ["お問い合わせ", "ヘルプ"]
+        contents: [
+            {
+                title: "お問い合わせ",
+                link: "/support"
+            },
+            {
+                title: "ヘルプ",
+                link: "/help"
+            },
+        ]
     },
     {
         title: "管理者情報",
-        contents: ["Github", "...so on"]
+        contents: [
+            {
+                title: "Github",
+                link: "/"
+            },
+            {
+                title: "Twitter",
+                link: "/"
+            },
+        ]
     },
 ]
 
@@ -58,8 +91,8 @@ const Footer = () => {
                                 </Typography>
                             </ListItem>
                             {listItem.contents.map(content => (
-                                <ListItemButton key={content}>
-                                    <Typography variant="body2">{content}</Typography>
+                                <ListItemButton component={RouterLink} to={content.link} key={content.title}>
+                                    <Typography variant="body2">{content.title}</Typography>
                                 </ListItemButton>
                             ))}
                         </List>
