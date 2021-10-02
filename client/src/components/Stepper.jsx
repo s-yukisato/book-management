@@ -1,13 +1,21 @@
 import { useState } from 'react';
 
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+
+import { styled } from '@mui/material/styles';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
 import Selection from './Selection';
 
@@ -16,6 +24,36 @@ import { ReactComponent as ChooseLogo } from '../assets/undraw_Choose_re_7d5a.sv
 import { ReactComponent as TimeLogo } from '../assets/undraw_time_management_30iu.svg';
 
 const steps = ['目標設定', '書籍選択', '期日設定', '最終確認'];
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+        backgroundColor: theme.palette.common.black,
+        color: theme.palette.common.white,
+    },
+    [`&.${tableCellClasses.body}`]: {
+        fontSize: 14,
+    },
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+    '&:nth-of-type(odd)': {
+        backgroundColor: theme.palette.action.hover,
+    },
+    // hide last border
+    '&:last-child td, &:last-child th': {
+        border: 0,
+    },
+}));
+
+function createData(id, attributes) {
+    return { id, attributes };
+}
+
+const rows = [
+    createData('goal', '目標'),
+    createData('books', '書籍'),
+    createData('deadline', '期日'),
+];
 
 
 export default function HorizontalLinearStepper({ values, setValues, create }) {
@@ -105,21 +143,33 @@ export default function HorizontalLinearStepper({ values, setValues, create }) {
                         </Box>
                     )}
                     {activeStep === steps.length - 1 && (
-                        <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                            <Grid container spacing={3} sx={{ justifyContent: 'center', alignItems: 'center' }}>
-                                <Grid item sm={12} sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                                    <Typography>プロジェクト名</Typography>
-                                    <Typography>{values.goal}</Typography>
-                                </Grid>
-                                <Grid item sm={12} sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                                    <Typography>書籍</Typography>
-                                    <Typography>{values.books}</Typography>
-                                </Grid>
-                                <Grid item sm={12} sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                                    <Typography>期日</Typography>
-                                    <Typography>{values.deadline}</Typography>
-                                </Grid>
-                            </Grid>
+                        <Box mt={3}>
+                            <TableContainer component={Paper}>
+                                <Table sx={{ width: { xs: "90vw", sm: '80vw' } }} aria-label="customized table">
+                                    <TableHead>
+                                        <TableRow>
+                                            <StyledTableCell>属性</StyledTableCell>
+                                            <StyledTableCell>登録情報</StyledTableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {rows.map((row, index) => (
+                                            <StyledTableRow key={row.attributes}>
+                                                <StyledTableCell>
+                                                    {row.attributes}
+                                                </StyledTableCell>
+                                                <StyledTableCell align="left">
+                                                    {row.id === "books" ? (
+                                                        <ul>
+                                                            {values[row.id].map(item => <li>{item}</li>)}
+                                                        </ul>
+                                                    ) : values[row.id]}
+                                                </StyledTableCell>
+                                            </StyledTableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
                         </Box>
                     )}
                     <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
