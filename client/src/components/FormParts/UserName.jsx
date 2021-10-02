@@ -1,14 +1,14 @@
 import TextField from '@mui/material/TextField'
 
-import { useUserNameValidate } from '../hooks/usePostValidate';
+import { useUserNameValidate } from '../../hooks/useValidate';
 
 const UserName = ({ values, setValues }) => {
-    const [error, validateInput] = useUserNameValidate()
+    const { error, message, validate } = useUserNameValidate()
 
     const handleChange = (e) => {
         const post = e.target.value;
-        setValues({...values, "name": post});
-        validateInput(post)
+        setValues({ ...values, "name": post });
+        validate(post)
     };
 
     return (
@@ -20,7 +20,7 @@ const UserName = ({ values, setValues }) => {
             value={values.name}
             label="ユーザー名"
             error={error}
-            helperText={error}
+            helperText={message}
             onChange={handleChange}
         />
     )

@@ -1,14 +1,14 @@
 import TextField from '@mui/material/TextField'
 
-import { useEmailValidate } from '../hooks/usePostValidate';
+import { useEmailValidate } from '../../hooks/useValidate';
 
 const Email = ({ values, setValues }) => {
-    const [error, validateInput] = useEmailValidate()
+    const { error, message, validate } = useEmailValidate()
 
     const handleChange = (e) => {
         const post = e.target.value;
-        setValues({...values, "email": post});
-        validateInput(post)
+        setValues({ ...values, "email": post });
+        validate(post)
     };
 
     return (
@@ -20,7 +20,7 @@ const Email = ({ values, setValues }) => {
             value={values.email}
             label="メールアドレス"
             error={error}
-            helperText={error}
+            helperText={message}
             onChange={handleChange}
         />
     )

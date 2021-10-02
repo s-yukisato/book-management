@@ -8,17 +8,17 @@ import InputLabel from '@mui/material/InputLabel';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-import { usePasswordValidate } from '../hooks/usePostValidate';
+import { usePasswordValidate } from '../../hooks/useValidate';
 
 
 const Password = ({ values, setValues }) => {
     const [showPassword, setShowPassword] = useState(false)
-    const [error, validateInput] = usePasswordValidate();
+    const { error, message, validate } = usePasswordValidate();
 
     const handleChange = (e) => {
         const post = e.target.value;
         setValues({ ...values, 'password': post })
-        validateInput(post)
+        validate(post)
     };
 
     const handleClickShowPassword = () => {
@@ -31,9 +31,9 @@ const Password = ({ values, setValues }) => {
 
     return (
         <FormControl required fullWidth variant="outlined">
-            <InputLabel htmlFor="outlined-adornment-password" error={error}>パスワード</InputLabel>
+            <InputLabel htmlFor="password" error={error}>パスワード</InputLabel>
             <OutlinedInput
-                id="outlined-adornment-password"
+                id="password"
                 type={showPassword ? 'text' : 'password'}
                 value={values.password}
                 onChange={handleChange}
@@ -50,9 +50,9 @@ const Password = ({ values, setValues }) => {
                         </IconButton>
                     </InputAdornment>
                 }
-                label="Password"
+                label="パスワード"
             />
-            <FormHelperText error={error}>{error}</FormHelperText>
+            <FormHelperText error={error}>{message}</FormHelperText>
         </FormControl>
     )
 }
