@@ -12,8 +12,8 @@ import Box from '@mui/material/Box';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
-import Password from '../components/Password';
-import Email from '../components/Email';
+import Email from '../components/FormParts/Email';
+import Password from '../components/FormParts/Password';
 import Copyright from '../components/Copyright';
 
 import { useLogin } from '../hooks/useLogin';

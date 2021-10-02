@@ -12,9 +12,9 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
-import UserName from '../components/UserName';
-import Email from '../components/Email';
-import Password from '../components/Password';
+import UserName from '../components/FormParts/UserName';
+import Email from '../components/FormParts/Email';
+import Password from '../components/FormParts/Password';
 import Copyright from '../components/Copyright';
 
 import { useLogin } from '../hooks/useLogin'

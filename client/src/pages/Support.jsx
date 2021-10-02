@@ -5,9 +5,10 @@ import axios from 'axios'
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import TextareaAutosize from '@mui/material/TextareaAutosize';
-import TextField from '@mui/material/TextField';
-import Email from '../components/Email';
+
+import Email from '../components/FormParts/Email';
+import UserName from '../components/FormParts/UserName';
+import Contents from '../components/FormParts/Contents';
 
 import Fab from '@mui/material/Fab';
 import SendIcon from '@mui/icons-material/Send';
@@ -20,14 +21,10 @@ import { ReactComponent as QuestionLogo } from '../assets/undraw_Questions_re_1f
 
 const Support = () => {
     const [values, setValues] = useState({
-        userName: '',
+        name: '',
         email: '',
         contents: '',
     });
-
-    const handleChange = (prop) => (event) => {
-        setValues({ ...values, [prop]: event.target.value });
-    };
 
     const history = useHistory();
 
@@ -79,25 +76,13 @@ const Support = () => {
                         <Grid item sx={{ minWidth: "360px", mb: 2 }}>
                             <Box component="form" onSubmit={handleSubmit}>
                                 <Box sx={{ mx: 1, my: 3 }}>
-                                    <TextField
-                                        name="userName"
-                                        required
-                                        fullWidth
-                                        id="userName"
-                                        label="ユーザー名"
-                                        onClick={handleChange('userName')}
-                                        autoFocus
-                                    />
+                                    <UserName values={values} setValues={setValues} />
                                 </Box>
                                 <Box sx={{ mx: 1, my: 3 }}>
                                     <Email values={values} setValues={setValues} />
                                 </Box>
                                 <Box sx={{ mx: 1, my: 3 }}>
-                                    <TextareaAutosize
-                                        minRows={5}
-                                        style={{ width: '100%', borderRadius: 18, outline: 'none', fontSize: '1rem', padding: '1em' }}
-                                        onClick={handleChange('contents')}
-                                    />
+                                    <Contents values={values} setValues={setValues} />
                                 </Box>
                                 <Box sx={{ m: 2, textAlign: 'center' }}>
                                     <Fab type="submit" variant="extended" color="primary">
