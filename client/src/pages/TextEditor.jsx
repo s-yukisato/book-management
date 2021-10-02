@@ -32,7 +32,6 @@ const TextEditor = () => {
     const { id: projectId } = useParams();
 
     const history = useHistory();
-    history.block('このページを離れますか？');
 
     const [result, setReuslt] = useState();
     const [prevContent, setPrevContent] = useState();
