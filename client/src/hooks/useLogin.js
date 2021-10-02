@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
-
 
 export const useLogin = (values) => {
   const url = "http://localhost:3001/api/v1/user";
@@ -9,9 +8,6 @@ export const useLogin = (values) => {
   const [error, setError] = useState(null);
 
   const history = useHistory();
-  const location = useLocation();
-
-  const { from } = location.state || { from: { pathname: "/" } };
 
   const login = async (e) => {
     e.preventDefault();
@@ -21,7 +17,7 @@ export const useLogin = (values) => {
     );
 
     if (data.status === 200 || data.status === 201) {
-      history.replace(from);
+      window.location.reload();
     } else if (data.status === 400) {
       setError(data.message);
     } else {
