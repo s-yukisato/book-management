@@ -3,6 +3,8 @@ import Grid from '@mui/material/Grid';
 import Skeleton from './Skeleton';
 import Card from './Card';
 
+import BackToTop from './BackToTop'
+
 import { useFetch } from '../hooks/useFetch';
 import { useFetchRecordContext } from '../context/FetchContext';
 import { useAuthContext } from '../context/AuthContext';
@@ -39,6 +41,7 @@ const ContentList = () => {
                 ))}
                 {status === "error" && <>現在メンテナンス中です</>}
             </Grid>
+            <BackToTop />
         </>
     )
 }
