@@ -5,7 +5,7 @@ const Graph = () => {
   const data = {
     labels: ['月', '火', '水', '木', '金', '土', '日'],
     datasets: [{
-      label: 'Dataset',
+      label: '読み終えた冊数',
       data: [12, 19, 3, 5, 2, 3],
       backgroundColor: [
         'rgba(255, 99, 132, 0.2)',
@@ -42,7 +42,7 @@ const Graph = () => {
   return (
     <Bar
       data={data}
-      width={100}
+      width={80}
       height={50}
       options={options}
     />
