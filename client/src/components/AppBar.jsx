@@ -156,7 +156,7 @@ export default function PrimarySearchAppBar() {
           </Box>
         </Toolbar>
       </AppBar>
-      <Toolbar />
+      <Toolbar id="back-to-top-anchor" />
       {renderMobileMenu}
       <Drawer state={state} setState={setState} toggleDrawer={toggleDrawer} />
     </Box>
