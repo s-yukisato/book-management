@@ -4,10 +4,11 @@ import axios from 'axios';
 import { v4 as uuidV4 } from "uuid";
 
 import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
-import AppBar from '../components/AppBar';
 import Stepper from '../components/Stepper';
 
 import { formatDate } from '../hooks/useDate';
@@ -45,9 +46,9 @@ const NewProject = () => {
 
     return (
         <>
-            <AppBar />
-            <Button onClick={handleClick} startIcon={<ArrowBackIcon />} sx={{ position: "fixed", top: "70px", left: "20px" }}>プロジェクト一覧へ戻る</Button>
-            <Stepper values={values} setValues={setValues} create={createProject} />
+            <Button onClick={handleClick} startIcon={<ArrowBackIcon />} sx={{ position: "fixed", top: "30px", left: "20px" }}>プロジェクト一覧へ戻る</Button>
+            <Toolbar />
+            <Box sx={{ pt: 3, width: {xs: "90vw", sm: "100%"} }}><Stepper values={values} setValues={setValues} create={createProject} /></Box>
         </>
     )
 };
