@@ -39,13 +39,8 @@ const Record = ({ record, records, setRecords }) => {
             <Box
                 onClick={editHandler}
                 sx={{
-                    pt: 2,
-                    px: 2,
-                    boxShadow: 2,
-                    ":hover": {
-                        boxShadow: 6,
-                        cursor: "pointer"
-                    }
+                    pt: 2, px: 2, boxShadow: 2,
+                    ":hover": { boxShadow: 6, cursor: "pointer" }
                 }}
             >
                 <Box sx={{ display: "flex", justifyContent: "space-between" }}>

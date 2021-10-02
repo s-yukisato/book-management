@@ -1,21 +1,16 @@
 import { useState } from 'react';
 
-import Box from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
 
 import ViewListIcon from '@mui/icons-material/ViewList';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import BookIcon from '@mui/icons-material/Book';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 
-import MenuWrapper from '../MenuContents';
+import MenuWrapper from '../MenuWrapper';
 import RecordComponent from './RecordComponent';
 
-import LightTooltip from '../LightTooltip';
 
 const list = [
     {
@@ -43,51 +38,61 @@ const list = [
 const TopRecord = () => {
     const [state, setState] = useState("all");
 
-    const handleChange = (prop) => () => {
-        setState(prop)
+    const handleChange = (e, value) => {
+        setState(value);
     }
 
-    const menu = (
-        <List sx={{ position: "fixed", top: "70px", left: "10px" }}>
+    const MenuTabs = (
+        <Tabs
+            orientation="vertical"
+            value={state}
+            onChange={handleChange}
+            sx={{
+                borderRight: 1, borderColor: 'divider',
+                position: "fixed", top: 70, left: 5, right: 5,
+                width: 180, minHeight: "100vh",
+            }}
+        >
             {list.map(item => (
-                <ListItem button
-                    onClick={handleChange(item.state)}
-                    key={item.name}>
-                    <ListItemIcon>
-                        {item.icon}
-                    </ListItemIcon>
-                    
-                    <ListItemText primary={item.name} />
-                </ListItem>
+                <Tab
+                    key={item.name}
+                    value={item.state}
+                    icon={item.icon}
+                    label={item.name}
+                    sx={{ display: 'flex', flexDirection: "row", justifyContent: 'space-between' }} />
             ))}
-        </List>
+        </Tabs>
     )
 
-
-    const mobileMenu = (
-        <Box sx={{
-            display: { xs: "flex", md: "none" },
-            bgcolor: "#7c9b40",
-            px: 2,
-            borderRadius: 12
-        }}>
-            {list.map(item => (
-                <LightTooltip title={item.name} mx={1}>
-                    <IconButton
-                        onClick={handleChange(item.state)}
-                        sx={{ color: "#FFF" }}
-                    >
-                        {item.icon}
-                    </IconButton>
-                </LightTooltip>
-            ))}
-        </Box>
+    const MobileMenuTabs = (
+        <Tabs
+            value={state}
+            onChange={handleChange}
+            sx={{ display: { xs: 'block', sm: 'none' },
+            px: 0
+        }}
+        >
+            {
+                list.map(item => (
+                    <Tab
+                        key={item.name}
+                        value={item.state}
+                        icon={item.icon}
+                        label={item.name}
+                        sx={{
+                            fontSize: "5px", color: "white",
+                            pl: 0, pr: 0,
+                            minWidth: 0, minHeight: 0, width: "70px"
+                         }} />
+                ))
+            }
+        </Tabs >
     )
 
     return (
         <MenuWrapper
-            menu={menu}
-            mobileMenu={mobileMenu}
+            menu={MenuTabs}
+            mobileMenu={MobileMenuTabs}
             contents={<RecordComponent state={state} />} />
     )
 }

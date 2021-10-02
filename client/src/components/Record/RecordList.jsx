@@ -6,8 +6,7 @@ const RecordList = ({ records, setRecords, filteredRecords }) => {
     return (
         <Grid
             item
-            spacing={2}
-            sx={{ my: 3, width: { xs: "80vw", md: "60vw" } }}
+            sx={{ my: 3, width: { xs: "80vw", sm: "60vw" } }}
         >
             {
                 filteredRecords.map(record => (
