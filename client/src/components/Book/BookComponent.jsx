@@ -1,3 +1,5 @@
+import React from 'react';
+
 import Grid from '@mui/material/Grid';
 
 import BookList from './BookList';
@@ -6,8 +8,9 @@ import NoBook from './NoBook';
 
 import Pagination from './Pagination';
 
-const BookComponent = ({ books, currentPage, setCurrentPage }) => {
+const BookComponent = React.memo(({ books, currentPage, setCurrentPage }) => {
     const status = "fetched"
+
     return (
         <>
             {status === "fetched" && (
@@ -26,6 +29,6 @@ const BookComponent = ({ books, currentPage, setCurrentPage }) => {
             {status === "error" && <>現在メンテナンス中です</>}
         </>
     )
-}
+})
 
 export default BookComponent;
