@@ -5,9 +5,12 @@ const expressJwt = require("express-jwt");
 const cookieParser = require("cookie-parser");
 const csrf = require("csurf");
 
+const authenticate = require("./authenticate");
+
 const authRoute = require("./routes/auth");
 const data = require("./routes/data");
-const library = require("./routes/library");
+const book = require("./routes/book");
+const record = require("./routes/record");
 const project = require("./routes/project");
 
 require("dotenv").config();
@@ -36,8 +39,9 @@ app.use(
 
 app.use("/api/v1/user", authRoute);
 app.use("/api/data", data);
-app.use("/api/v1/library", library);
-app.use("/api/v1/document", project);
+app.use("/api/v1/book", book);
+app.use("/api/v1/record", authenticate, record);
+app.use("/api/v1/project", authenticate, project);
 
 app.use(cookieParser());
 app.use(
