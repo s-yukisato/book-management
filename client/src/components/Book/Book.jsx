@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import Grid from '@mui/material/Grid';
 import CardActions from '@mui/material/CardActions';
@@ -11,15 +11,19 @@ import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
 import AddIcon from '@mui/icons-material/Add';
 
 import LightTooltip from '../LightTooltip';
-
+import { useRegisterContext } from './RegisterContext';
 import { BookCard } from '../UI/BookCard';
 
 
-const Book = ({ book, registeredList }) => {
-    const [registered, setRegistered] = useState(registeredList.includes(book.isbn));
+const Book = ({book}) => {
 
-    const register =() => {}
-    const unregister =() =>{}
+    const { registered, handleOpen } = useRegisterContext();
+
+    const history = useHistory();
+    const redirectLibrary = () => {
+        history.push("/library")
+    }
+
     return (
         <Grid item>
             <BookCard>
@@ -43,13 +47,13 @@ const Book = ({ book, registeredList }) => {
                 <CardActions>
                     {registered ? (
                         <LightTooltip title="本棚から削除する">
-                            <IconButton onClick={unregister}>
+                            <IconButton onClick={redirectLibrary}>
                                 <PlaylistAddCheckIcon color="info" />
                             </IconButton>
                         </LightTooltip>
                     ) : (
                         <LightTooltip title="本棚に登録する">
-                            <IconButton onClick={register}>
+                            <IconButton onClick={handleOpen}>
                                 <AddIcon color="primary" />
                             </IconButton>
                         </LightTooltip>
