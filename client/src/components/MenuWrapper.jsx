@@ -10,7 +10,7 @@ const MenuWrapper = ({ menu, mobileMenu, contents }) => {
             <Grid container width="100vw">
                 <Grid
                     container
-                    width="180px"
+                    width="200px"
                     sx={{ display: { xs: 'none', sm: 'block' }, }}
                 >
                     {menu}
