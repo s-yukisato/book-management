@@ -68,9 +68,7 @@ const TopRecord = () => {
         <Tabs
             value={state}
             onChange={handleChange}
-            sx={{ display: { xs: 'block', sm: 'none' },
-            px: 0
-        }}
+            sx={{ px: 0 }}
         >
             {
                 list.map(item => (
@@ -83,7 +81,7 @@ const TopRecord = () => {
                             fontSize: "5px", color: "white",
                             pl: 0, pr: 0,
                             minWidth: 0, minHeight: 0, width: "70px"
-                         }} />
+                        }} />
                 ))
             }
         </Tabs >

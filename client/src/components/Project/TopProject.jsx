@@ -63,10 +63,7 @@ const TopProject = () => {
         <Tabs
             value={state}
             onChange={handleChange}
-            sx={{
-                display: { xs: 'block', sm: 'none' },
-                minWidth: "30px", minHeight: "30px", px: 0
-            }}
+            sx={{ minWidth: "30px", minHeight: "30px", px: 0 }}
         >
             {
                 list.map(item => (
