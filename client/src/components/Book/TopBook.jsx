@@ -9,7 +9,8 @@ import SearchIcon from '@mui/icons-material/Search';
 
 import MenuWrapper from '../MenuWrapper';
 import BookComponent from './BookComponent';
-import Search from '../Search';
+
+import { Search, SearchIconWrapper, StyledInputBase } from '../UI/SearchBar'
 
 import { Title, Author, Isbn } from '../FormParts/Search';
 
@@ -32,7 +33,6 @@ const TopBook = () => {
     const url = "http://localhost:3001/api/data"
 
     const handleClick = async () => {
-        const params = `&title=${values.title}&author=${values.author}&isbn=${values.isbn}`;
         const anchor = document.querySelector('#back-to-top-anchor');
 
         if (anchor) {
@@ -41,20 +41,16 @@ const TopBook = () => {
                 block: 'center',
             });
         }
-        // const { data } = await axios.post(url, params);
-        // setBooks(data);
-        console.log(params);
-
+        const { data } = await axios.post(url, { values, currentPage });
+        setBooks(data);
     }
 
     useEffect(() => {
-        const params = `&title=${values.title}&author=${values.author}&isbn=${values.isbn}&page=${currentPage}`;
-        // const fetchData = async () => {
-        //     const { data } = await axios.post(url, params);
-        //     setBooks(data);
-        // }
-        // fetchData();
-        console.log(params)
+        const fetchData = async () => {
+            const { data } = await axios.post(url, { values, currentPage });
+            setBooks(data);
+        }
+        fetchData();
     }, [currentPage]);
 
     useEffect(() => {
@@ -90,13 +86,30 @@ const TopBook = () => {
         </>
     )
 
+    const MobileSearch = (
+        <>
+            <Search>
+                <SearchIconWrapper>
+                    <SearchIcon />
+                </SearchIconWrapper>
+                <StyledInputBase
+                    placeholder="Search…"
+                    inputProps={{ "aria-label": "search" }}
+                    value={values.title}
+                />
+            </Search>
+        </>
+    )
+
 
     return (
-        <MenuWrapper
-            menu={SearchForm}
-            mobileMenu={<Search />}
-            contents={<BookComponent books={books} currentPage={currentPage} setCurrentPage={setCurrentPage} />} />
+        <>
+            <MenuWrapper
+                menu={SearchForm}
+                mobileMenu={MobileSearch}
+                contents={<BookComponent books={books} currentPage={currentPage} setCurrentPage={setCurrentPage} />} />
+        </>
     )
 }
 
-export default TopBook
+export default TopBook;
