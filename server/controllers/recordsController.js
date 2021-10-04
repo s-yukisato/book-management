@@ -23,8 +23,17 @@ const createRecord = async (req, res) => {
 
 const updateRecord = async (req, res) => {
   const RecordId = req.params.id;
-  const data = req.body.data;
-  await Record.findByIdAndUpdate(RecordId, { data });
+  const data = req.body;
+  console.log(data);
+  console.log(RecordId);
+  await Record.findByIdAndUpdate(RecordId, {
+    $set: {
+      memo: data.memo,
+      status: data.status,
+      rating: data.rating,
+      page: data.page,
+    },
+  });
   res.status(200).json(data);
 };
 
