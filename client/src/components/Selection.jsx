@@ -37,7 +37,7 @@ export default function MultipleSelectChip({ values, setValues }) {
   const { dataState } = useFetchRecordContext();
 
   const records = dataState.data;
-  const books = records === [] ? [] : records.map(record => record.book);
+  const books = records.length > 0 ? records.map(record => record.book) : [];
 
   const theme = useTheme();
   const [selected, setSelected] = useState(values.books);
@@ -54,15 +54,14 @@ export default function MultipleSelectChip({ values, setValues }) {
 
   return (
     <>
-      <FormControl sx={{ m: 1, width: 300 }}>
-        <InputLabel id="demo-multiple-chip-label">書籍一覧</InputLabel>
+      <FormControl sx={{ m: 1, width: 320 }}>
+        <InputLabel id="select-book">本棚書籍一覧</InputLabel>
         <Select
-          labelId="demo-multiple-chip-label"
-          id="demo-multiple-chip"
+          id="select-book"
           multiple
           value={selected}
           onChange={handleChange}
-          input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+          input={<OutlinedInput id="select-book" label="本棚書籍一覧" width="320" />}
           renderValue={(selected) => (
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
               {selected.map((value) => (
