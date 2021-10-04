@@ -31,6 +31,7 @@ const Project = ({ project, projects, setProjects }) => {
                 width: 200,
                 height: 200,
                 p: 3,
+                m: 1,
                 display: "flex",
                 flexFlow: "column",
                 textAlign: "start",
