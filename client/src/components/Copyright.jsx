@@ -6,7 +6,7 @@ const Copyright = (props) => {
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
             {'Copyright © '}
             <Link color="inherit" href="https://github.com/s-yukisato/book-management">
-                teelog
+                TeeLog
             </Link>{' '}
             {2021}
             {'.'}
