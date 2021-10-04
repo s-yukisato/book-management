@@ -62,7 +62,7 @@ const PrettoSlider = styled(Slider)({
 });
 
 
-export default function CustomizedSlider({ value }) {
+export default function CustomizedSlider({ now, max }) {
   return (
     <Box sx={{ width: "90%" }}>
       <Box sx={{ m: 2 }} />
@@ -70,7 +70,8 @@ export default function CustomizedSlider({ value }) {
       <PrettoSlider
         valueLabelDisplay="auto"
         aria-label="pretto slider"
-        value={value}
+        value={now}
+        max={max}
       />
     </Box>
   );
