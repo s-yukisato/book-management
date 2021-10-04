@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 
 import RecordList from './RecordList';
 import NoRecord from './NoRecord';
+import BackToTop from '../BackToTop';
 
 import { useFetchRecordContext } from '../../context/FetchContext';
 
@@ -51,6 +52,7 @@ const RecordComponent = ({ state }) => {
                     filteredRecords={filteredRecords}
                 />
             ) : <NoRecord />}
+            <BackToTop />
         </>
     )
 }

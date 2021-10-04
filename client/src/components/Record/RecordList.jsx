@@ -1,20 +1,35 @@
+import React from 'react';
+
+import { TransitionGroup } from 'react-transition-group';
+
 import Grid from '@mui/material/Grid';
+import Collapse from '@mui/material/Collapse';
 
 import Record from "./Record";
 
-const RecordList = ({ records, setRecords, filteredRecords }) => {
+import { UpdateProvider } from './UpdateContext';
+
+const RecordList = React.memo(({ records, setRecords, filteredRecords }) => {
+    console.log("render list")
     return (
         <Grid
             item
-            sx={{ my: 3, width: { xs: "80vw", sm: "60vw" } }}
+            flex="auto"
+            sx={{ my: 3, width: { xs: "80vw", sm: "58vw" } }}
         >
-            {
-                filteredRecords.map(record => (
-                    <Record key={record._id} record={record} records={records} setRecords={setRecords} />
-                ))
-            }
+            <TransitionGroup>
+                {
+                    filteredRecords.map(record => (
+                        <Collapse key={record._id}>
+                            <UpdateProvider record={record}>
+                                <Record record={record} records={records} setRecords={setRecords} />
+                            </UpdateProvider>
+                        </Collapse>
+                    ))
+                }
+            </TransitionGroup>
         </Grid >
     )
-}
+})
 
 export default RecordList;
