@@ -40,7 +40,7 @@ const NewProject = () => {
             deadline: values.deadline
         }
         await axios.post(url, postData)
-            .then(response => history.push(`/project/${id}`))
+            .then(response => history.replace(`/project/${id}`))
             .catch(err => console.log(err))
     }
 
@@ -48,7 +48,9 @@ const NewProject = () => {
         <>
             <Button onClick={handleClick} startIcon={<ArrowBackIcon />} sx={{ position: "fixed", top: "30px", left: "20px" }}>プロジェクト一覧へ戻る</Button>
             <Toolbar />
-            <Box sx={{ pt: 3, width: {xs: "90vw", sm: "100%"} }}><Stepper values={values} setValues={setValues} create={createProject} /></Box>
+            <Box sx={{ pt: 3, width: { xs: "90vw", sm: "100%" } }}>
+                <Stepper values={values} setValues={setValues} create={createProject} />
+            </Box>
         </>
     )
 };
