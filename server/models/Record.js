@@ -7,10 +7,11 @@ const RecordSchema = new Schema({
         type: Number,
         default: 3
     },
-    progress: Number,
+    page: Number,
     book: {
         isbn: String,
         title: String,
+        pages: Number,
         image: String
     },
     user: {

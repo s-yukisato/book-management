@@ -54,7 +54,7 @@ const Record = ({ record, records, setRecords }) => {
                             ml: 2
                         }} />
                     <Box sx={{ py: 3 }}>
-                        <Typography variant="h4">{Math.floor(record.progress / 300 * 100)}%</Typography>
+                        <Typography variant="h4">{Math.floor(record.page / record.book.page * 100)}%</Typography>
                     </Box>
                     <Box display='flex' flexDirection='column'>
                         <Box sx={{ flex: 2 }}>
@@ -83,7 +83,7 @@ const Record = ({ record, records, setRecords }) => {
                     justifyContent="center"
                     alignItems="center"
                 >
-                    <Slider value={record.progress} />
+                    <Slider now={record.page} max={record.book.page} />
                 </Box>
                 <Snackbar open={open} setOpen={setOpen} message="状態を [ 読み終えた ] に変更しました" />
             </Box>
