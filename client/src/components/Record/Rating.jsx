@@ -8,7 +8,7 @@ const RatingComponent = ({ values, setValues }) => {
   };
 
   return (
-    <Stack spacing={1}>
+    <Stack>
       <Rating
         value={values.rating}
         precision={0.5}
