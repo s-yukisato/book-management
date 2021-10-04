@@ -10,7 +10,7 @@ const getProject = async (req, res) => {
   const projectId = req.params.id;
   const project = await Project.findById(projectId);
   if (project) {
-    res.status(200).json(project.document);
+    res.status(200).json(project);
   } else {
     res.status(404).json({ message: "このページは表示できません"})
   }
