@@ -11,7 +11,10 @@ const RecordSchema = new Schema({
     book: {
         isbn: String,
         title: String,
-        pages: Number,
+        pages: {
+            type: Number,
+            default: 300,
+        },
         image: String
     },
     user: {

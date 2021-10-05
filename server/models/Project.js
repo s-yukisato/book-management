@@ -7,6 +7,7 @@ const ProjectSchema = new Schema({
         required: true
     },
     document: Object,
+    status: String,
     books: [],
     user: {
         type: Schema.Types.ObjectId,
