@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 
-import Chart from '../Chart';
+import Chart from './Chart';
 
 import { useFetchRecordContext } from '../../context/FetchContext';
 
@@ -12,7 +12,7 @@ const DashboardComponent = ({ state }) => {
 
     const [data, setData] = useState([]);
 
-    const [filteredData, setFilteredData] = useState([]);
+    // const [filteredData, setFilteredData] = useState([]);
 
 
     const filterHandler = () => {

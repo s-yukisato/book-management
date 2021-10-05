@@ -19,9 +19,9 @@ import Paper from '@mui/material/Paper';
 
 import Selection from './Selection';
 
-import { ReactComponent as GoalLogo } from '../assets/undraw_stepping_up_g6oo.svg';
-import { ReactComponent as ChooseLogo } from '../assets/undraw_Choose_re_7d5a.svg';
-import { ReactComponent as TimeLogo } from '../assets/undraw_time_management_30iu.svg';
+import { ReactComponent as GoalLogo } from '../../assets/undraw_stepping_up_g6oo.svg';
+import { ReactComponent as ChooseLogo } from '../../assets/undraw_Choose_re_7d5a.svg';
+import { ReactComponent as TimeLogo } from '../../assets/undraw_time_management_30iu.svg';
 
 const steps = ['目標設定', '書籍選択', '期日設定', '最終確認'];
 
