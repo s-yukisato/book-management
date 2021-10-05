@@ -23,15 +23,21 @@ const BookList = ({ books }) => {
             spacing={2}
             m="auto"
             sx={{
+                "&:before": {
+                    display: "block",
+                    content: '""',
+                    width: "210px",
+                    order: 1
+                },
                 "&:after": {
                     display: "block",
                     content: '""',
-                    width: "45%",
+                    width: "210px",
                 }
             }}
         >
             {books.map(book => (
-                <RegisterProvider props={{book, registeredList}}>
+                <RegisterProvider props={{ book, registeredList }}>
                     <Book key={book.isbn} book={book} user={user} />
                 </RegisterProvider>
             ))}
