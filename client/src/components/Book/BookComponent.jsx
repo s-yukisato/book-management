@@ -8,25 +8,42 @@ import NoBook from './NoBook';
 
 import Pagination from './Pagination';
 
-const BookComponent = React.memo(({ books, currentPage, setCurrentPage }) => {
-    const status = "fetched"
+const BookComponent = React.memo(({ books, loading, currentPage, setCurrentPage, maxPage }) => {
 
     return (
         <>
-            {status === "fetched" && (
+            {!loading ? (
                 books.length > 0 ? (
                     <>
                         <BookList books={books} />
-                        <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} />
+                        <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} maxPage={maxPage} />
                     </>
                 ) : <NoBook />
-            )}
-            {(status === "fetching" || status === "idle") && Array.from(new Array(30)).map(index => (
-                <Grid item key={index} >
-                    <LoadingBook />
-                </Grid>
-            ))}
-            {status === "error" && <>現在メンテナンス中です</>}
+            ) : (
+                <Grid
+                    container
+                    flex="auto"
+                    justifyContent='space-evenly'
+                    spacing={2}
+                    m="auto"
+                    sx={{
+                        "&:before": {
+                            display: "block",
+                            content: '""',
+                            width: "210px",
+                            order: 1
+                        },
+                        "&:after": {
+                            display: "block",
+                            content: '""',
+                            width: "210px",
+                        }
+                    }}
+                >
+                    {Array.from(new Array(30)).map(index => (
+                        <LoadingBook />
+                    ))}
+                </Grid>)}
         </>
     )
 })

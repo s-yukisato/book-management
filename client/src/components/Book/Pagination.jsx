@@ -2,7 +2,7 @@ import Typography from '@mui/material/Typography';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 
-export default function PaginationControlled({ currentPage, setCurrentPage }) {
+export default function PaginationControlled({ currentPage, setCurrentPage, maxPage }) {
   const handleChange = (event, value) => {
     setCurrentPage(parseInt(value));
     const anchor = (event.target.ownerDocument || document).querySelector(
@@ -20,7 +20,7 @@ export default function PaginationControlled({ currentPage, setCurrentPage }) {
   return (
     <Stack spacing={2} p={2}>
       <Typography>Page: {currentPage}</Typography>
-      <Pagination count={10} page={currentPage} variant="outlined" color="secondary" onChange={handleChange} />
+      <Pagination count={maxPage} page={currentPage} variant="outlined" color="secondary" onChange={handleChange} />
     </Stack>
   );
 }
