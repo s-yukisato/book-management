@@ -15,9 +15,10 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 
 import SaveIcon from '@mui/icons-material/Save';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 import AppBar from '../components/AppBar2';
+
+import { useFetchRecordContext } from '../context/FetchContext';
 
 
 function TabPanel(props) {
@@ -67,6 +68,19 @@ const TextEditor = () => {
     const { id: projectId } = useParams();
 
     const [projectData, setProjectData] = useState({});
+    const [load, setLoad] = useState(false);
+
+    const { dataState } = useFetchRecordContext();
+    const [records, setRecords] = useState([]);
+
+    useEffect(() => {
+        if (!load) return;
+        console.log(projectData)
+        const allRecords = dataState.data;
+        const selectedBook = allRecords.filter(record => projectData.books.includes(record.book.title));
+        setRecords(selectedBook)
+        console.log(selectedBook)
+    }, [dataState, load]);
 
     const [currentTarget, setCurrentTarget] = useState(0);
 
@@ -91,6 +105,7 @@ const TextEditor = () => {
                     setProjectData(res.data)
                     quill.setContents(res.data.document)
                     quill.enable()
+                    setLoad(true);
                 })
                 .catch(err => {
                     history.replace("/projects")
@@ -140,21 +155,21 @@ const TextEditor = () => {
 
     const menu = (
         <>
-            <ArrowBackIosNewIcon />
-            <Typography variant="h6">{projectData.title}</Typography>
+            <Box display="flex">
+                <Typography variant="h6">{projectData.title}</Typography>
+            </Box>
         </>
     )
 
     return (
         <>
             <AppBar menu={menu} />
-            <Grid container width="98vw">
+            <Grid container width="96vw">
                 <Grid item flex={2}>
                     <div className="container" ref={wrapperRef}></div>
                 </Grid>
                 <Grid item flex={1} sx={{ display: { xs: 'none', sm: 'block' } }}>
                     <Grid item direction="column" p={2} minWidth={210}>
-                        <Box height={50} />
                         <Typography variant="h6" sx={{ maxHeight: 40, overflow: 'hidden' }}>{projectData.title}</Typography>
                         <Box sx={{ my: 2, maxWidth: "33vw", bgcolor: 'background.paper' }}>
                             <Tabs
@@ -165,27 +180,16 @@ const TextEditor = () => {
                                 allowScrollButtonsMobile
                                 aria-label="scrollable force tabs example"
                             >
-                                <Tab label="Item One" {...a11yProps(0)} />
-                                <Tab label="Item Two" {...a11yProps(1)} />
-                                <Tab label="Item Three" {...a11yProps(2)} />
-                                <Tab label="Item Four" {...a11yProps(3)} />
-                                <Tab label="Item Three" {...a11yProps(4)} />
+                                {records.map((item, index) => <Tab label={<img width="30px" height="48px" src={item.book.image} alt={item.book.title} />} {...a11yProps(index)} />)}
                             </Tabs>
-                            <TabPanel value={currentTarget} index={0}>
-                                Item One
-                            </TabPanel>
-                            <TabPanel value={currentTarget} index={1}>
-                                Item Two
-                            </TabPanel>
-                            <TabPanel value={currentTarget} index={2}>
-                                Item Three
-                            </TabPanel>
-                            <TabPanel value={currentTarget} index={3}>
-                                Item Four
-                            </TabPanel>
-                            <TabPanel value={currentTarget} index={4}>
-                                Item Five
-                            </TabPanel>
+                            {records.map((item, index) => (
+                                <TabPanel value={currentTarget} index={index}>
+                                    <Typography variant="body2">あなたのメモ</Typography>
+                                    <Box sx={{ borderRadius: 4, boxShadow: 2, p: 2, maxHeight: "50vh" }}>
+                                        {item.memo ? item.memo : "メモがありません"}
+                                    </Box>
+                                </TabPanel>
+                            ))}
                         </Box>
                     </Grid>
                 </Grid>
