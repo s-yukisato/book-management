@@ -12,17 +12,16 @@ import Table from '../components/Table';
 
 import { useAuthContext } from '../context/AuthContext';
 
+import { useRedirect } from '../components/common/useRedirect';
+
 const Account = () => {
     const { user } = useAuthContext();
-    const history = useHistory();
 
-    const handleClick = () => {
-        history.push("/")
-    }
+    const { toHomePage } = useRedirect();
     return (
         <>
             <Button
-                onClick={handleClick}
+                onClick={toHomePage}
                 startIcon={<ArrowBackIcon />}
                 sx={{ position: "fixed", top: "70px", left: "20px" }}
             >

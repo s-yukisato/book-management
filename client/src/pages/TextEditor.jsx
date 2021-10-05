@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { useParams, useHistory } from 'react-router';
+import { useParams } from 'react-router';
 
 import axios from 'axios';
 import Quill from 'quill';
@@ -19,6 +19,9 @@ import SaveIcon from '@mui/icons-material/Save';
 import AppBar from '../components/AppBar2';
 
 import { useFetchRecordContext } from '../context/FetchContext';
+
+import { url } from '../config'
+import { useRedirect } from '../components/common/useRedirect';
 
 
 function TabPanel(props) {
@@ -67,6 +70,8 @@ const TOOLBAR_OPTIONS = [
 const TextEditor = () => {
     const { id: projectId } = useParams();
 
+    const { toProjectsPage } = useRedirect();
+
     const [projectData, setProjectData] = useState({});
     const [load, setLoad] = useState(false);
 
@@ -89,7 +94,6 @@ const TextEditor = () => {
         setCurrentTarget(newValue);
     };
 
-    const history = useHistory();
 
     const [result, setReuslt] = useState();
     const [prevContent, setPrevContent] = useState();
@@ -100,20 +104,18 @@ const TextEditor = () => {
         if (quill == null) return
 
         const loadproject = async () => {
-            await axios.get(`http://localhost:3001/api/v1/project/${projectId}`)
+            await axios.get(`${url}/api/v1/project/${projectId}`)
                 .then(res => {
                     setProjectData(res.data)
                     quill.setContents(res.data.document)
                     quill.enable()
                     setLoad(true);
                 })
-                .catch(err => {
-                    history.replace("/projects")
-                })
+                .catch(err => toProjectsPage())
         }
         loadproject();
 
-    }, [quill, projectId, history])
+    }, [quill, projectId])
 
     const handleSave = async () => {
         if (quill == null) return
@@ -124,7 +126,7 @@ const TextEditor = () => {
         if (prevContent !== contentBody) {
             setReuslt("");
             await axios
-                .put(`http://localhost:3001/api/v1/project/${projectId}`, contents)
+                .put(`${url}/api/v1/project/${projectId}`, contents)
                 .then((res) => setReuslt("保存しました"))
                 .catch((err) => setReuslt("エラーが発生しました"));
 
@@ -171,7 +173,7 @@ const TextEditor = () => {
                 <Grid item flex={1} sx={{ display: { xs: 'none', sm: 'block' } }}>
                     <Grid item direction="column" p={2} minWidth={210}>
                         <Typography variant="h6" sx={{ maxHeight: 40, overflow: 'hidden' }}>{projectData.title}</Typography>
-                        <Box sx={{ my: 2, maxWidth: "33vw", bgcolor: 'background.paper' }}>
+                        <Box sx={{ my: 2, maxWidth: "33vw", bgcolor: '#fafafa', minHeight: "60vh" }}>
                             <Tabs
                                 value={currentTarget}
                                 onChange={handleChange}
