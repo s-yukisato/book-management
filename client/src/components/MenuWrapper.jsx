@@ -7,7 +7,7 @@ const MenuWrapper = ({ menu, mobileMenu, contents }) => {
     return (
         <>
             <AppBar menu={mobileMenu} />
-            <Grid container width="100vw">
+            <Grid container>
                 <Grid
                     container
                     width="200px"
