@@ -17,6 +17,8 @@ import { Title, Author, Isbn } from '../FormParts/Search';
 
 const TopBook = () => {
     const [books, setBooks] = useState([]);
+    const [maxCount, setMaxCount] = useState();
+    const [loading, setLoading] = useState(false);
 
     const [values, setValues] = useState({
         title: "",
@@ -33,6 +35,7 @@ const TopBook = () => {
     const url = "http://localhost:3001/api/data"
 
     const handleClick = async () => {
+        setLoading(true);
         const anchor = document.querySelector('#back-to-top-anchor');
 
         if (anchor) {
@@ -42,22 +45,32 @@ const TopBook = () => {
             });
         }
         const { data } = await axios.post(url, { values, currentPage });
-        setBooks(data);
+        setBooks(data.items);
+        setMaxCount(data.maxCount);
+        setLoading(false);
     }
 
     useEffect(() => {
+        setLoading(true)
         const fetchData = async () => {
             const { data } = await axios.post(url, { values, currentPage });
-            setBooks(data);
+            setBooks(data.items);
+            setMaxCount(data.maxCount);
+            setLoading(false);
         }
         fetchData();
     }, [currentPage]);
 
     useEffect(() => {
+        setLoading(true);
         const fetchData = async () => {
+            console.log('Fetching data')
             const { data } = await axios.get(url);
-            setBooks(data);
+            setBooks(data.items);
+            setMaxCount(data.maxCount);
+            setLoading(false);
         }
+
         fetchData();
     }, [])
 
@@ -72,7 +85,7 @@ const TopBook = () => {
                     width: "200px", minHeight: "100vh"
                 }}
             >
-                <Typography variant="h6">検索バー</Typography>
+                <Typography variant="h6">検索結果 {maxCount}件</Typography>
                 <Box my={2}><Title values={values} setValues={setValues} /></Box>
                 <Box my={2}><Author values={values} setValues={setValues} /></Box>
                 <Box my={2}><Isbn values={values} setValues={setValues} /></Box>
@@ -107,7 +120,12 @@ const TopBook = () => {
             <MenuWrapper
                 menu={SearchForm}
                 mobileMenu={MobileSearch}
-                contents={<BookComponent books={books} currentPage={currentPage} setCurrentPage={setCurrentPage} />} />
+                contents={<BookComponent
+                    books={books}
+                    loading={loading}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                    maxPage={Math.min(100, Math.floor(parseInt(maxCount)/30))} />} />
         </>
     )
 }
