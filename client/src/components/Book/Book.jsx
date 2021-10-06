@@ -1,32 +1,31 @@
-import { useHistory } from 'react-router-dom';
-
 import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
+import Rating from '@mui/material/Rating';
 
 import IconButton from '@mui/material/IconButton';
-import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
 import AddIcon from '@mui/icons-material/Add';
+import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 
 import LightTooltip from '../LightTooltip';
 import { useRegisterContext } from './RegisterContext';
 import { BookCard } from '../UI/BookCard';
 
+import { useRedirect } from '../common/useRedirect';
 
-const Book = ({book}) => {
 
+const Book = ({ book }) => {
     const { registered, handleOpen } = useRegisterContext();
 
-    const history = useHistory();
-    const redirectLibrary = () => {
-        history.push("/library")
-    }
+    const { toLibraryPage } = useRedirect();
+    console.log("book")
 
     return (
         <Grid item>
-            <BookCard>
+            <BookCard sx={{ bgcolor: "transparent", ":hover": { boxShadow: 4 } }}>
                 <CardMedia
                     component="img"
                     image={book.largeImageUrl}
@@ -45,10 +44,17 @@ const Book = ({book}) => {
                     </Typography>
                 </CardContent>
                 <CardActions>
+                    <Box>
+                        <Typography variant="caption">みんなの評価</Typography>
+                        <Rating
+                            value={parseFloat(book.reviewAverage)}
+                            precision={0.1}
+                            readOnly />
+                    </Box>
                     {registered ? (
                         <LightTooltip title="本棚から削除する">
-                            <IconButton onClick={redirectLibrary}>
-                                <PlaylistAddCheckIcon color="info" />
+                            <IconButton onClick={toLibraryPage}>
+                                <BookmarkAddedIcon color="success" />
                             </IconButton>
                         </LightTooltip>
                     ) : (
