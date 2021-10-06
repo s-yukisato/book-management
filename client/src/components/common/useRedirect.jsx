@@ -10,9 +10,9 @@ export const useRedirect = () => {
 
     const toProjectsPage = () => history.push("/projects");
 
-    const toCreateProjectPage = () => history.push("/project/new");
+    const toCreateProjectPage = () => history.push("/projects/new");
 
-    const toProject = (id) => history.replace(`/projects/${id}`);
+    const toProject = (id) => history.replace(`/project/${id}`);
 
     const toThanksPage = () => history.push("/thanks");
 

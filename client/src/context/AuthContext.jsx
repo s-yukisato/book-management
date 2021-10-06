@@ -1,5 +1,6 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import axios from "axios";
+import { API_URI } from '../config'
 
 import Backdrop from "../components/Backdrop";
 
@@ -23,7 +24,7 @@ export function AuthProvider({ children }) {
     useEffect(() => {
         const authenticate = async () => {
 
-            await axios.get("http://localhost:3001/api/v1/user/auth")
+            await axios.get(`${API_URI}/api/v1/user/auth`)
                 .then(response => {
                     const data = response.data
                     if (data.status === 200 || data.status === 201) {
@@ -31,8 +32,7 @@ export function AuthProvider({ children }) {
                     }
                 })
                 .catch(err => setError(err))
-
-            setLoading(false);
+                .finally(() => setLoading(false))
         };
         authenticate();
     }, []);

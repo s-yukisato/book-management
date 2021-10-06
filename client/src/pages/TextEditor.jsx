@@ -20,7 +20,7 @@ import AppBar from '../components/AppBar2';
 
 import { useFetchRecordContext } from '../context/FetchContext';
 
-import { url } from '../config'
+import { API_URI } from '../config'
 import { useRedirect } from '../components/common/useRedirect';
 
 
@@ -104,7 +104,7 @@ const TextEditor = () => {
         if (quill == null) return
 
         const loadproject = async () => {
-            await axios.get(`${url}/api/v1/project/${projectId}`)
+            await axios.get(`${API_URI}/api/v1/project/${projectId}`)
                 .then(res => {
                     setProjectData(res.data)
                     quill.setContents(res.data.document)
@@ -126,7 +126,7 @@ const TextEditor = () => {
         if (prevContent !== contentBody) {
             setReuslt("");
             await axios
-                .put(`${url}/api/v1/project/${projectId}`, contents)
+                .put(`${API_URI}/api/v1/project/${projectId}`, contents)
                 .then((res) => setReuslt("保存しました"))
                 .catch((err) => setReuslt("エラーが発生しました"));
 

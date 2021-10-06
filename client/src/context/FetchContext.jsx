@@ -1,5 +1,6 @@
 import { createContext, useEffect, useContext, useReducer } from "react";
 import axios from 'axios';
+import { API_URI } from '../config';
 
 
 const initialState = {
@@ -45,7 +46,7 @@ export const FetchRecordProvider = ({ children }) => {
     useEffect(() => {
         console.log('fetch')
         axios
-            .get('http://localhost:3001/api/v1/record')
+            .get(`${API_URI}/api/v1/record`)
             .then(res => {
                 dispatch({ type: 'FETCH_SUCCESS', payload: res.data })
             })
@@ -70,7 +71,7 @@ export const FetchProjectProvider = ({ children }) => {
     useEffect(() => {
         console.log('fetch')
         axios
-            .get('http://localhost:3001/api/v1/project')
+            .get(`${API_URI}/api/v1/project`)
             .then(res => {
                 dispatch({ type: 'FETCH_SUCCESS', payload: res.data })
             })

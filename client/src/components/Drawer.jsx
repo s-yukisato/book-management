@@ -21,19 +21,15 @@ const DrawerComponent = ({ state, toggleDrawer }) => {
   );
 
   return (
-    <div>
-      {
-        <>
-          <Drawer
-            anchor='left'
-            open={state}
-            onClose={toggleDrawer(false)}
-          >
-            {list()}
-          </Drawer>
-        </>
-      }
-    </div>
+    <>
+      <Drawer
+        anchor='top'
+        open={state}
+        onClose={toggleDrawer(false)}
+      >
+        {list()}
+      </Drawer>
+    </>
   );
 };
 
