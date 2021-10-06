@@ -9,7 +9,7 @@ import Toolbar from '@mui/material/Toolbar';
 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
-import Stepper from '../components/Stepper';
+import Stepper from '../components/CreateProject/Stepper';
 
 import { formatDate } from '../hooks/useDate';
 
@@ -36,6 +36,7 @@ const NewProject = () => {
             _id: id,
             title: values.goal,
             document: '',
+            status: "uncompleted",
             books: values.books,
             deadline: values.deadline
         }
