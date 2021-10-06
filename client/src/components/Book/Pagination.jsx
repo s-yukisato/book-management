@@ -20,7 +20,12 @@ export default function PaginationControlled({ currentPage, setCurrentPage, maxP
   return (
     <Stack spacing={2} p={2}>
       <Typography>Page: {currentPage}</Typography>
-      <Pagination count={maxPage} page={currentPage} variant="outlined" color="secondary" onChange={handleChange} />
+      <Pagination
+        count={maxPage}
+        page={currentPage}
+        variant="outlined"
+        color="secondary"
+        onChange={handleChange} />
     </Stack>
   );
 }

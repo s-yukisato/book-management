@@ -102,7 +102,7 @@ export function RegisterProvider({ props, children }) {
         }
     }
 
-    const title = "登録フォーム"
+    const title = book.title;
 
     const content = (
         <Box sx={{ mt: 3 }}>
