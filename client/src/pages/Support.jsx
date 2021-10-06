@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import axios from 'axios'
 
 import Typography from '@mui/material/Typography';
@@ -17,7 +16,9 @@ import AppBar from '../components/AppBar2';
 import Footer from '../components/Footer';
 import Navi from '../components/Navi';
 
-import { ReactComponent as QuestionLogo } from '../assets/undraw_Questions_re_1fy7.svg'
+import { ReactComponent as QuestionLogo } from '../assets/undraw_Questions_re_1fy7.svg';
+
+import { useRedirect } from '../components/common/useRedirect';
 
 const Support = () => {
     const [values, setValues] = useState({
@@ -26,7 +27,7 @@ const Support = () => {
         contents: '',
     });
 
-    const history = useHistory();
+    const { toThanksPage } = useRedirect();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -34,7 +35,7 @@ const Support = () => {
         await axios.post(url, values)
             .then(response => console.log(response))
             .catch(err => console.error(err))
-        history.push("/thanks")
+            .finally(() => toThanksPage());
     };
 
     return (
@@ -96,10 +97,7 @@ const Support = () => {
                 </Grid>
             </Grid>
 
-
-            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                <Footer />
-            </Box>
+            <Footer />
         </>
     )
 }
