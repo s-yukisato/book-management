@@ -76,19 +76,20 @@ const listItems = [
 
 
 const Footer = React.memo(() => {
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(listItems.map((item) => ({ [item.title]: false })))
 
     console.log("rendereee")
 
-    const handleClick = () => {
-        setOpen(!open);
+    const handleClick = (prop) => (e) => {
+        console.log(open[prop])
+        setOpen({ ...open, [prop]: !open[prop] });
     };
     return (
         <>
             <Grid
                 container
                 justifyContent="center"
-                sx={{ bgcolor: '#939597', p:2 }}
+                sx={{ bgcolor: 'rgba(147, 149, 151, 0.8)', p: 2 }}
             >
                 <CGrid>
                     <img src={Logo} width="200px" height="200px" alt="Logo" />
@@ -96,7 +97,7 @@ const Footer = React.memo(() => {
 
                 {listItems.map(listItem => (
                     <CGrid>
-                        <List sx={{ display: { xs: "none", sm: 'inline-block'} }}>
+                        <List sx={{ display: { xs: "none", sm: 'inline-block' } }}>
                             <ListItem key={listItem.title}>
                                 <Typography variant="h6">
                                     {listItem.title}
@@ -105,7 +106,7 @@ const Footer = React.memo(() => {
                             {listItem.contents.map(item => (
                                 item.link ? (
                                     <ListItemButton component={RouterLink} to={item.link} key={item.title}>
-                                        <ListItemText primary={item.title} />
+                                        <ListItemText size={8} primary={item.title} />
                                     </ListItemButton>
                                 ) : (
                                     <ListItemButton target="_blank" component={'a'} href={item.url} key={item.title}>
@@ -123,20 +124,20 @@ const Footer = React.memo(() => {
                 >
                     {listItems.map(listItem => (
                         <>
-                            <ListItemButton onClick={handleClick}>
+                            <ListItemButton onClick={handleClick(listItem.title)}>
                                 <ListItemText primary={listItem.title} />
-                                {open ? <ExpandLess /> : <ExpandMore />}
+                                {open[listItem.title] ? <ExpandLess /> : <ExpandMore />}
                             </ListItemButton>
 
-                            <Collapse in={open} timeout="auto" unmountOnExit>
+                            <Collapse in={open[listItem.title]} timeout="auto" unmountOnExit>
                                 {listItem.contents.map(item => (
                                     item.link ? (
                                         <ListItemButton component={RouterLink} to={item.link} key={item.title}>
-                                            <ListItemText primary={item.title} />
+                                            <ListItemText pl={4} primary={item.title} />
                                         </ListItemButton>
                                     ) : (
                                         <ListItemButton target="_blank" component={'a'} href={item.url} key={item.title}>
-                                            <ListItemText primary={item.title} />
+                                            <ListItemText pl={4} primary={item.title} />
                                         </ListItemButton>
                                     )
                                 ))}
@@ -144,9 +145,7 @@ const Footer = React.memo(() => {
                         </>
                     ))}
                 </List>
-                <Grid item width="100vw">
-                    <Copyright m={2} />
-                </Grid>
+                <Copyright m={2} />
             </Grid>
         </>
     )
