@@ -2,6 +2,8 @@ import { useState } from 'react';
 
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import Badge from '@mui/material/Badge';
+import { styled } from '@mui/material/styles';
 
 import ViewListIcon from '@mui/icons-material/ViewList';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
@@ -10,6 +12,15 @@ import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 
 import MenuWrapper from '../MenuWrapper';
 import RecordComponent from './RecordComponent';
+
+const StyledBadge = styled(Badge)(({ theme }) => ({
+    '& .MuiBadge-badge': {
+        right: -5,
+        top: 13,
+        border: `2px solid ${theme.palette.background.paper}`,
+        padding: '0 4px',
+    },
+}));
 
 
 const list = [
@@ -37,10 +48,11 @@ const list = [
 
 const TopRecord = () => {
     const [state, setState] = useState("all");
+    const [stateCount, setStateCount] = useState(list.map((item) => ({ [item.state]: 0 })));
 
-    const handleChange = (e, value) => {
-        setState(value);
-    }
+    const handleChange = (e, value) => setState(value);
+
+    console.log(stateCount)
 
     const MenuTabs = (
         <Tabs
@@ -49,7 +61,7 @@ const TopRecord = () => {
             onChange={handleChange}
             sx={{
                 borderRight: 1, borderColor: 'divider',
-                position: "fixed", top: 70, left: 5, right: 5,
+                position: "fixed", top: 70, left: 5,
                 width: 180, minHeight: "100vh",
             }}
         >
@@ -57,8 +69,13 @@ const TopRecord = () => {
                 <Tab
                     key={item.name}
                     value={item.state}
-                    icon={item.icon}
+                    icon={
+                        <StyledBadge badgeContent={stateCount[item.state]} color="secondary">
+                            {item.icon}
+                        </StyledBadge>
+                    }
                     label={item.name}
+                    disabled={stateCount[item.state] === 0}
                     sx={{ display: 'flex', flexDirection: "row", justifyContent: 'space-between' }} />
             ))}
         </Tabs>
@@ -75,7 +92,12 @@ const TopRecord = () => {
                     <Tab
                         key={item.name}
                         value={item.state}
-                        icon={item.icon}
+                        icon={
+                            <StyledBadge badgeContent={stateCount[item.state]} color="secondary">
+                                {item.icon}
+                            </StyledBadge>
+                        }
+                        disabled={stateCount[item.state] === 0}
                         label={item.name}
                         sx={{
                             fontSize: "5px", color: "white",
@@ -91,7 +113,7 @@ const TopRecord = () => {
         <MenuWrapper
             menu={MenuTabs}
             mobileMenu={MobileMenuTabs}
-            contents={<RecordComponent state={state} />} />
+            contents={<RecordComponent state={state} setStateCount={setStateCount} />} />
     )
 }
 

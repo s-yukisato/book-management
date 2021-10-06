@@ -6,42 +6,26 @@ import BackToTop from '../BackToTop';
 
 import { useFetchRecordContext } from '../../context/FetchContext';
 
-const RecordComponent = ({ state }) => {
+const RecordComponent = ({ state, setStateCount }) => {
     const { dataState } = useFetchRecordContext();
 
     const [records, setRecords] = useState([]);
 
     const [filteredRecords, setFilteredRecords] = useState([]);
 
-
-    const filterHandler = () => {
-        switch (state) {
-            case "wanted":
-                setFilteredRecords(records.filter((record) => record.status === "wanted"));
-                break;
-            case "reading":
-                setFilteredRecords(records.filter((record) => record.status === "reading"));
-                break;
-            case "read":
-                setFilteredRecords(records.filter((record) => record.status === "read"));
-                break;
-            default:
-                setFilteredRecords(records);
-                break;
-        }
-    };
-
     useEffect(() => {
-        console.log('Year!')
         setRecords(dataState.data)
-        console.log(dataState.data)
     }, [dataState])
 
     useEffect(() => {
-        console.log("filter")
-        filterHandler()
-        console.log(state)
-    }, [records, state])
+        if (state === "all") setFilteredRecords(records);
+        else setFilteredRecords(records.filter((record) => record.status === state));
+
+        const lenWanted = records.filter((record) => record.status === "wanted").length;
+        const lenReading = records.filter((record) => record.status === "reading").length;
+        const lenRead = records.filter((record) => record.status === "read").length;
+        setStateCount({ all: records.length, read: lenRead, reading: lenReading, wanted: lenWanted });
+    }, [state, records, setStateCount])
 
     return (
         <>

@@ -2,6 +2,8 @@ import { useState } from 'react';
 
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import Badge from '@mui/material/Badge';
+import { styled } from '@mui/material/styles';
 
 import AppsIcon from '@mui/icons-material/Apps';
 import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList';
@@ -9,6 +11,16 @@ import FactCheckIcon from '@mui/icons-material/FactCheck';
 
 import MenuWrapper from '../MenuWrapper';
 import ProjectComponent from './ProjectComponent';
+
+
+const StyledBadge = styled(Badge)(({ theme }) => ({
+    '& .MuiBadge-badge': {
+        right: -5,
+        top: 13,
+        border: `2px solid ${theme.palette.background.paper}`,
+        padding: '0 4px',
+    },
+}));
 
 
 const list = [
@@ -31,6 +43,7 @@ const list = [
 
 const TopProject = () => {
     const [state, setState] = useState("all");
+    const [stateCount, setStateCount] = useState(list.map((item) => ({ [item.state]: 0 })));
 
     const handleChange = (e, value) => {
         setState(value);
@@ -43,7 +56,7 @@ const TopProject = () => {
             onChange={handleChange}
             sx={{
                 borderRight: 1, borderColor: 'divider',
-                position: "fixed", top: 70, left: 5, right: 5,
+                position: "fixed", top: 70, left: 5,
                 width: 180, minHeight: "100vh",
             }}
         >
@@ -51,7 +64,12 @@ const TopProject = () => {
                 <Tab
                     key={item.name}
                     value={item.state}
-                    icon={item.icon}
+                    icon={
+                        <StyledBadge badgeContent={stateCount[item.state]} color="secondary">
+                            {item.icon}
+                        </StyledBadge>
+                    }
+                    disabled={stateCount[item.state] === 0}
                     label={item.name}
                     sx={{ display: 'flex', flexDirection: "row", justifyContent: 'space-between' }} />
             ))}
@@ -70,7 +88,12 @@ const TopProject = () => {
                     <Tab
                         key={item.name}
                         value={item.state}
-                        icon={item.icon}
+                        icon={
+                            <StyledBadge badgeContent={stateCount[item.state]} color="secondary">
+                                {item.icon}
+                            </StyledBadge>
+                        }
+                        disabled={stateCount[item.state] === 0}
                         label={item.name}
                         sx={{
                             minWidth: 0,
@@ -90,7 +113,7 @@ const TopProject = () => {
         <MenuWrapper
             menu={MenuTabs}
             mobileMenu={MobileMenuTabs}
-            contents={<ProjectComponent state={state} />} />
+            contents={<ProjectComponent state={state} setStateCount={setStateCount} />} />
     )
 }
 
