@@ -14,6 +14,8 @@ import { Search, SearchIconWrapper, StyledInputBase } from '../UI/SearchBar'
 
 import { Title, Author, Isbn } from '../FormParts/Search';
 
+import Copyright from '../Copyright'
+
 
 const TopBook = () => {
     const [books, setBooks] = useState([]);
@@ -79,13 +81,13 @@ const TopBook = () => {
         <>
             <Box
                 sx={{
-                    my: 2, pl: 3,
+                    my: 2, px: 2,
                     borderRight: 1, borderColor: 'divider',
-                    position: "fixed", top: 70, left: 5, right: 5,
-                    width: "200px", minHeight: "100vh"
+                    position: "fixed", top: 70, left: 5,
+                    width: "200px", minHeight: "70vh"
                 }}
             >
-                <Typography variant="h6">検索結果 {maxCount}件</Typography>
+                <Typography variant="h6" my={2}>ヒット {maxCount}件</Typography>
                 <Box my={2}><Title values={values} setValues={setValues} /></Box>
                 <Box my={2}><Author values={values} setValues={setValues} /></Box>
                 <Box my={2}><Isbn values={values} setValues={setValues} /></Box>
@@ -125,7 +127,8 @@ const TopBook = () => {
                     loading={loading}
                     currentPage={currentPage}
                     setCurrentPage={setCurrentPage}
-                    maxPage={Math.min(100, Math.floor(parseInt(maxCount)/30))} />} />
+                    maxPage={Math.min(100, Math.floor(parseInt(maxCount) / 30))} />} />
+            <Copyright sx={{ p: 2, bgcolor: '#E3CDC1' }} />
         </>
     )
 }
