@@ -1,3 +1,5 @@
+import React from 'react';
+
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import CardActions from '@mui/material/CardActions';
@@ -11,17 +13,18 @@ import AddIcon from '@mui/icons-material/Add';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 
 import LightTooltip from '../LightTooltip';
-import { useRegisterContext } from './RegisterContext';
 import { BookCard } from '../UI/BookCard';
 
 import { useRedirect } from '../common/useRedirect';
 
 
-const Book = ({ book }) => {
-    const { registered, handleOpen } = useRegisterContext();
+const Book = React.memo(({ book, registered, index, setTargetIndex }) => {
 
     const { toLibraryPage } = useRedirect();
-    console.log("book")
+
+    const openDialog = () => {
+        setTargetIndex(index)
+    }
 
     return (
         <Grid item>
@@ -59,7 +62,7 @@ const Book = ({ book }) => {
                         </LightTooltip>
                     ) : (
                         <LightTooltip title="本棚に登録する">
-                            <IconButton onClick={handleOpen}>
+                            <IconButton onClick={openDialog}>
                                 <AddIcon color="primary" />
                             </IconButton>
                         </LightTooltip>
@@ -68,7 +71,6 @@ const Book = ({ book }) => {
             </BookCard>
         </Grid>
     )
-
-}
+})
 
 export default Book;
