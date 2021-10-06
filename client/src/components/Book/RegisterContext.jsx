@@ -17,7 +17,9 @@ import {
     Status,
     RatingPart as Rating,
     Page
-} from '../FormParts/Register';
+} from '../FormParts/Record';
+
+import { useSnackbar } from '../common/useSnackbar'
 
 
 const RegisterContext = createContext();
@@ -44,17 +46,20 @@ export function RegisterProvider({ props, children }) {
     const { book, registeredList } = props;
     const [registered, setRegistered] = useState(registeredList.includes(book.isbn));
 
-
     const [error, setError] = useState(null);
 
-    const bookValues = {
-        _id: book.isbn,
-        title: book.title,
-        author: book.author,
-        publisher: book.publisherName,
-        price: book.itemPrice,
-        image: book.largeImageUrl
-    };
+    
+    const snackbar = useSnackbar();
+    const Snackbar = snackbar.component
+
+    // const bookValues = {
+    //     _id: book.isbn,
+    //     title: book.title,
+    //     author: book.author,
+    //     publisher: book.publisherName,
+    //     price: book.itemPrice,
+    //     image: book.largeImageUrl
+    // };
 
     const [values, setValues] = useState({
         memo: '',
@@ -64,7 +69,7 @@ export function RegisterProvider({ props, children }) {
         book: {
             isbn: book.isbn,
             title: book.title,
-            image: book.largeImageUrl
+            image: book.largeImageUrl,
         }
     });
 
@@ -76,16 +81,16 @@ export function RegisterProvider({ props, children }) {
             return setError("これは登録対象外です")
         }
         setError(null);
-        console.log("regiser1")
-        await axios.post(`${url}/book`, bookValues)
-            .then(res => res.json())
-            .catch(err => setError(err.message))
-        console.log("regiser2")
-        if (error) return;
+
+        // await axios.post(`${url}/book`, bookValues)
+        //     .then(res => res.json())
+        //     .catch(err => setError(err.message))
+
+        // if (error) return;
         await axios.post(`${url}/record`, values)
             .then(res => res.json())
             .catch(err => setError(err.message))
-        console.log("regiser2")
+
         if (error) {
             return setError("登録に失敗しました")
         }
@@ -93,6 +98,7 @@ export function RegisterProvider({ props, children }) {
         if (!error) {
             setOpen(false);
             setRegistered(true);
+            snackbar.open();
         }
     }
 
@@ -103,7 +109,8 @@ export function RegisterProvider({ props, children }) {
             <Grid container spacing={2}>
                 <Grid item xs={12}><Memo values={values} setValues={setValues} /></Grid>
                 <Grid item xs={12}><Status values={values} setValues={setValues} /></Grid>
-                <Grid item xs={12}><Page values={values} setValues={setValues} /></Grid>
+                <Grid item xs={12} sm={6}><Page values={values} setValues={setValues} /></Grid>
+                {/* <Grid item xs={12} sm={6}><Page values={values} setValues={setValues} /></Grid> */}
                 <Grid item xs={12}><Rating values={values} setValues={setValues} /></Grid>
             </Grid>
             <Typography color="error" sx={{ textAlign: 'center', mt: 2 }}>{error}</Typography>
@@ -120,7 +127,6 @@ export function RegisterProvider({ props, children }) {
     const value = {
         registered,
         handleOpen,
-
     }
 
     return (
@@ -138,6 +144,7 @@ export function RegisterProvider({ props, children }) {
                 <Divider />
                 <DialogActions>{actions}</DialogActions>
             </Dialog>
+            <Snackbar message="本棚に登録しました" />
         </RegisterContext.Provider>
     )
 }
