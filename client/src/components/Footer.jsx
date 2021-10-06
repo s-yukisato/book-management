@@ -124,7 +124,7 @@ const Footer = React.memo(() => {
                 >
                     {listItems.map(listItem => (
                         <>
-                            <ListItemButton onClick={handleClick(listItem.title)}>
+                            <ListItemButton onClick={handleClick(listItem.title)} sx={{ borderBottom: '1px solid' }}>
                                 <ListItemText primary={listItem.title} />
                                 {open[listItem.title] ? <ExpandLess /> : <ExpandMore />}
                             </ListItemButton>
@@ -132,12 +132,12 @@ const Footer = React.memo(() => {
                             <Collapse in={open[listItem.title]} timeout="auto" unmountOnExit>
                                 {listItem.contents.map(item => (
                                     item.link ? (
-                                        <ListItemButton component={RouterLink} to={item.link} key={item.title}>
-                                            <ListItemText pl={4} primary={item.title} />
+                                        <ListItemButton component={RouterLink} to={item.link} key={item.title} sx={{ pl: 4 }} >
+                                            <ListItemText primary={item.title} />
                                         </ListItemButton>
                                     ) : (
-                                        <ListItemButton target="_blank" component={'a'} href={item.url} key={item.title}>
-                                            <ListItemText pl={4} primary={item.title} />
+                                        <ListItemButton target="_blank" component={'a'} href={item.url} key={item.title} sx={{ pl: 4 }}>
+                                            <ListItemText primary={item.title} />
                                         </ListItemButton>
                                     )
                                 ))}
