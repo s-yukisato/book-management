@@ -15,7 +15,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import UserName from '../components/FormParts/UserName';
 import Email from '../components/FormParts/Email';
 import Password from '../components/FormParts/Password';
-import Copyright from '../components/Copyright';
+import Copyright from '../components/block/Copyright';
 
 import { useLogin } from '../hooks/useLogin'
 

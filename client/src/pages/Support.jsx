@@ -1,24 +1,24 @@
 import { useState } from 'react';
-import axios from 'axios'
+import axios from 'axios';
 
-import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+import Fab from '@mui/material/Fab';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
 
 import Email from '../components/FormParts/Email';
 import UserName from '../components/FormParts/UserName';
 import Contents from '../components/FormParts/Contents';
 
-import Fab from '@mui/material/Fab';
 import SendIcon from '@mui/icons-material/Send';
 
-import AppBar from '../components/AppBar2';
-import Footer from '../components/Footer';
+import Header from '../components/container/Header';
+import Footer from '../components/container/Footer';
 import Navi from '../components/Navi';
 
 import { ReactComponent as QuestionLogo } from '../assets/undraw_Questions_re_1fy7.svg';
 
-import { useRedirect } from '../components/common/useRedirect';
+import { useRedirect } from '../hooks/useRedirect';
 
 const Support = () => {
     const [values, setValues] = useState({
@@ -40,7 +40,7 @@ const Support = () => {
 
     return (
         <>
-            <AppBar />
+            <Header />
             <Grid container>
                 <Grid
                     container
@@ -96,7 +96,6 @@ const Support = () => {
                     </Grid>
                 </Grid>
             </Grid>
-
             <Footer />
         </>
     )
