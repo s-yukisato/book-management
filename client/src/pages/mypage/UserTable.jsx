@@ -22,7 +22,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     },
 }));
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
+const StyledTableRow = styled(TableRow)({
     '&:nth-of-type(odd)': {
         backgroundColor: "rgba(255, 235, 201, 0.6)",
     },
@@ -32,7 +32,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     '&:last-child td, &:last-child th': {
         border: 0,
     },
-}));
+});
 
 
 function createData(id, attributes, action) {
@@ -53,36 +53,32 @@ const rows = [
 
 
 export default function Tables({ user, handleClick }) {
-
-
     return (
-        <>
-            <TableContainer component={Paper}>
-                <Table sx={{ width: { xs: "90vw", sm: '80vw' } }} aria-label="customized table">
-                    <TableHead>
-                        <TableRow>
-                            {header.map(item => <StyledTableCell>{item}</StyledTableCell>)}
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {rows.map(row => (
-                            <StyledTableRow key={row.attributes}>
-                                <StyledTableCell>
-                                    {row.attributes}
-                                </StyledTableCell>
-                                <StyledTableCell align="left">
-                                    {user && user[row.id]}
-                                </StyledTableCell>
-                                <StyledTableCell align="left">
-                                    <Button variant="outlined" color="inherit" onClick={handleClick(row.id)} startIcon={<EditIcon />}>
-                                        <Typography sx={{ display: { xs: 'none', sm: 'block' } }}>{row.action}</Typography>
-                                    </Button>
-                                </StyledTableCell>
-                            </StyledTableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-        </>
+        <TableContainer component={Paper} sx={{ display: 'flex', justifyContent: 'center', width: "auto" }}>
+            <Table sx={{ width: { xs: "90vw", sm: '80vw' } }} aria-label="customized table">
+                <TableHead>
+                    <TableRow>
+                        {header.map(item => <StyledTableCell>{item}</StyledTableCell>)}
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {rows.map(row => (
+                        <StyledTableRow key={row.attributes}>
+                            <StyledTableCell>
+                                {row.attributes}
+                            </StyledTableCell>
+                            <StyledTableCell align="left">
+                                {user && user[row.id]}
+                            </StyledTableCell>
+                            <StyledTableCell align="left">
+                                <Button variant="outlined" color="inherit" onClick={handleClick(row.id)} startIcon={<EditIcon />}>
+                                    <Typography sx={{ display: { xs: 'none', sm: 'block' } }}>{row.action}</Typography>
+                                </Button>
+                            </StyledTableCell>
+                        </StyledTableRow>
+                    ))}
+                </TableBody>
+            </Table>
+        </TableContainer>
     );
 };

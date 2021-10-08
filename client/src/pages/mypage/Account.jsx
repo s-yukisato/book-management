@@ -107,7 +107,9 @@ const Account = () => {
                 </Avatar>
                 <Typography variant="h6">ようこそ {user.name} !</Typography>
             </Box>
-            <Table user={user} handleClick={handleClick} />
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                <Table user={user} handleClick={handleClick} />
+            </Box>
             <Dialog isOpen={openDialog} close={closeDialog} title={title} content={content} action={action} />
             <Snackbar isOpen={openSnackbar} setIsOpen={setOpenSnackbar} message={`${target}を変更しました`} />
         </>
