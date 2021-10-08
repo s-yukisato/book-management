@@ -3,6 +3,7 @@ import Typography from '@mui/material/Typography';
 
 import { ReactComponent as VoidLogo } from '../../assets/undraw_void_3ggu.svg';
 
+
 const NoBook = () => {
     return (
         <Grid

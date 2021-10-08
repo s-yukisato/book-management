@@ -1,11 +1,12 @@
-import Typography from '@mui/material/Typography';
-import Pagination from '@mui/material/Pagination';
+import MuiPagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 
-export default function PaginationControlled({ currentPage, setCurrentPage, maxPage }) {
-  const handleChange = (event, value) => {
+
+const Pagination = ({ currentPage, setCurrentPage, maxPage }) => {
+  const handleChange = (e, value) => {
     setCurrentPage(parseInt(value));
-    const anchor = (event.target.ownerDocument || document).querySelector(
+    const anchor = (e.target.ownerDocument || document).querySelector(
       '#back-to-top-anchor',
     );
 
@@ -20,7 +21,7 @@ export default function PaginationControlled({ currentPage, setCurrentPage, maxP
   return (
     <Stack spacing={2} p={2}>
       <Typography>Page: {currentPage}</Typography>
-      <Pagination
+      <MuiPagination
         count={maxPage}
         page={currentPage}
         variant="outlined"
@@ -28,4 +29,6 @@ export default function PaginationControlled({ currentPage, setCurrentPage, maxP
         onChange={handleChange} />
     </Stack>
   );
-}
+};
+
+export default Pagination;

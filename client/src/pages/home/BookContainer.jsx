@@ -8,8 +8,7 @@ import NoBook from './NoBook';
 
 import Pagination from './Pagination';
 
-const BookComponent = React.memo(({ books, loading, currentPage, setCurrentPage, maxPage }) => {
-
+const Container = React.memo(({ books, loading, currentPage, setCurrentPage, maxPage }) => {
     return (
         <>
             {!loading ? (
@@ -41,11 +40,11 @@ const BookComponent = React.memo(({ books, loading, currentPage, setCurrentPage,
                     }}
                 >
                     {Array.from(new Array(30)).map(index => (
-                        <LoadingBook />
+                        <LoadingBook key={index} />
                     ))}
                 </Grid>)}
         </>
     )
 })
 
-export default BookComponent;
+export default Container;

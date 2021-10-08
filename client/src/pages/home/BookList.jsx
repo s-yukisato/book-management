@@ -1,103 +1,95 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { API_URI } from "../../config";
 
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import Divider from '@mui/material/Divider';
-import Grid from '@mui/material/Grid'
-import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Zoom from '@mui/material/Zoom';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
 
 import {
     Memo,
     Status,
     RatingPart as Rating,
     Page
-} from '../FormParts/Record';
-
-import { useSnackbar } from '../common/useSnackbar'
+} from '../../components/FormParts/Record';
+import Dialog from '../../components/block/Dialog';
+import Snackbar from '../../components/block/Snackbar';
 
 import Book from "./Book";
 
 import { useFetchRecordContext } from '../../context/FetchContext';
 
 
-const Transition = React.forwardRef(function Transition(props, ref) {
-    return <Zoom ref={ref} {...props} />;
-});
-
-
-const url = `http://localhost:3001/api/v1`
+const initalState = {
+    memo: '',
+    status: 'reading',
+    rating: 3,
+    page: '0',
+    book: {
+        isbn: "",
+        title: "",
+        image: "",
+        pages: 300,
+    }
+}
 
 const BookList = ({ books }) => {
-    console.log("boook list")
-
     const { dataState } = useFetchRecordContext();
-    const records = dataState.data
-
+    const records = dataState.data;
     // 登録済みの書籍をRecordから探す
     const registeredList = records.length > 0 ? records.map((record) => record.book.isbn) : [];
 
-
-    // ダイアログ用
-    const [open, setOpen] = useState(false);
-
-    const [targetIndex, setTargetIndex] = useState(null);
-
-    const [values, setValues] = useState({
-        memo: '',
-        status: 'reading',
-        rating: 3,
-        page: '0',
-        book: {
-            isbn: "",
-            title: "",
-            image: "",
-        }
-    });
-
-    useEffect(() => {
-        console.log(targetIndex)
-        if (targetIndex == null) return;
-        setValues({ ...values, book: {
-            isbn: books[targetIndex].isbn,
-            title: books[targetIndex].title,
-            image: books[targetIndex].largeImageUrl
-        }})
-        setOpen(true);
-    }, [targetIndex])
-
-
-    const handleClose = () => setOpen(false);
+    const [openDialog, setOpenDialog] = useState(false);
+    
+    const [openSnackbar, setOpenSnackbar] = useState(false);
 
     const [error, setError] = useState(null);
 
+    const [targetIndex, setTargetIndex] = useState(null);
 
-    const snackbar = useSnackbar();
-    const Snackbar = snackbar.component
+    // Recordに登録するデータ内容
+    const [values, setValues] = useState(initalState);
+
+    useEffect(() => {
+        // 初回にダイアログが開かないように
+        if (targetIndex == null) return;
+        
+        // 選択された書籍のデータをbooks配列から参照
+        setValues({
+            ...values, book: {
+                isbn: books[targetIndex].isbn,
+                title: books[targetIndex].title,
+                image: books[targetIndex].largeImageUrl,
+                pages: 300
+            }
+        })
+        setOpenDialog(true);
+    }, [targetIndex]);
+
+    const closeDialog = () => {
+        setOpenDialog(false);
+        setTargetIndex(null);
+    };
 
     const register = async (e) => {
         e.preventDefault();
+        // 書籍ではないものは登録できないようにする
         if (values.book.isbn === "") {
             return setError("これは登録対象外です")
         }
         setError(null);
 
-        await axios.post(`${url}/record`, values)
-            .then(res => res.json())
+        await axios.post(`${API_URI}/api/v1/record`, values)
+            .then(res => res)
             .catch(err => setError(err.message))
 
-        if (error) {
-            return setError("登録に失敗しました")
-        }
+        if (error) return setError("登録に失敗しました")
 
         if (!error) {
-            setOpen(false);
-            snackbar.open();
+            setOpenDialog(false);
+            setOpenSnackbar(true);
+            setValues(initalState);
         }
     }
 
@@ -116,9 +108,9 @@ const BookList = ({ books }) => {
         </Box>
     )
 
-    const actions = (
+    const action = (
         <>
-            <Button onClick={handleClose}>閉じる</Button>
+            <Button onClick={closeDialog}>閉じる</Button>
             <Button type="submit" onClick={register}>登録する</Button>
         </>
     )
@@ -150,19 +142,8 @@ const BookList = ({ books }) => {
                     <Book key={book.isbn} registered={registeredList.includes(book.isbn)} index={index} setTargetIndex={setTargetIndex} book={book} />
                 ))}
             </Grid>
-            <Dialog
-                open={open}
-                TransitionComponent={Transition}
-                keepMounted
-                onClose={handleClose}
-            >
-                <DialogTitle>{title}</DialogTitle>
-                <Divider />
-                <DialogContent>{content}</DialogContent>
-                <Divider />
-                <DialogActions>{actions}</DialogActions>
-            </Dialog>
-            <Snackbar message="本棚に登録しました" />
+            <Dialog isOpen={openDialog} close={closeDialog} title={title} content={content} action={action} />
+            <Snackbar isOpen={openSnackbar} setIsOpen={setOpenSnackbar} message="本棚に登録しました" />
         </>
     )
 }

@@ -1,30 +1,27 @@
 import React from 'react';
 
-import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-import Rating from '@mui/material/Rating';
-
 import IconButton from '@mui/material/IconButton';
+import Grid from '@mui/material/Grid';
+import Rating from '@mui/material/Rating';
+import Typography from '@mui/material/Typography';
+
 import AddIcon from '@mui/icons-material/Add';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 
-import LightTooltip from '../LightTooltip';
-import { BookCard } from '../UI/BookCard';
+import LightTooltip from '../../components/block/LightTooltip';
+import { BookCard } from '../../components/UI/BookCard';
 
-import { useRedirect } from '../common/useRedirect';
+import { useRedirect } from '../../hooks/useRedirect';
 
 
 const Book = React.memo(({ book, registered, index, setTargetIndex }) => {
-
     const { toLibraryPage } = useRedirect();
 
-    const openDialog = () => {
-        setTargetIndex(index)
-    }
+    const openDialog = () => setTargetIndex(index);
 
     return (
         <Grid item>
@@ -33,16 +30,9 @@ const Book = React.memo(({ book, registered, index, setTargetIndex }) => {
                     component="img"
                     image={book.largeImageUrl}
                     alt="No image"
-                    sx={{
-                        width: 97,
-                        height: 130
-                    }}
-                />
+                    sx={{ width: 97, height: 130 }} />
                 <CardContent>
-                    <Typography variant="body2" component="div" sx={{
-                        height: 40,
-                        overflow: 'hidden'
-                    }}>
+                    <Typography variant="body2" component="div" sx={{ height: 40, overflow: 'hidden' }}>
                         {book ? book.title : "Not found"}
                     </Typography>
                 </CardContent>
