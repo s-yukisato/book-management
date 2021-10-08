@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 
 import RecordList from './RecordList';
 import NoRecord from './NoRecord';
+import Backdrop from "../../components/block/Backdrop";
 import BackToTop from '../../components/block/BackToTop';
 
 import { useFetchRecordContext } from '../../context/FetchContext';
@@ -30,13 +31,14 @@ const RecordComponent = ({ state, setStateCount }) => {
 
     return (
         <>
-            {filteredRecords.length > 0 ? (
-                <RecordList
-                    records={records}
-                    setRecords={setRecords}
-                    filteredRecords={filteredRecords}
-                />
-            ) : <NoRecord />}
+            {dataState.isLoading ? <Backdrop open={dataState.isLoading} />
+                : filteredRecords.length > 0 ? (
+                    <RecordList
+                        records={records}
+                        setRecords={setRecords}
+                        filteredRecords={filteredRecords}
+                    />
+                ) : <NoRecord />}
             <BackToTop />
         </>
     )
