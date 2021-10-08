@@ -1,8 +1,8 @@
-import { createContext, useState, useContext, useEffect } from "react";
+import { createContext, useContext, useEffect, useReducer } from "react";
 import axios from "axios";
 import { API_URI } from '../config'
 
-import Backdrop from "../components/Backdrop";
+import Backdrop from "../components/block/Backdrop";
 
 const AuthContext = createContext();
 
@@ -10,32 +10,46 @@ export function useAuthContext() {
     return useContext(AuthContext);
 }
 
-export function AuthProvider({ children }) {
-    const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
 
-    const value = {
-        user,
-        loading,
-        error
-    };
+const initialState = {
+    isLoading: true,
+    isError: false,
+    user: null
+}
+
+const dataFetchReducer = (dataState, action) => {
+    switch (action.type) {
+        case 'FETCH_INIT':
+            return initialState;
+        case 'FETCH_SUCCESS':
+            return { ...dataState, isLoading: false, user: action.payload }
+        case 'FETCH_ERROR':
+            return { ...dataState, isLoading: false, isError: true }
+        default:
+            return dataState
+    }
+}
+
+export function AuthProvider({ children }) {
+    const [dataState, dispatch] = useReducer(dataFetchReducer, initialState)
 
     useEffect(() => {
-        const authenticate = async () => {
-
-            await axios.get(`${API_URI}/api/v1/user/auth`)
-                .then(response => {
-                    const data = response.data
-                    if (data.status === 200 || data.status === 201) {
-                        setUser(data.user);
-                    }
-                })
-                .catch(err => setError(err))
-                .finally(() => setLoading(false))
-        };
-        authenticate();
+        console.log('userFetch')
+        axios
+            .get(`${API_URI}/api/v1/user/auth`)
+            .then(res => {
+                dispatch({ type: 'FETCH_SUCCESS', payload: res.data.user })
+            })
+            .catch(err => {
+                dispatch({ type: 'FETCH_ERROR' })
+            })
     }, []);
 
-    return <AuthContext.Provider value={value}>{loading ? <Backdrop open={loading} /> : error ? <>現在メンテナンス中です</> : children}</AuthContext.Provider>;
+    return (
+        <AuthContext.Provider value={dataState}>
+            {dataState.isLoading ? (
+                <Backdrop open={dataState.isLoading} />
+            ) : dataState.isError ? <>現在メンテナンス中です</> : children}
+        </AuthContext.Provider>
+    )
 }
