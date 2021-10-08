@@ -44,6 +44,7 @@ export const Isbn = ({ values, setValues }) => {
         <TextField
             id="isbn"
             label="ISBN"
+            type="number"
             value={values.isbn}
             fullWidth
             variant="standard"

@@ -1,12 +1,13 @@
 import Grid from '@mui/material/Grid';
 
-import AppBar from './AppBar2';
+import Header from './Header';
 
 
 const MenuWrapper = ({ menu, mobileMenu, contents }) => {
+    console.log("menu render")
     return (
         <>
-            <AppBar menu={mobileMenu} />
+            <Header menu={mobileMenu} />
             <Grid container>
                 <Grid
                     container

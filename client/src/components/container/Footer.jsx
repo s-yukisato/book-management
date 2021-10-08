@@ -11,9 +11,9 @@ import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 
-import Logo from '../assets/logo_transparent.png';
+import Logo from '../../assets/logo_transparent.png';
 
-import Copyright from './Copyright'
+import Copyright from '../block/Copyright'
 
 
 const CGrid = ({ children }) => (

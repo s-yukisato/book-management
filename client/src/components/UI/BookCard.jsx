@@ -9,7 +9,4 @@ export const BookCard = styled(Card)({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    ":hover": {
-        boxShadow: 6,
-    },
 })

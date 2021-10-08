@@ -1,29 +1,35 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 
-import AppBar from '@mui/material/AppBar';
+import MuiAppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
+import Divider from '@mui/material/Divider';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 
-import HomeIcon from '@mui/icons-material/Home';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import DashboardIcon from '@mui/icons-material/Dashboard';
+import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
+import BarChartIcon from '@mui/icons-material/BarChart';
+import ContactSupportIcon from '@mui/icons-material/ContactSupport';
+import HomeIcon from '@mui/icons-material/Home';
+import ImportContactsIcon from '@mui/icons-material/ImportContacts';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 
-import LightTooltip from './LightTooltip';
+import LightTooltip from '../block/LightTooltip';
+
+import NameLogo from '../../assets/name_logo.png';
 
 
-export default function PrimarySearchAppBar({ menu }) {
+const AppBar = React.memo(({ menu }) => {
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
 
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-
+    console.log("app render")
     const handleMobileMenuClose = () => {
         setMobileMoreAnchorEl(null);
     };
@@ -46,11 +52,29 @@ export default function PrimarySearchAppBar({ menu }) {
             title: "ダッシュボードへ",
             to: "/dashboard",
             areaLabel: "dashboardlink",
-            icon: <DashboardIcon />
+            icon: <BarChartIcon />
+        },
+        {
+            title: "プロジェクトへ",
+            to: "/projects",
+            areaLabel: "projectlink",
+            icon: <AppRegistrationIcon />
+        },
+        {
+            title: "ライブラリへ",
+            to: "/library",
+            areaLabel: "librarylink",
+            icon: <ImportContactsIcon />
+        },
+        {
+            title: "サポートページへ",
+            to: "/support",
+            areaLabel: "supportlink",
+            icon: <ContactSupportIcon />
         },
         {
             title: "お知らせ",
-            to: "/",
+            to: "/notification",
             areaLabel: "notifications",
             icon: <NotificationsIcon />
         },
@@ -78,30 +102,34 @@ export default function PrimarySearchAppBar({ menu }) {
             open={isMobileMenuOpen}
             onClose={handleMobileMenuClose}
         >
-            {listItems.map(item => (
-                <MenuItem
-                    component={RouterLink}
-                    to={item.to}
-                    size="large"
-                    aria-label={item.areaLabel}
-                    color="inherit"
-                >
-                    {item.icon}
-                    <Typography variant="body2" p={1}>{item.title}</Typography>
-                </MenuItem>
+            {listItems.map((item, index) => (
+                <div>
+                    <MenuItem
+                        component={RouterLink}
+                        to={item.to}
+                        size="large"
+                        aria-label={item.areaLabel}
+                        color="inherit"
+                    >
+                        {item.icon}
+                        <Typography variant="body2" p={1}>{item.title}</Typography>
+                    </MenuItem>
+                    {index === 3 && <Divider />}
+                </div>
             ))}
         </Menu>
     );
 
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="fixed" sx={{ bgcolor: '#91B54D' }}>
+            <MuiAppBar position="fixed" sx={{ bgcolor: "rgb(181, 205, 163)" }}>
                 <Toolbar>
-                    <Box sx={{ flexGrow: 1 }} />
+                    <Box sx={{ flexGrow: 1, display: { xs: "block", sm: "none" } }} />
                     <Box sx={{ display: { xs: "block", sm: "none" } }}>{menu}</Box>
+                    <Box sx={{ display: { xs: "none", sm: "block"}}} pl={3} component={"img"} src={NameLogo} width={128} height={32}></Box>
                     <Box sx={{ flexGrow: 1 }} />
                     <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
-                        {listItems.map(item => (
+                        {listItems.map((item, index) => (
                             <LightTooltip title={item.title}>
                                 <IconButton
                                     component={RouterLink}
@@ -127,9 +155,11 @@ export default function PrimarySearchAppBar({ menu }) {
                         </IconButton>
                     </Box>
                 </Toolbar>
-            </AppBar>
+            </MuiAppBar>
             <Toolbar id="back-to-top-anchor" />
             {renderMobileMenu}
         </Box>
     );
-}
+});
+
+export default AppBar;
