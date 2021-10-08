@@ -7,13 +7,20 @@ const NoProject = () => {
     return (
         <Grid
             container
+            direction="column"
             justifyContent="center"
             alignItems="center"
             textAlign="center"
+            spacing={2}
+            minHeight="100vh"
             sx={{ display: { xs: 'block', sm: 'flex' } }}
         >
-            <EmptyLogo width="240px" height="120px" />
-            <Typography variant="h6" m={3}>プロジェクトを作成しましょう</Typography>
+            <Grid item>
+                <EmptyLogo width="240px" height="120px" />
+            </Grid>
+            <Grid item sx={{ mx: 1, my: 3 }}>
+                <Typography variant="h6" m={3}>プロジェクトを作成しましょう</Typography>
+            </Grid>
         </Grid>
     )
 }

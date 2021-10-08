@@ -1,5 +1,4 @@
 import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
@@ -12,19 +11,22 @@ const NoRecord = () => {
 
     return (
         <Grid
-            item
+            container
+            direction="column"
             justifyContent="center"
             alignItems="center"
             textAlign="center"
+            spacing={2}
+            minHeight="100vh"
             sx={{ display: { xs: 'block', sm: 'flex' } }}
         >
-            <Box>
+            <Grid item>
                 <BookLoverLogo width="80%" height="80%" />
-            </Box>
-            <Box sx={{ mx: 1, my: 3 }}>
+            </Grid>
+            <Grid item sx={{ mx: 1, my: 3 }}>
                 <Typography variant="h6">本棚に登録しましょう。</Typography>
                 <Button onClick={toHomePage}>探しに行く</Button>
-            </Box>
+            </Grid>
         </Grid>
     )
 }

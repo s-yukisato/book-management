@@ -48,7 +48,6 @@ const Support = () => {
                     sx={{
                         display: { xs: 'none', md: 'block' },
                         borderRight: '2px solid #f5f0ec',
-                        bgcolor: "#FCFAF9"
                     }}
                 >
                     <Navi />
