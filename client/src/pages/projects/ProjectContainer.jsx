@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
@@ -10,46 +9,33 @@ import ProjectList from './ProjectList';
 import NoProject from './NoProject';
 
 import { useFetchProjectContext } from '../../context/FetchContext';
+import { useRedirect } from '../../hooks/useRedirect';
 
-const ProjectComponent = ({ state }) => {
+const ProjectComponent = ({ state, setStateCount }) => {
     const { dataState } = useFetchProjectContext();
 
     const [projects, setProjects] = useState([]);
 
     const [filteredProjects, setFilteredProjects] = useState([]);
 
-    const history = useHistory();
+    const { toCreateProjectPage } = useRedirect();
 
-    const handleClick = () => {
-        history.push("/projects/new");
-    }
-
-
-    const filterHandler = () => {
-        switch (state) {
-            case "uncompleted":
-                setFilteredProjects(projects.filter((project) => project.status === "wanted"));
-                break;
-            case "completed":
-                setFilteredProjects(projects.filter((project) => project.status === "reading"));
-                break;
-            default:
-                setFilteredProjects(projects);
-                break;
-        }
-    };
 
     useEffect(() => {
-        console.log('Year!')
+        if (!dataState) return;
         setProjects(dataState.data)
-        console.log(dataState.data)
     }, [dataState])
 
+
     useEffect(() => {
-        console.log("filter")
-        filterHandler()
-        console.log(state)
-    }, [projects, state])
+        if (state === "all") setFilteredProjects(projects);
+        else setFilteredProjects(projects.filter((record) => record.status === state));
+
+        const lenUncompleted = projects.filter((record) => record.status === "uncompleted").length;
+        const lenCompleted = projects.filter((record) => record.status === "completed").length;
+        setStateCount({ all: projects.length, uncompleted: lenUncompleted, completed: lenCompleted });
+    }, [state, projects, setStateCount])
+
 
     return (
         <>
@@ -61,7 +47,9 @@ const ProjectComponent = ({ state }) => {
                 />
             ) : <NoProject />}
             <Box sx={{ position: "fixed", bottom: 50, right: 50, }}>
-                <Fab onClick={handleClick} size="large" sx={{ color: "#FFFFFF", bgcolor: "#FF7066", ":hover": { bgcolor: "#F15B47" } }}>
+                <Fab onClick={toCreateProjectPage} size="large"
+                    sx={{ color: "#FFFFFF", bgcolor: "#FF7066", ":hover": { bgcolor: "#F15B47" } }}
+                >
                     <AddIcon />
                 </Fab>
             </Box>

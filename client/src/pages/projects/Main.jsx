@@ -9,8 +9,8 @@ import AppsIcon from '@mui/icons-material/Apps';
 import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList';
 import FactCheckIcon from '@mui/icons-material/FactCheck';
 
-import MenuWrapper from '../MenuWrapper';
-import ProjectComponent from './ProjectComponent';
+import MenuWrapper from '../../components/container/MenuWrapper';
+import ProjectContainer from './ProjectContainer';
 
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -41,7 +41,7 @@ const list = [
     }
 ]
 
-const TopProject = () => {
+const Main = () => {
     const [state, setState] = useState("all");
     const [stateCount, setStateCount] = useState(list.map((item) => ({ [item.state]: 0 })));
 
@@ -113,8 +113,8 @@ const TopProject = () => {
         <MenuWrapper
             menu={MenuTabs}
             mobileMenu={MobileMenuTabs}
-            contents={<ProjectComponent state={state} setStateCount={setStateCount} />} />
+            contents={<ProjectContainer state={state} setStateCount={setStateCount} />} />
     )
 }
 
-export default TopProject
+export default Main;
