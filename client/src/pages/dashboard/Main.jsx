@@ -7,7 +7,7 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import EventNoteIcon from '@mui/icons-material/EventNote';
 
-import MenuWrapper from '../MenuWrapper';
+import MenuWrapper from '../../components/container/MenuWrapper';
 import DashboardComponent from './DashboardComponent';
 
 
