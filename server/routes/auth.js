@@ -9,4 +9,6 @@ router.post("/signin", signin)
 
 router.get("/auth", authenticate, getInfo)
 
+router.get("/:id", getInfo)
+
 module.exports = router;
