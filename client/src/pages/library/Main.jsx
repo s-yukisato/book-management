@@ -10,8 +10,8 @@ import MenuBookIcon from '@mui/icons-material/MenuBook';
 import BookIcon from '@mui/icons-material/Book';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 
-import MenuWrapper from '../MenuWrapper';
-import RecordComponent from './RecordComponent';
+import MenuWrapper from '../../components/container/MenuWrapper';
+import RecordContainer from './RecordContainer';
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
     '& .MuiBadge-badge': {
@@ -113,7 +113,7 @@ const TopRecord = () => {
         <MenuWrapper
             menu={MenuTabs}
             mobileMenu={MobileMenuTabs}
-            contents={<RecordComponent state={state} setStateCount={setStateCount} />} />
+            contents={<RecordContainer state={state} setStateCount={setStateCount} />} />
     )
 }
 

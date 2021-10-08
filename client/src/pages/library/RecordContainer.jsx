@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
 
 import RecordList from './RecordList';
 import NoRecord from './NoRecord';
-import BackToTop from '../BackToTop';
+import BackToTop from '../../components/block/BackToTop';
 
 import { useFetchRecordContext } from '../../context/FetchContext';
+
 
 const RecordComponent = ({ state, setStateCount }) => {
     const { dataState } = useFetchRecordContext();

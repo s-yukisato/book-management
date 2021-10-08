@@ -1,41 +1,31 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React from 'react';
 
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
 
 import BookIcon from '@mui/icons-material/Book';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-import LightTooltip from '../../components/LightTooltip';
-import Slider from '../../components/Slider';
-import Snackbar from '../../components/Snackbar';
+import LightTooltip from '../../components/block/LightTooltip';
+import { ReadOnlySlider } from './Slider';
 
-import { useUpdateContext } from './UpdateContext';
-
-const Record = React.memo(({ record, records, setRecords }) => {
+const Record = React.memo(({ record, index, setTargetIndex, setActionType }) => {
     console.log("rendner rec")
-    const [open, setOpen] = useState(false);
 
-    const { handleOpen } = useUpdateContext();
-
-    const finishedHandler = () => {
-        setRecords(records.map((item) => {
-            if (item._id === record._id) {
-                return { ...item, status: "read" }
-            }
-            return item
-        }))
-        setOpen(true);
+    const openDialog = () => {
+        setActionType("update");
+        setTargetIndex(index);
     }
 
-    
-    const deleteHandler = async () => {
-        setRecords(records.filter(el => el._id !== record._id))
-        await axios.delete(`http://localhost:3001/api/v1/record/${record._id}`)
-            .then(res => res.json())
-            .catch(err => console.error(err))
+    const statusChange = () => {
+        setActionType("statusChange");
+        setTargetIndex(index);
+    }
+
+    const deleteRecord = () => {
+        setActionType("delete");
+        setTargetIndex(index);
     }
 
     return (
@@ -50,32 +40,32 @@ const Record = React.memo(({ record, records, setRecords }) => {
                     component="img"
                     src={record.book.image}
                     alt="No image"
-                    onClick={handleOpen}
+                    onClick={openDialog}
                     sx={{
                         width: 78,
                         height: 112,
                         ml: 2,
                         cursor: "pointer"
                     }} />
-                <Box flex="auto" sx={{ textAlign: "center", py: 3, cursor: "pointer" }} onClick={handleOpen}>
-                    <Typography variant="h4">{Math.floor(record.page / record.book.page * 100)}%</Typography>
+                <Box flex="auto" sx={{ textAlign: "center", py: 3, cursor: "pointer" }} onClick={openDialog}>
+                    <Typography variant="h4">{Math.floor(record.page / record.book.pages * 100)}%</Typography>
                 </Box>
                 <Box display='flex' flexDirection='column'>
-                    <Box sx={{ flex: 2, cursor: "pointer" }} onClick={handleOpen}>
+                    <Box sx={{ flex: 2, cursor: "pointer" }} onClick={openDialog}>
                         <Typography variant="body2" sx={{ textAlign: 'end', mb: 1 }}>最終更新日</Typography>
                         <Typography variant="body2" sx={{ textAlign: 'end' }}>{record.updatedAt.slice(0, 10)}</Typography>
                         <Typography variant="body2" sx={{ textAlign: 'end' }}>{record.updatedAt.slice(11, 16)}</Typography>
                     </Box>
                     <Box sx={{ display: { xs: 'block', sm: 'flex' }, flex: 1 }}>
                         {record.status !== "read" && (
-                            <LightTooltip title="読み終えた">
-                                <IconButton onClick={finishedHandler}>
+                            <LightTooltip title="「読み終えた」に変更">
+                                <IconButton onClick={statusChange}>
                                     <BookIcon />
                                 </IconButton>
                             </LightTooltip>
                         )}
                         <LightTooltip title="削除する">
-                            <IconButton onClick={deleteHandler}>
+                            <IconButton onClick={deleteRecord}>
                                 <DeleteIcon />
                             </IconButton>
                         </LightTooltip>
@@ -87,11 +77,10 @@ const Record = React.memo(({ record, records, setRecords }) => {
                 justifyContent="center"
                 alignItems="center"
             >
-                <Slider now={record.page} max={record.book.page} />
+                <ReadOnlySlider now={record.page} max={record.book.pages} />
             </Box>
-            <Snackbar open={open} setOpen={setOpen} message="状態を [ 読み終えた ] に変更しました" />
         </Box>
     )
-})
+});
 
 export default Record;

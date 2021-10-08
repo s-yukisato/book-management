@@ -1,5 +1,3 @@
-import { useHistory } from 'react-router-dom';
-
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -7,12 +5,10 @@ import Button from '@mui/material/Button';
 
 import { ReactComponent as BookLoverLogo } from '../../assets/undraw_book_lover_mkck.svg';
 
-const NoRecord = () => {
-    const history = useHistory();
+import { useRedirect } from '../../hooks/useRedirect';
 
-    const renderHandler = () => {
-        history.push("/")
-    }
+const NoRecord = () => {
+    const { toHomePage } = useRedirect();
 
     return (
         <Grid
@@ -27,7 +23,7 @@ const NoRecord = () => {
             </Box>
             <Box sx={{ mx: 1, my: 3 }}>
                 <Typography variant="h6">本棚に登録しましょう。</Typography>
-                <Button onClick={renderHandler}>探しに行く</Button>
+                <Button onClick={toHomePage}>探しに行く</Button>
             </Box>
         </Grid>
     )

@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
-
-import Slider from '@mui/material/Slider';
-import Typography from '@mui/material/Typography';
-import Tooltip from '@mui/material/Tooltip';
 import Box from '@mui/material/Box';
+import Slider from '@mui/material/Slider';
+import Tooltip from '@mui/material/Tooltip';
+import Typography from '@mui/material/Typography';
+
 
 function ValueLabelComponent(props) {
   const { children, value } = props;
@@ -20,7 +20,6 @@ ValueLabelComponent.propTypes = {
   children: PropTypes.element.isRequired,
   value: PropTypes.number.isRequired,
 };
-
 
 const PrettoSlider = styled(Slider)({
   color: '#52af77',
@@ -62,7 +61,26 @@ const PrettoSlider = styled(Slider)({
 });
 
 
-export default function CustomizedSlider({ now, max }) {
+export function ControlledSlider({ values, setValues, max }) {
+  const handleChange = (e) => {
+    setValues({ ...values, "page": e.target.value });
+  };
+  return (
+    <Box sx={{ width: "90%" }}>
+      <Box sx={{ m: 2 }} />
+      <Typography gutterBottom></Typography>
+      <PrettoSlider
+        valueLabelDisplay="auto"
+        aria-label="pretto slider"
+        value={values.page}
+        max={max}
+        onChange={handleChange}
+      />
+    </Box>
+  );
+}
+
+export function ReadOnlySlider({ now, max }) {
   return (
     <Box sx={{ width: "90%" }}>
       <Box sx={{ m: 2 }} />
@@ -72,6 +90,7 @@ export default function CustomizedSlider({ now, max }) {
         aria-label="pretto slider"
         value={now}
         max={max}
+        readOnly
       />
     </Box>
   );
