@@ -12,9 +12,9 @@ const Container = React.memo(({ books, loading, currentPage, setCurrentPage, max
     return (
         <>
             {!loading ? (
-                books.length > 0 ? (
+                books ? (
                     <>
-                        <BookList books={books} />
+                        <BookList books={books} loading={loading} />
                         <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} maxPage={maxPage} />
                     </>
                 ) : <NoBook />
@@ -39,7 +39,7 @@ const Container = React.memo(({ books, loading, currentPage, setCurrentPage, max
                         }
                     }}
                 >
-                    {Array.from(new Array(30)).map(index => (
+                    {Array.from(new Array(30)).map((_, index) => (
                         <LoadingBook key={index} />
                     ))}
                 </Grid>)}
