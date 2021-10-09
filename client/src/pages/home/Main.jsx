@@ -17,8 +17,8 @@ import { Title, Author, Isbn } from '../../components/FormParts/Search';
 
 import Copyright from '../../components/block/Copyright';
 
-const fetchUrl = `${API_URI}/api/data`;
 
+const fetchUrl = `${API_URI}/api/data`;
 
 const initalValue = {
     title: "",
@@ -34,7 +34,6 @@ const TopBook = () => {
     useEffect(() => {
         setLoading(true);
         const fetchData = async () => {
-            console.log('Fetching data')
             const { data } = await axios.get(fetchUrl);
             setBooks(data.items);
             setMaxCount(data.maxCount);
@@ -63,6 +62,7 @@ const TopBook = () => {
 
     const handleClickSearchButton = async () => {
         backToTop();
+        setMaxCount(0);
         setLoading(true);
 
         const { data } = await axios.post(fetchUrl, { values, currentPage });
@@ -117,8 +117,9 @@ const TopBook = () => {
                 <StyledInputBase
                     placeholder="Search…"
                     inputProps={{ "aria-label": "search" }}
+                    value={values.title}
+                    onChange={(e) => setValues({ ...values, title: e.target.value })}
                 >
-                    <Title values={values} setValues={setValues} />
                 </StyledInputBase>
             </Search>
         </>

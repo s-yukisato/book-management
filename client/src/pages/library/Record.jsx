@@ -11,8 +11,6 @@ import LightTooltip from '../../components/block/LightTooltip';
 import { ReadOnlySlider } from './Slider';
 
 const Record = React.memo(({ record, index, setTargetIndex, setActionType }) => {
-    console.log("rendner rec")
-
     const openDialog = () => {
         setActionType("update");
         setTargetIndex(index);
