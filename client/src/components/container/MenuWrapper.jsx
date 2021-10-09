@@ -4,7 +4,6 @@ import Header from './Header';
 
 
 const MenuWrapper = ({ menu, mobileMenu, contents }) => {
-    console.log("menu render")
     return (
         <>
             <Header menu={mobileMenu} />
@@ -28,6 +27,6 @@ const MenuWrapper = ({ menu, mobileMenu, contents }) => {
             </Grid>
         </>
     )
-}
+};
 
 export default MenuWrapper;

@@ -24,12 +24,11 @@ import LightTooltip from '../block/LightTooltip';
 import NameLogo from '../../assets/name_logo.png';
 
 
-const AppBar = React.memo(({ menu }) => {
+const Header = React.memo(({ menu }) => {
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
 
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-    console.log("app render")
     const handleMobileMenuClose = () => {
         setMobileMoreAnchorEl(null);
     };
@@ -37,7 +36,6 @@ const AppBar = React.memo(({ menu }) => {
     const handleMobileMenuOpen = (event) => {
         setMobileMoreAnchorEl(event.currentTarget);
     };
-
 
     const mobileMenuId = 'primary-search-account-menu-mobile';
 
@@ -162,4 +160,4 @@ const AppBar = React.memo(({ menu }) => {
     );
 });
 
-export default AppBar;
+export default Header;

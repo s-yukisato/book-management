@@ -63,4 +63,4 @@ const SearchComponent = () => {
     )
 };
 
-export default SearchComponent
+export default SearchComponent;

@@ -42,7 +42,8 @@ const Container = React.memo(({ books, loading, currentPage, setCurrentPage, max
                     {Array.from(new Array(30)).map((_, index) => (
                         <LoadingBook key={index} />
                     ))}
-                </Grid>)}
+                </Grid>
+            )}
         </>
     )
 })

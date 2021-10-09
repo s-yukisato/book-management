@@ -78,8 +78,7 @@ const listItems = [
 const Footer = React.memo(() => {
     const [open, setOpen] = useState(listItems.map((item) => ({ [item.title]: false })))
 
-    const handleClick = (prop) => (e) => {
-        console.log(open[prop])
+    const handleClick = (prop) => (_) => {
         setOpen({ ...open, [prop]: !open[prop] });
     };
     return (

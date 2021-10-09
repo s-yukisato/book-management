@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
+import { API_URI } from "../config";
 
 export const useLogin = (values) => {
-  const url = "http://localhost:3001/api/v1/user";
+  const url = `${API_URI}/api/v1/user`;
 
   const [error, setError] = useState(null);
 

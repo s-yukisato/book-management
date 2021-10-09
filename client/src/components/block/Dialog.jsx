@@ -14,7 +14,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 
 const Dialog = ({ isOpen, close, title, content, action }) => {
-    console.log("dailog rendereee")
     return (
         <MuiDialog
             open={isOpen}
