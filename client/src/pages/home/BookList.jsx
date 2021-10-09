@@ -7,6 +7,8 @@ import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
+import { ReactComponent as AuthenticationLogo } from '../../assets/undraw_authentication_fsn5.svg';
+
 import {
     Memo,
     Status,
@@ -18,7 +20,9 @@ import Snackbar from '../../components/block/Snackbar';
 
 import Book from "./Book";
 
+import { useAuthContext } from '../../context/AuthContext';
 import { useFetchRecordContext } from '../../context/FetchContext';
+import { useRedirect } from '../../hooks/useRedirect';
 
 
 const initalState = {
@@ -35,13 +39,16 @@ const initalState = {
 }
 
 const BookList = ({ books }) => {
+    const { user } = useAuthContext();
+    const { toSignInPage, toSignUpPage } = useRedirect();
+
     const { dataState } = useFetchRecordContext();
     const records = dataState.data;
     // 登録済みの書籍をRecordから探す
     const registeredList = records.length > 0 ? records.map((record) => record.book.isbn) : [];
 
     const [openDialog, setOpenDialog] = useState(false);
-    
+
     const [openSnackbar, setOpenSnackbar] = useState(false);
 
     const [error, setError] = useState(null);
@@ -54,7 +61,7 @@ const BookList = ({ books }) => {
     useEffect(() => {
         // 初回にダイアログが開かないように
         if (targetIndex == null) return;
-        
+
         // 選択された書籍のデータをbooks配列から参照
         setValues({
             ...values, book: {
@@ -90,9 +97,11 @@ const BookList = ({ books }) => {
             setOpenDialog(false);
             setOpenSnackbar(true);
             setValues(initalState);
+            setTargetIndex(null);
         }
     }
 
+    // ======================= 登録用 ================================
     const title = values.book.title;
 
     const content = (
@@ -114,6 +123,14 @@ const BookList = ({ books }) => {
             <Button type="submit" onClick={register}>登録する</Button>
         </>
     )
+    // ====================================================================
+
+    const authAction = (
+        <>
+            <Button onClick={toSignUpPage}>サインアップ</Button>
+            <Button onClick={toSignInPage}>サインイン</Button>
+        </>
+    )
 
 
     return (
@@ -123,7 +140,6 @@ const BookList = ({ books }) => {
                 flex="auto"
                 justifyContent='space-evenly'
                 spacing={2}
-                m="auto"
                 sx={{
                     "&:before": {
                         display: "block",
@@ -139,13 +155,27 @@ const BookList = ({ books }) => {
                 }}
             >
                 {books.map((book, index) => (
-                    <Book key={book.isbn} registered={registeredList.includes(book.isbn)} index={index} setTargetIndex={setTargetIndex} book={book} />
+                    <Book
+                        key={book.isbn}
+                        registered={registeredList.includes(book.isbn)}
+                        index={index}
+                        setTargetIndex={setTargetIndex}
+                        book={book} />
                 ))}
             </Grid>
-            <Dialog isOpen={openDialog} close={closeDialog} title={title} content={content} action={action} />
+            {user ? (
+                <Dialog isOpen={openDialog} close={closeDialog} title={title} content={content} action={action} />
+            ) : (
+                <Dialog
+                    isOpen={openDialog}
+                    close={closeDialog}
+                    title={"このサービスはログインが必要です"}
+                    content={<AuthenticationLogo width="80%" height="80%" />}
+                    action={authAction} />
+            )}
             <Snackbar isOpen={openSnackbar} setIsOpen={setOpenSnackbar} message="本棚に登録しました" />
         </>
     )
-}
+};
 
 export default BookList;
