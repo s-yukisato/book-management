@@ -87,7 +87,7 @@ const ShowMemo = ({ projectData }) => {
                 {records.map((item, index) => (
                     <TabPanel value={currentTarget} index={index}>
                         <Typography variant="body2">あなたのメモ</Typography>
-                        <Box sx={{ borderRadius: 4, boxShadow: 2, p: 2, maxHeight: "50vh" }}>
+                        <Box sx={{ borderRadius: 4, boxShadow: 2, p: 2, maxHeight: "50vh", overflowY: "scroll", overflowWrap: "break-word" }}>
                             {item.memo ? item.memo : "メモがありません"}
                         </Box>
                     </TabPanel>
