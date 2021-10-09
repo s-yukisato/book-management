@@ -15,6 +15,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import UserName from '../components/FormParts/UserName';
 import Email from '../components/FormParts/Email';
 import Password from '../components/FormParts/Password';
+import ConfirmPassword from '../components/FormParts/ConfirmPassword';
 import Copyright from '../components/block/Copyright';
 
 import { useLogin } from '../hooks/useLogin'
@@ -29,7 +30,7 @@ const SignUp = () => {
         confirmPassword: '',
     });
 
-    const [error, login] = useLogin(values);
+    const [error, login] = useLogin({ name: values.name, email: values.email, password: values.password });
 
     return (
         <ThemeProvider theme={theme}>
@@ -59,6 +60,9 @@ const SignUp = () => {
                             </Grid>
                             <Grid item xs={12}>
                                 <Password values={values} setValues={setValues} />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <ConfirmPassword values={values} setValues={setValues} />
                             </Grid>
                         </Grid>
                         <Typography color="error" sx={{ textAlign: 'center', mt: 2 }}>{error}</Typography>
