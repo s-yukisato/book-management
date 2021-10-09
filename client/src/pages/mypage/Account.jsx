@@ -45,11 +45,7 @@ const Account = () => {
     const [openSnackbar, setOpenSnackbar] = useState(false);
 
     const handleClick = (prop) => (e) => {
-        if (prop === 'name') {
-            setOpenSnackbar(true);
-        } else {
-            setOpenDialog(true);
-        }
+        setOpenDialog(true);
         setTarget(prop);
     }
 
@@ -75,9 +71,19 @@ const Account = () => {
     const content = (
         <Box sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-                <Grid item xs={12}><UserName values={values} setValues={setValues} /></Grid>
-                <Grid item xs={12}><Email values={values} setValues={setValues} /></Grid>
-                <Grid item xs={12}><Password values={values} setValues={setValues} /></Grid>
+                {target === "name" && <Grid item xs={12}><UserName values={values} setValues={setValues} /></Grid>}
+                {target === "email" && (
+                    <>
+                        <Grid item xs={12}><Password values={values} setValues={setValues} /></Grid>
+                        <Grid item xs={12}><Email values={values} setValues={setValues} /></Grid>
+                    </>
+                )}
+                {target === "password" && (
+                    <>
+                        <Grid item xs={12}><Password values={values} setValues={setValues} /></Grid>
+                        <Grid item xs={12}><Password values={values} setValues={setValues} /></Grid>
+                    </>
+                )}
             </Grid>
             <Typography color="error" sx={{ textAlign: 'center', mt: 2 }}>{error}</Typography>
         </Box>
