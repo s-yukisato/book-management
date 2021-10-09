@@ -8,13 +8,13 @@ import DateRangeIcon from '@mui/icons-material/DateRange';
 import EventNoteIcon from '@mui/icons-material/EventNote';
 
 import MenuWrapper from '../../components/container/MenuWrapper';
-import DashboardComponent from './DashboardComponent';
+import DashboardComponent from './Container';
 
 
 const list = [
     {
-        name: "全期間",
-        state: "all",
+        name: "年間",
+        state: "year",
         icon: <BarChartIcon />
     },
     {
@@ -30,7 +30,7 @@ const list = [
 ]
 
 const TopDashboard = () => {
-    const [state, setState] = useState("all");
+    const [state, setState] = useState("week");
 
     const handleChange = (e, value) => {
         setState(value);

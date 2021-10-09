@@ -1,12 +1,14 @@
 import { Bar } from 'react-chartjs-2';
 
-const Graph = () => {
+const Graph = ({ recordList }) => {
+  const labels = Object.keys(recordList);
+  const numberPerDate = Object.values(recordList);
 
   const data = {
-    labels: ['月', '火', '水', '木', '金', '土', '日'],
+    labels: labels,
     datasets: [{
-      label: '読み終えた冊数',
-      data: [12, 19, 3, 5, 2, 3],
+      label: '登録した冊数',
+      data: numberPerDate.map(rec => rec.length),
       backgroundColor: [
         'rgba(255, 99, 132, 0.2)',
         'rgba(54, 162, 235, 0.2)',
@@ -33,7 +35,7 @@ const Graph = () => {
     scales: {
       yAxes: [{
         ticks: {
-          beginAtZero: true
+          beginAtZero: true,
         }
       }]
     }
