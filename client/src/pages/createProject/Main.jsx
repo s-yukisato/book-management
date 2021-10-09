@@ -59,7 +59,7 @@ const Main = () => {
                 sx={{ position: "fixed", top: "30px", left: "20px" }}
             >プロジェクト一覧へ戻る</Button>
             <Toolbar />
-            <Box sx={{ pt: 3, width: { xs: "90vw", sm: "100%" } }}>
+            <Box sx={{ textAlign: "center", mx: { xs: 2, sm: 14 }, my: 4 }}>
                 <Stepper values={values} setValues={setValues} create={createProject} />
             </Box>
         </>
