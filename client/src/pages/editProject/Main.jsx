@@ -1,6 +1,5 @@
 import { useState } from 'react';
 
-import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
@@ -20,19 +19,13 @@ const Main = () => {
 
     const [projectData, setProjectData] = useState(null);
 
-    const menu = () => (
-        <>
-            <Box display="flex">
-                <Typography variant="h6">Teelog</Typography>
-            </Box>
-        </>
-    )
+    const menu = projectData && projectData.title;
 
     return (
         <>
             <Header menu={menu} />
-            <Grid container width="96vw">
-                <Grid item flex={2}>
+            <Grid container>
+                <Grid item flex={2} width="100%">
                     <TextEditor isSave={isSave} setIsSave={setIsSave} setProjectData={setProjectData} setResult={setResult} />
                 </Grid>
                 <Grid item flex={1} sx={{ display: { xs: 'none', sm: 'block' } }}>

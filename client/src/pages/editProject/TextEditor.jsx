@@ -67,6 +67,7 @@ const TextEditor = ({ isSave, setIsSave, setProjectData, setResult }) => {
             }
         }
         saveDocument();
+        
         return () => {
             setIsSave(false);
         }
