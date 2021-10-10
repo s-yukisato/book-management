@@ -32,7 +32,7 @@ const Main = () => {
         deadline: OneWeekLater
     });
 
-    const { toProjectsPage, toProject } = useRedirect();
+    const { toProjectsPage, toProjectReplace } = useRedirect();
 
     const createProject = async () => {
         const id = uuidV4();
@@ -47,7 +47,7 @@ const Main = () => {
         }
 
         await axios.post(`${API_URI}/api/v1/project`, postData)
-            .then(res => toProject(id))
+            .then(res => toProjectReplace(id))
             .catch(err => console.log(err))
     }
 

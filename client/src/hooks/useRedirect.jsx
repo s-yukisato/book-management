@@ -12,7 +12,9 @@ export const useRedirect = () => {
 
     const toCreateProjectPage = () => history.push("/projects/new");
 
-    const toProject = (id) => history.replace(`/project/${id}`);
+    const toProject = (id) => history.push(`/project/${id}`);
+
+    const toProjectReplace = (id) => history.replace(`/project/${id}`);
 
     const toSignInPage = () => history.push("/signin");
 
@@ -26,6 +28,7 @@ export const useRedirect = () => {
         toProjectsPage,
         toCreateProjectPage,
         toProject,
+        toProjectReplace,
         toSignInPage,
         toSignUpPage,
         toThanksPage
