@@ -66,6 +66,8 @@ const TopBook = () => {
         setMaxCount(0);
         setLoading(true);
 
+        // 検索したタイミングで現在のページを1にする
+        setCurrentPage(1);
         const { data } = await axios.post(fetchUrl, { values, currentPage });
         setBooks(data.items);
         setMaxCount(data.maxCount);
