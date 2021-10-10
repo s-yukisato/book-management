@@ -4,6 +4,7 @@ import { API_URI } from '../../config';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
 import SearchIcon from '@mui/icons-material/Search';
@@ -11,10 +12,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import MenuWrapper from '../../components/container/MenuWrapper';
 import BookContainer from './BookContainer';
 
-import { Search, SearchIconWrapper, StyledInputBase } from '../../components/UI/SearchBar'
-
 import { Title, Author, Isbn } from '../../components/FormParts/Search';
-
+import Search from '../../components/block/Search';
 import Copyright from '../../components/block/Copyright';
 
 
@@ -28,8 +27,14 @@ const initalValue = {
 
 const TopBook = () => {
     const [books, setBooks] = useState([]);
-    const [maxCount, setMaxCount] = useState();
+
     const [loading, setLoading] = useState(false);
+    // 検索する入力データ
+    const [values, setValues] = useState(initalValue);
+    // 取得したデータの数 ページ数を計算するために使用
+    const [maxCount, setMaxCount] = useState();
+    // ページネーションの現在の位置
+    const [currentPage, setCurrentPage] = useState(1);
 
     useEffect(() => {
         setLoading(true);
@@ -42,10 +47,6 @@ const TopBook = () => {
 
         fetchData();
     }, [])
-
-    const [values, setValues] = useState(initalValue);
-
-    const [currentPage, setCurrentPage] = useState(1);
 
     const resetValues = () => setValues(initalValue);
 
@@ -110,18 +111,14 @@ const TopBook = () => {
 
     const MobileSearch = (
         <>
-            <Search>
-                <SearchIconWrapper onClick={handleClickSearchButton} sx={{ cursor: "pointer" }}>
-                    <SearchIcon />
-                </SearchIconWrapper>
-                <StyledInputBase
-                    placeholder="Search…"
-                    inputProps={{ "aria-label": "search" }}
-                    value={values.title}
-                    onChange={(e) => setValues({ ...values, title: e.target.value })}
-                >
-                </StyledInputBase>
-            </Search>
+            <Grid container justifyContent="center">
+                <Grid item flex={3}>
+                    <Search values={values} setValues={setValues} />
+                </Grid>
+                <Grid item flex={1}>
+                    <Button onClick={handleClickSearchButton} sx={{ color: "white" }}>検索</Button>
+                </Grid>
+            </Grid>
         </>
     );
 
