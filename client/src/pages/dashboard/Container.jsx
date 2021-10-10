@@ -49,7 +49,10 @@ const DashboardComponent = ({ state }) => {
 
     const [records, setRecords] = useState([]);
 
-    const [editedData, setEditedData] = useState({});
+    const [editedData, setEditedData] = useState(null);
+
+    const [labels, setLabels] = useState(null);
+    const [data, setData] = useState(null);
 
     useEffect(() => {
         function toCountDict(dict, array) {
@@ -69,6 +72,12 @@ const DashboardComponent = ({ state }) => {
         if (state === "week") setEditedData(toCountDict(WeekDict, records));
         else if (state === "month") setEditedData(toCountDict(MonthDict, records));
         else if (state === "year") setEditedData(toCountPerMonthDict(YearDict, records));
+
+        if (editedData) {
+            const numberPerDate = Object.values(editedData).map(arr => arr.length);
+            setLabels(Object.keys(editedData));
+            setData(numberPerDate);
+        }
     }, [records, state])
 
     useEffect(() => {
@@ -78,33 +87,37 @@ const DashboardComponent = ({ state }) => {
 
     return (
         <Grid item flex="auto" width="100%">
-            <Box sx={{ mx: 3, my: 4, minWidth: "100px",maxWidth: "500px", minHeight: "200px" }}>
-                <Chart recordList={editedData} />
-            </Box>
-            <Box sx={{ mx: 3, minWidth: "100px", minHeight: "200px" }}>
-                {editedData && Object.keys(editedData).map(key => (
-                    editedData[key].length > 0 && (
-                        <Box my={4}>
-                            <Typography mb={1}>{key}</Typography>
-                            <Grid container spacing={1}>
-                                {editedData[key].map(item => (
-                                    <Grid item key={item._id}>
-                                        <Box
-                                            component="img"
-                                            src={item.book.image}
-                                            alt="No image"
-                                            sx={{
-                                                width: 78,
-                                                height: 112,
-                                                ml: 2,
-                                            }} />
+            {editedData && (
+                <>
+                    <Grid item sx={{ mx: 3, my: 4, width: { xs: "90%", sm: "80%", md: "70%" } }}>
+                        <Chart labels={labels} graphData={data} />
+                    </Grid>
+                    <Grid item sx={{ mx: 3, width: "80%" }}>
+                        {editedData && Object.keys(editedData).map(key => (
+                            editedData[key].length > 0 && (
+                                <Box my={4}>
+                                    <Typography mb={1}>{key}</Typography>
+                                    <Grid container spacing={1}>
+                                        {editedData[key].map(item => (
+                                            <Grid item key={item._id}>
+                                                <Box
+                                                    component="img"
+                                                    src={item.book.image}
+                                                    alt="No image"
+                                                    sx={{
+                                                        width: 78,
+                                                        height: 112,
+                                                        ml: 2,
+                                                    }} />
+                                            </Grid>
+                                        ))}
                                     </Grid>
-                                ))}
-                            </Grid>
-                        </Box>
-                    )
-                ))}
-            </Box>
+                                </Box>
+                            )
+                        ))}
+                    </Grid>
+                </>
+            )}
         </Grid>
     )
 }

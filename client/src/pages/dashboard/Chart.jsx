@@ -1,14 +1,12 @@
 import { Bar } from 'react-chartjs-2';
 
-const Graph = ({ recordList }) => {
-  const labels = Object.keys(recordList);
-  const numberPerDate = Object.values(recordList);
+const Graph = ({ labels, graphData }) => {
 
   const data = {
     labels: labels,
     datasets: [{
       label: '登録した冊数',
-      data: numberPerDate.map(rec => rec.length),
+      data: graphData,
       backgroundColor: [
         'rgba(255, 99, 132, 0.2)',
         'rgba(54, 162, 235, 0.2)',
