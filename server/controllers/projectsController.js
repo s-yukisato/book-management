@@ -12,7 +12,7 @@ const getProject = async (req, res) => {
   if (project) {
     res.status(200).json(project);
   } else {
-    res.status(404).json({ message: "このページは表示できません"})
+    res.status(404).json({ message: "このページは表示できません" });
   }
 };
 
@@ -33,12 +33,23 @@ const updateProject = async (req, res) => {
   await Project.findByIdAndUpdate(projectId, {
     $set: { document: document },
   });
-  res.status(200).json({message: 'ok'});
+  res.status(200).json({ message: "ok" });
+};
+
+const statusChangeProject = async (req, res) => {
+  const projectId = req.params.id;
+  const status = req.body.status;
+
+  await Project.findByIdAndUpdate(projectId, {
+    $set: { status: status },
+  });
+  res.status(200).json({ message: "ok" });
 };
 
 const deleteProject = async (req, res) => {
   const projectId = req.params.id;
   await Project.findByIdAndDelete(projectId);
+  console.log("yar");
   res.status(200).json({ messgae: "削除しました" });
 };
 
@@ -47,5 +58,6 @@ module.exports = {
   getProject,
   createProject,
   updateProject,
+  statusChangeProject,
   deleteProject,
 };

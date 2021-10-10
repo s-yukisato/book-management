@@ -24,8 +24,7 @@ const createRecord = async (req, res) => {
 const updateRecord = async (req, res) => {
   const RecordId = req.params.id;
   const data = req.body;
-  console.log(data);
-  console.log(RecordId);
+
   await Record.findByIdAndUpdate(RecordId, {
     $set: {
       memo: data.memo,
@@ -35,6 +34,16 @@ const updateRecord = async (req, res) => {
     },
   });
   res.status(200).json(data);
+};
+
+const statusChangeRecord = async (req, res) => {
+  const recordId = req.params.id;
+  const status = req.body.status;
+
+  await Record.findByIdAndUpdate(recordId, {
+    $set: { status: status },
+  });
+  res.status(200).json({ message: "ok" });
 };
 
 const deleteRecord = async (req, res) => {
@@ -48,5 +57,6 @@ module.exports = {
   getRecord,
   createRecord,
   updateRecord,
+  statusChangeRecord,
   deleteRecord,
 };
