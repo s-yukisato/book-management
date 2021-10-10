@@ -16,7 +16,6 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 import ContactSupportIcon from '@mui/icons-material/ContactSupport';
 import HomeIcon from '@mui/icons-material/Home';
 import ImportContactsIcon from '@mui/icons-material/ImportContacts';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 
 import LightTooltip from '../block/LightTooltip';
@@ -69,12 +68,6 @@ const Header = React.memo(({ menu }) => {
             to: "/support",
             areaLabel: "supportlink",
             icon: <ContactSupportIcon />
-        },
-        {
-            title: "お知らせ",
-            to: "/notification",
-            areaLabel: "notifications",
-            icon: <NotificationsIcon />
         },
         {
             title: "マイページへ",
