@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import { API_URI } from '../../config';
 
@@ -10,6 +10,7 @@ import Typography from '@mui/material/Typography';
 
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 import UserName from '../../components/FormParts/UserName';
 import Email from '../../components/FormParts/Email';
@@ -22,31 +23,48 @@ import { useAuthContext } from '../../context/AuthContext';
 import { useRedirect } from '../../hooks/useRedirect';
 
 
+const initialState = {
+    name: "",
+    email: "",
+    prevPassword: "",
+    newPassword: ""
+}
+
 const Account = () => {
     const { user } = useAuthContext();
     const { toHomePage } = useRedirect();
 
-    const [values, setValues] = useState({});
+    const [values, setValues] = useState(initialState);
     const [target, setTarget] = useState(null);
     const [error, setError] = useState(null);
 
-    useEffect(() => {
-        if (!user) return;
-        setValues({
-            name: user.name,
-            email: user.email,
-            password: user.password
-        })
-    }, [user])
+    const displayValue = {
+        name: "ユーザー名",
+        email: "メールアドレス",
+        password: "パスワード"
+    }
 
     const [openDialog, setOpenDialog] = useState(false);
     const closeDialog = () => setOpenDialog(false);
 
     const [openSnackbar, setOpenSnackbar] = useState(false);
 
-    const handleClick = (prop) => (e) => {
+    const handleClick = (prop) => (_) => {
+        if (prop === "name") {
+            setValues({...initialState, name: user.name})
+        } else if (prop === "email") {
+            setValues({...initialState, email: user.email})
+        } else {
+            setValues(initialState)
+        }
+        setError(null);
         setOpenDialog(true);
         setTarget(prop);
+    }
+
+    const logout = () => {
+        document.cookie = "token=;";
+        window.location.reload();
     }
 
     const update = async (e) => {
@@ -58,30 +76,50 @@ const Account = () => {
             .then(res => res)
             .catch(err => setError(err.message))
 
-        if (error) return setError("変更に失敗しました")
+        if (error != null) return setError("変更に失敗しました")
 
-        if (!error) {
+        if (error == null) {
             setOpenDialog(false);
             setOpenSnackbar(true);
         }
     }
 
-    const title = `${target}の変更`;
+    const title = `${displayValue[target]}の変更`;
 
     const content = (
         <Box sx={{ mt: 3 }}>
-            <Grid container spacing={2}>
+            <Grid container spacing={3}>
                 {target === "name" && <Grid item xs={12}><UserName values={values} setValues={setValues} /></Grid>}
                 {target === "email" && (
                     <>
-                        <Grid item xs={12}><Password values={values} setValues={setValues} /></Grid>
-                        <Grid item xs={12}><Email values={values} setValues={setValues} /></Grid>
+                        <Grid item xs={12}>
+                            <Email values={values} setValues={setValues} />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Password
+                                values={values}
+                                setValues={setValues}
+                                id="prevPassword"
+                                label="本人確認用パスワード" />
+                        </Grid>
                     </>
                 )}
                 {target === "password" && (
                     <>
-                        <Grid item xs={12}><Password values={values} setValues={setValues} /></Grid>
-                        <Grid item xs={12}><Password values={values} setValues={setValues} /></Grid>
+                        <Grid item xs={12}>
+                            <Password
+                                values={values}
+                                setValues={setValues}
+                                id="prevPassword"
+                                label="本人確認用パスワード" />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Password
+                                values={values}
+                                setValues={setValues}
+                                id="newPassword"
+                                label="新しいパスワード" />
+                        </Grid>
                     </>
                 )}
             </Grid>
@@ -100,6 +138,13 @@ const Account = () => {
             >
                 ホームページへ
             </Button>
+            <Button
+                startIcon={<LogoutIcon />}
+                onClick={logout}
+                sx={{ position: "fixed", top: "70px", right: "20px" }}
+            >
+                ログアウト
+            </Button>
             <Box
                 sx={{
                     my: 8,
@@ -117,7 +162,7 @@ const Account = () => {
                 <Table user={user} handleClick={handleClick} />
             </Box>
             <Dialog isOpen={openDialog} close={closeDialog} title={title} content={content} action={action} />
-            <Snackbar isOpen={openSnackbar} setIsOpen={setOpenSnackbar} message={`${target}を変更しました`} />
+            <Snackbar isOpen={openSnackbar} setIsOpen={setOpenSnackbar} message={`${displayValue[target]}を変更しました`} />
         </>
     )
 }
