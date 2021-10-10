@@ -1,5 +1,3 @@
-import { useRef } from 'react';
-
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 
@@ -44,9 +42,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-const SearchComponent = () => {
-    const searchElement = useRef(null)
-
+const SearchComponent = ({values, setValues}) => {
+    const handleChange = (e) => {
+        setValues({ ...values, "title": e.target.value });
+    };
     return (
         <>
             <Search>
@@ -56,7 +55,8 @@ const SearchComponent = () => {
                 <StyledInputBase
                     placeholder="Search…"
                     inputProps={{ "aria-label": "search" }}
-                    ref={searchElement}
+                    value={values.title}
+                    onChange={handleChange}
                 />
             </Search>
         </>
