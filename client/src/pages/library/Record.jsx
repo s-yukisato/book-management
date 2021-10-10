@@ -30,52 +30,64 @@ const Record = React.memo(({ record, index, setTargetIndex, setActionType }) => 
         <Box
             sx={{
                 pt: 2, px: 2, boxShadow: 2, mb: 2,
+                position: "relative",
                 ":hover": { boxShadow: 6 }
             }}
         >
-            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Box
+                onClick={openDialog}
+                sx={{ display: "flex", justifyContent: "space-between" }}
+            >
                 <Box
                     component="img"
                     src={record.book.image}
                     alt="No image"
-                    onClick={openDialog}
                     sx={{
                         width: 78,
                         height: 112,
                         ml: 2,
                         cursor: "pointer"
                     }} />
-                <Box flex="auto" sx={{ textAlign: "center", py: 3, cursor: "pointer" }} onClick={openDialog}>
+                <Box flex="auto" sx={{ textAlign: "center", py: 3, cursor: "pointer" }}>
                     <Typography variant="h4">{Math.floor(record.page / record.book.pages * 100)}%</Typography>
                 </Box>
                 <Box display='flex' flexDirection='column'>
-                    <Box sx={{ flex: 2, cursor: "pointer" }} onClick={openDialog}>
+                    <Box sx={{ flex: 2, cursor: "pointer" }}>
                         <Typography variant="body2" sx={{ textAlign: 'end', mb: 1 }}>最終更新日</Typography>
                         <Typography variant="body2" sx={{ textAlign: 'end' }}>{record.updatedAt.slice(0, 10)}</Typography>
                         <Typography variant="body2" sx={{ textAlign: 'end' }}>{record.updatedAt.slice(11, 16)}</Typography>
                     </Box>
-                    <Box sx={{ display: { xs: 'block', sm: 'flex' }, flex: 1 }}>
-                        {record.status !== "read" && (
-                            <LightTooltip title="「読み終えた」に変更">
-                                <IconButton onClick={statusChange}>
-                                    <BookIcon />
-                                </IconButton>
-                            </LightTooltip>
-                        )}
-                        <LightTooltip title="削除する">
-                            <IconButton onClick={deleteRecord}>
-                                <DeleteIcon />
-                            </IconButton>
-                        </LightTooltip>
-                    </Box>
                 </Box>
+            </Box>
+            <Box
+                sx={{
+                    display: { xs: 'block', sm: 'flex' },
+                    zIndex: 2, position: 'absolute', top: 100, right: 20
+                }}
+            >
+                {record.status !== "read" && (
+                    <LightTooltip title="「読み終えた」に変更">
+                        <IconButton onClick={statusChange}>
+                            <BookIcon />
+                        </IconButton>
+                    </LightTooltip>
+                )}
+                <LightTooltip title="削除する">
+                    <IconButton onClick={deleteRecord}>
+                        <DeleteIcon />
+                    </IconButton>
+                </LightTooltip>
             </Box>
             <Box
                 display="flex"
                 justifyContent="center"
                 alignItems="center"
+                sx={{position: 'relative'}}
             >
                 <ReadOnlySlider now={record.page} max={record.book.pages} />
+                <Box sx={{position:'absolute', top: '-10px', left: "60%"}}>
+                <Typography variant="body2">{record.page} / {record.book.pages}</Typography>
+                </Box>
             </Box>
         </Box>
     )

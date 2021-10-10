@@ -31,9 +31,8 @@ const initalValue = {
 const RecordList = React.memo(({ records, setRecords, filteredRecords }) => {
     const [openDialog, setOpenDialog] = useState(false);
 
-    const [openSnackbarUpdate, setOpenSnackbarUpdate] = useState(false);
-    const [openSnackbarStatusChange, setOpenSnackbarStatusChange] = useState(false);
-    const [openSnackbarDelete, setOpenSnackbarDelete] = useState(false);
+    const [openSnackbar, setOpenSnackbar] = useState(false);
+    const [message, setMessage] = useState("");
 
     const [error, setError] = useState(null);
 
@@ -42,15 +41,18 @@ const RecordList = React.memo(({ records, setRecords, filteredRecords }) => {
 
     const [values, setValues] = useState(initalValue);
 
-    const statusChange = () => {
+    const statusChange = async () => {
+        await axios.put(`${API_URI}/api/v1/record/status/${records[targetIndex]._id}`, { status: "read" })
+            .then(res => res)
+            .catch(err => console.error(err))
         setRecords(records.map((item) => {
             if (item._id === records[targetIndex]._id) {
                 return { ...item, status: "read" }
             }
             return item
         }))
-
-        setOpenSnackbarStatusChange(true);
+        setMessage("「読み終えた」に変更しました");
+        setOpenSnackbar(true);
         setTargetIndex(null);
     }
 
@@ -59,7 +61,8 @@ const RecordList = React.memo(({ records, setRecords, filteredRecords }) => {
             .then(res => res)
             .catch(err => console.error(err))
         setRecords(records.filter(el => el._id !== records[targetIndex]._id))
-        setOpenSnackbarDelete(true);
+        setMessage("削除しました");
+        setOpenSnackbar(true);
         setTargetIndex(null);
     }
 
@@ -103,7 +106,8 @@ const RecordList = React.memo(({ records, setRecords, filteredRecords }) => {
 
         if (!error) {
             setOpenDialog(false);
-            setOpenSnackbarUpdate(true);
+            setMessage("更新しました");
+            setOpenSnackbar(true);
             setValues(initalValue);
         }
     }
@@ -150,9 +154,7 @@ const RecordList = React.memo(({ records, setRecords, filteredRecords }) => {
                 ))}
             </TransitionGroup>
             <Dialog isOpen={openDialog} close={closeDialog} title={title} content={content} action={action} />
-            <Snackbar isOpen={openSnackbarUpdate} setIsOpen={setOpenSnackbarUpdate} message="変更しました" />
-            <Snackbar isOpen={openSnackbarStatusChange} setIsOpen={setOpenSnackbarStatusChange} message="「読み終えた」に変更しました" />
-            <Snackbar isOpen={openSnackbarDelete} setIsOpen={setOpenSnackbarDelete} message="削除しました" />
+            <Snackbar isOpen={openSnackbar} setIsOpen={setOpenSnackbar} message={message} />
         </Grid >
     )
 })
