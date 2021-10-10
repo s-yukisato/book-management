@@ -10,30 +10,25 @@ body {
   font-family: "Poppins", sans-serif;
   position: relative;
   min-height: 100vh;
-  background: rgb(253, 252, 229, .4);
+  background: rgb(253, 252, 229, 0.4);
 }
 
 /* ============= TextEditer ================= */
 
 .container .ql-editor {
-  width: 100%;
-  max-width: 90vw;
   min-height: 11in;
-  padding: .5in;
+  padding: 0.5in;
   margin: 1rem;
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
   background-color: white;
+  overflow-wrap: break-word;
 }
 
 .container .ql-container.ql-snow {
   border: none;
-  display: flex;
-  justify-content: space-evenly;
 }
 
 .container .ql-toolbar.ql-snow {
-  display: flex;
-  justify-content: center;
   position: sticky;
   top: 10;
   left: -10;
