@@ -44,7 +44,6 @@ export const FetchRecordProvider = ({ children }) => {
     const [dataState, dispatch] = useReducer(dataFetchReducer, initialState)
 
     useEffect(() => {
-        console.log('fetch')
         axios
             .get(`${API_URI}/api/v1/record`)
             .then(res => {
@@ -69,7 +68,6 @@ export const FetchProjectProvider = ({ children }) => {
     const [dataState, dispatch] = useReducer(dataFetchReducer, initialState)
 
     useEffect(() => {
-        console.log('fetch')
         axios
             .get(`${API_URI}/api/v1/project`)
             .then(res => {

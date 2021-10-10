@@ -4,7 +4,6 @@ import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 
 const Copyright = React.memo((props) => {
-    console.log("yarrr")
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
             {'Copyright © '}

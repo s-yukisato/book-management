@@ -4,6 +4,7 @@ import { API_URI } from '../config'
 
 import Backdrop from "../components/block/Backdrop";
 
+
 const AuthContext = createContext();
 
 export function useAuthContext() {
@@ -34,7 +35,6 @@ export function AuthProvider({ children }) {
     const [dataState, dispatch] = useReducer(dataFetchReducer, initialState)
 
     useEffect(() => {
-        console.log('userFetch')
         axios
             .get(`${API_URI}/api/v1/user/auth`)
             .then(res => {

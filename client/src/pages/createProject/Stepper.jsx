@@ -73,7 +73,6 @@ export default function HorizontalLinearStepper({ values, setValues, create }) {
         if (activeStep === steps.length - 1) {
             create();
         }
-        console.log(values)
     };
 
     const handleBack = () => {

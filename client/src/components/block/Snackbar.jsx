@@ -6,13 +6,12 @@ import MuiSnackbar from '@mui/material/Snackbar';
 
 import CloseIcon from '@mui/icons-material/Close';
 
+
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} {...props} />;
 });
 
-
 const Snackbar = ({ isOpen, setIsOpen, message }) => {
-
     const close = (event, reason) => {
         if (reason === 'clickaway') return;
         
