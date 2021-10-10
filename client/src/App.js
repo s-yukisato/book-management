@@ -10,7 +10,7 @@ import Projects from "./pages/projects/Main";
 import NewProject from "./pages/createProject/Main";
 import EditProject from "./pages/editProject/Main";
 import Library from "./pages/library/Main";
-import Support from "./pages/Support";
+import Support from "./pages/contact/Main";
 import Thanks from "./pages/Thanks";
 import MyPage from "./pages/mypage/Account";
 import Error from "./pages/Error";
