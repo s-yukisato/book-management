@@ -18,10 +18,9 @@ const NoRecord = () => {
             textAlign="center"
             spacing={2}
             minHeight="100vh"
-            sx={{ display: { xs: 'block', sm: 'flex' } }}
         >
             <Grid item>
-                <BookLoverLogo width="80%" height="80%" />
+                <BookLoverLogo width="240px" height="120px" />
             </Grid>
             <Grid item sx={{ mx: 1, my: 3 }}>
                 <Typography variant="h6">本棚に登録しましょう。</Typography>

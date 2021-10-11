@@ -13,7 +13,6 @@ const NoProject = () => {
             textAlign="center"
             spacing={2}
             minHeight="100vh"
-            sx={{ display: { xs: 'block', sm: 'flex' } }}
         >
             <Grid item>
                 <EmptyLogo width="240px" height="120px" />
