@@ -84,7 +84,7 @@ const signin = async (req, res) => {
   });
 };
 
-const getInfo = async (req, res) => {
+const getUser = async (req, res) => {
   const id = req.user._id;
   const user = await User.findById(id);
   res.json({
@@ -97,6 +97,41 @@ const getInfo = async (req, res) => {
   });
 };
 
+const updateUser = async (req, res) => {
+  const id = req.user._id;
+  const { values, action } = req.body;
+
+  console.log(values, action);
+  if (action === "name") {
+    await User.findByIdAndUpdate(id, {
+      $set: { name: values.name },
+    });
+  } else {
+    const user = await User.findById(id);
+    const validPass = await bcrypt.compare(values.prevPassword, user.password);
+    if (!validPass) {
+      res.json({
+        status: 400,
+        message: "パスワードが違います",
+      });
+    }
+
+    if (action === "email") {
+      await User.findByIdAndUpdate(id, {
+        $set: { email: values.email },
+      });
+    } else if (action === "password") {
+      await User.findByIdAndUpdate(id, {
+        $set: { password: values.newPassword },
+      });
+    }
+  }
+  res.json({
+    status: 200,
+    message: "ok",
+  });
+};
+
 // アクセストークン生成
 const generateAccessToken = (user) => {
   return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expires: "30s" });
@@ -105,5 +140,6 @@ const generateAccessToken = (user) => {
 module.exports = {
   signup,
   signin,
-  getInfo,
+  getUser,
+  updateUser,
 };

@@ -8,7 +8,6 @@ import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import LogoutIcon from '@mui/icons-material/Logout';
 
@@ -22,6 +21,34 @@ import Table from './UserTable';
 import { useAuthContext } from '../../context/AuthContext';
 import { useRedirect } from '../../hooks/useRedirect';
 
+
+function stringToColor(string) {
+    let hash = 0;
+    let i;
+
+    /* eslint-disable no-bitwise */
+    for (i = 0; i < string.length; i += 1) {
+        hash = string.charCodeAt(i) + ((hash << 5) - hash);
+    }
+
+    let color = '#';
+
+    for (i = 0; i < 3; i += 1) {
+        const value = (hash >> (i * 8)) & 0xff;
+        color += `00${value.toString(16)}`.substr(-2);
+    }
+
+    return color;
+}
+
+function stringAvatar(name) {
+    return {
+        sx: {
+            bgcolor: stringToColor(name),
+        },
+        children: `${name.split(' ')[0][0].toUpperCase()}`,
+    };
+}
 
 const initialState = {
     name: "",
@@ -51,9 +78,9 @@ const Account = () => {
 
     const handleClick = (prop) => (_) => {
         if (prop === "name") {
-            setValues({...initialState, name: user.name})
+            setValues({ ...initialState, name: user.name })
         } else if (prop === "email") {
-            setValues({...initialState, email: user.email})
+            setValues({ ...initialState, email: user.email })
         } else {
             setValues(initialState)
         }
@@ -70,15 +97,19 @@ const Account = () => {
     const update = async (e) => {
         e.preventDefault();
 
-        setError(null);
+        let err = false;
 
-        await axios.post(`${API_URI}/api/v1/user`, values)
-            .then(res => res)
-            .catch(err => setError(err.message))
+        const { data } = await axios.put(`${API_URI}/api/v1/user`, { values, action: target })
 
-        if (error != null) return setError("変更に失敗しました")
+        if (data.status === 400) {
 
-        if (error == null) {
+            setError(data.message)
+            err = true;
+        } else {
+            if (target !== "password") user[target] = values[target]
+        }
+
+        if (!err) {
             setOpenDialog(false);
             setOpenSnackbar(true);
         }
@@ -87,7 +118,7 @@ const Account = () => {
     const title = `${displayValue[target]}の変更`;
 
     const content = (
-        <Box sx={{ mt: 3 }}>
+        <Box sx={{ mt: 3 }} component={"form"}>
             <Grid container spacing={3}>
                 {target === "name" && <Grid item xs={12}><UserName values={values} setValues={setValues} /></Grid>}
                 {target === "email" && (
@@ -117,6 +148,7 @@ const Account = () => {
                             <Password
                                 values={values}
                                 setValues={setValues}
+                                validation
                                 id="newPassword"
                                 label="新しいパスワード" />
                         </Grid>
@@ -153,9 +185,9 @@ const Account = () => {
                     alignItems: 'center',
                 }}
             >
-                <Avatar sx={{ m: 1, bgcolor: 'secondary.main', width: '56px', height: '56px' }}>
-                    <AccountCircleIcon fontSize="large" />
-                </Avatar>
+                <Avatar
+                    {...stringAvatar(user.name)}
+                    sx={{ width: '48px', height: '48px', fontSize: '20px', m: 2 }} />
                 <Typography variant="h6">ようこそ {user.name} !</Typography>
             </Box>
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>

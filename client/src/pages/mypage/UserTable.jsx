@@ -8,7 +8,6 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 
-import EditIcon from '@mui/icons-material/Edit';
 import { Typography } from '@mui/material';
 
 
@@ -43,9 +42,9 @@ const header = [
 ]
 
 const rows = [
-    createData('name', 'ユーザー名', '編集する'),
-    createData('email', 'メールアドレス', '編集する'),
-    createData('password', 'パスワード', '編集する'),
+    createData('name', 'ユーザー名', '変更'),
+    createData('email', 'メールアドレス', '変更'),
+    createData('password', 'パスワード', '変更'),
 ];
 
 
@@ -68,8 +67,16 @@ export default function Tables({ user, handleClick }) {
                                 {user && user[row.id]}
                             </StyledTableCell>
                             <StyledTableCell align="left">
-                                <Button variant="outlined" color="inherit" onClick={handleClick(row.id)} startIcon={<EditIcon />}>
-                                    <Typography sx={{ display: { xs: 'none', sm: 'block' } }}>{row.action}</Typography>
+                                <Button
+                                    onClick={handleClick(row.id)}
+                                    color="inherit"
+                                    sx={{
+                                        boxShadow: "inset -2px 2px 2px rgb(249, 243, 223)",
+                                        ":hover": {
+                                            background: "linear-gradient(to top, #fdfbfb 0%, #F3F0D7 100%)"
+                                        }
+                                    }}>
+                                    <Typography>{row.action}</Typography>
                                 </Button>
                             </StyledTableCell>
                         </StyledTableRow>
