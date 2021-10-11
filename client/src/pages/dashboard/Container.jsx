@@ -69,13 +69,16 @@ const DashboardComponent = ({ state }) => {
             }
             return dict;
         }
-        if (state === "week") setEditedData(toCountDict(WeekDict, records));
-        else if (state === "month") setEditedData(toCountDict(MonthDict, records));
-        else if (state === "year") setEditedData(toCountPerMonthDict(YearDict, records));
+        let processedData;
+        if (state === "week") processedData = toCountDict(WeekDict, records);
+        else if (state === "month") processedData = toCountDict(MonthDict, records);
+        else if (state === "year") processedData = toCountPerMonthDict(YearDict, records);
 
-        if (editedData) {
-            const numberPerDate = Object.values(editedData).map(arr => arr.length);
-            setLabels(Object.keys(editedData));
+        setEditedData(processedData);
+
+        if (processedData) {
+            const numberPerDate = Object.values(processedData).map(arr => arr.length);
+            setLabels(Object.keys(processedData));
             setData(numberPerDate);
         }
     }, [records, state])
