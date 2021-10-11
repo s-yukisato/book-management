@@ -39,13 +39,14 @@ const initalState = {
 }
 
 const BookList = ({ books }) => {
+    // ログインしていない場合の処理用
     const { user } = useAuthContext();
     const { toSignInPage, toSignUpPage } = useRedirect();
 
+    // ユーザーのRecordデータ
     const { dataState } = useFetchRecordContext();
-    const records = dataState.data;
-    // 登録済みの書籍をRecordから探す
-    const registeredList = records.length > 0 ? records.map((record) => record.book.isbn) : [];
+
+    const [isRegisteredList, setIsRegisteredList] = useState(Array(books.length).fill(false));
 
     const [openDialog, setOpenDialog] = useState(false);
 
@@ -57,6 +58,14 @@ const BookList = ({ books }) => {
 
     // Recordに登録するデータ内容
     const [values, setValues] = useState(initalState);
+
+    useEffect(() => {
+        if (dataState.isLoading) return;
+        const records = dataState.data;
+        // 登録済みの書籍をRecordから探す
+        const registeredList = records.length > 0 ? records.map((record) => record.book.isbn) : [];
+        setIsRegisteredList(books.map(book => registeredList.includes(book.isbn)))
+    }, [dataState, books])
 
     useEffect(() => {
         // 初回にダイアログが開かないように
@@ -95,8 +104,12 @@ const BookList = ({ books }) => {
 
         if (!error) {
             setOpenDialog(false);
+
             setOpenSnackbar(true);
+
             setValues(initalState);
+            // 登録済みリストに追加
+            setIsRegisteredList(isRegisteredList.map((item, index) => index === targetIndex ? true : item));
             setTargetIndex(null);
         }
     }
@@ -139,25 +152,28 @@ const BookList = ({ books }) => {
                 container
                 flex="auto"
                 justifyContent='space-evenly'
-                spacing={2}
+                columnSpacing={2}
+                rowSpacing={2}
                 sx={{
                     "&:before": {
                         display: "block",
                         content: '""',
                         width: "210px",
+                        m: 1,
                         order: 1
                     },
                     "&:after": {
                         display: "block",
                         content: '""',
                         width: "210px",
+                        m: 1,
                     }
                 }}
             >
                 {books.map((book, index) => (
                     <Book
                         key={book.isbn}
-                        registered={registeredList.includes(book.isbn)}
+                        isRegisteredList={isRegisteredList}
                         index={index}
                         setTargetIndex={setTargetIndex}
                         book={book} />

@@ -13,12 +13,12 @@ import AddIcon from '@mui/icons-material/Add';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 
 import LightTooltip from '../../components/block/LightTooltip';
-import { BookCard } from '../../components/UI/BookCard';
+import { BookCard } from './BookCard';
 
 import { useRedirect } from '../../hooks/useRedirect';
 
 
-const Book = React.memo(({ book, registered, index, setTargetIndex }) => {
+const Book = React.memo(({ book, isRegisteredList, index, setTargetIndex }) => {
     const { toLibraryPage } = useRedirect();
 
     const openDialog = () => setTargetIndex(index);
@@ -44,7 +44,7 @@ const Book = React.memo(({ book, registered, index, setTargetIndex }) => {
                             precision={0.1}
                             readOnly />
                     </Box>
-                    {registered ? (
+                    {isRegisteredList[index] ? (
                         <LightTooltip title="本棚から削除する">
                             <IconButton onClick={toLibraryPage}>
                                 <BookmarkAddedIcon color="success" />
