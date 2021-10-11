@@ -23,7 +23,7 @@ const Container = React.memo(({ books, loading, currentPage, setCurrentPage, max
                     container
                     flex="auto"
                     justifyContent='space-evenly'
-                    spacing={2}
+                    columnSpacing={2}
                     m="auto"
                     sx={{
                         "&:before": {

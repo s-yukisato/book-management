@@ -49,7 +49,7 @@ const statusChangeProject = async (req, res) => {
 const deleteProject = async (req, res) => {
   const projectId = req.params.id;
   await Project.findByIdAndDelete(projectId);
-  console.log("yar");
+
   res.status(200).json({ messgae: "削除しました" });
 };
 

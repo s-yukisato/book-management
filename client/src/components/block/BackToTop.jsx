@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import CssBaseline from '@mui/material/CssBaseline';
@@ -47,15 +47,17 @@ ScrollTop.propTypes = {
   window: PropTypes.func,
 };
 
-export default function BackToTop(props) {
+const BackToTop = React.memo((props) => {
   return (
-    <React.Fragment>
+    <>
       <CssBaseline />
       <ScrollTop {...props}>
         <Fab color="secondary" size="small" aria-label="scroll back to top">
           <KeyboardArrowUpIcon />
         </Fab>
       </ScrollTop>
-    </React.Fragment>
+    </>
   );
-}
+});
+
+export default BackToTop;
