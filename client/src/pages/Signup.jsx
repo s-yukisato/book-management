@@ -59,10 +59,17 @@ const SignUp = () => {
                                 <Email values={values} setValues={setValues} />
                             </Grid>
                             <Grid item xs={12}>
-                                <Password values={values} setValues={setValues} />
+                                <Password
+                                    values={values}
+                                    setValues={setValues}
+                                    validation
+                                    id="password"
+                                    label="パスワード" />
                             </Grid>
                             <Grid item xs={12}>
-                                <ConfirmPassword values={values} setValues={setValues} />
+                                <ConfirmPassword
+                                    values={values}
+                                    setValues={setValues} />
                             </Grid>
                         </Grid>
                         <Typography color="error" sx={{ textAlign: 'center', mt: 2 }}>{error}</Typography>
