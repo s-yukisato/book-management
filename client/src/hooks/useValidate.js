@@ -7,7 +7,6 @@ export const useUserNameValidate = () => {
   const validate = (inputValue) => {
     const minPostLength = 4;
     const maxPostLength = 16;
-    const regex = /[A-Za-z0-9]/;
 
     setError(true);
     if (!inputValue) {
@@ -19,8 +18,6 @@ export const useUserNameValidate = () => {
       setMessage(
         `ユーザー名は${minPostLength}文字以上${maxPostLength}文字以下にしてください`
       );
-    } else if (!regex.test(inputValue)) {
-      setMessage("正しい形式で入力してください");
     } else {
       setError(false);
       setMessage("");
@@ -31,7 +28,7 @@ export const useUserNameValidate = () => {
 };
 
 export const useEmailValidate = () => {
-  const [error, setError] = useState("");
+  const [error, setError] = useState(false);
   const [message, setMessage] = useState("");
 
   const validate = (inputValue) => {
@@ -62,7 +59,7 @@ export const useEmailValidate = () => {
 };
 
 export const usePasswordValidate = () => {
-  const [error, setError] = useState("");
+  const [error, setError] = useState(false);
   const [message, setMessage] = useState("");
 
   const validate = (inputValue) => {
