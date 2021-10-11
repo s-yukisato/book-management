@@ -12,6 +12,7 @@ const data = require("./routes/data");
 const book = require("./routes/book");
 const record = require("./routes/record");
 const project = require("./routes/project");
+const user = require("./routes/user");
 
 require("dotenv").config();
 
@@ -37,11 +38,12 @@ app.use(
   })
 );
 
-app.use("/api/v1/user", authRoute);
+app.use("/api/v1/auth", authRoute);
 app.use("/api/data", data);
 app.use("/api/v1/book", book);
 app.use("/api/v1/record", authenticate, record);
 app.use("/api/v1/project", authenticate, project);
+app.use("/api/v1/user", authenticate, user);
 
 app.use(cookieParser());
 app.use(

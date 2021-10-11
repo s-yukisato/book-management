@@ -36,7 +36,7 @@ export function AuthProvider({ children }) {
 
     useEffect(() => {
         axios
-            .get(`${API_URI}/api/v1/user/auth`)
+            .get(`${API_URI}/api/v1/auth/auth`)
             .then(res => {
                 dispatch({ type: 'FETCH_SUCCESS', payload: res.data.user })
             })

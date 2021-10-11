@@ -4,7 +4,7 @@ import axios from "axios";
 import { API_URI } from "../config";
 
 export const useLogin = (values) => {
-  const url = `${API_URI}/api/v1/user`;
+  const url = `${API_URI}/api/v1/auth`;
 
   const [error, setError] = useState(null);
 
