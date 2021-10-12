@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const expressJwt = require("express-jwt");
 const cookieParser = require("cookie-parser");
-const csrf = require("csurf");
 const path = require("path");
 
 const authenticate = require("./authenticate");
@@ -56,14 +55,6 @@ app.use(
     getToken: (req) => req.cookies.token,
   })
 );
-const csrfProtection = csrf({
-  cookie: true,
-});
-app.use(csrfProtection);
-
-app.get("/csrf-token", (req, res) => {
-  res.json({ csrfToken: req.csrfToken() });
-});
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname,'../client/build/index.html'));
