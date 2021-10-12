@@ -84,6 +84,11 @@ const signin = async (req, res) => {
   });
 };
 
+const signout = (req, res) => {
+  res.clearCookie("token");
+  res.json({ message: "sign out" });
+};
+
 const getUser = async (req, res) => {
   const id = req.user._id;
   const user = await User.findById(id);
@@ -140,6 +145,7 @@ const generateAccessToken = (user) => {
 module.exports = {
   signup,
   signin,
+  signout,
   getUser,
   updateUser,
 };
