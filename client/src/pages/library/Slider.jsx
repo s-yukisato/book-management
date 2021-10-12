@@ -61,7 +61,7 @@ const PrettoSlider = styled(Slider)({
 });
 
 
-export function ControlledSlider({ values, setValues, max }) {
+export function ControlledSlider({ values, setValues }) {
   const handleChange = (e) => {
     setValues({ ...values, "page": e.target.value });
   };
@@ -73,7 +73,7 @@ export function ControlledSlider({ values, setValues, max }) {
         valueLabelDisplay="auto"
         aria-label="pretto slider"
         value={values.page}
-        max={max}
+        max={values.pages}
         onChange={handleChange}
       />
     </Box>

@@ -82,11 +82,11 @@ const Record = React.memo(({ record, index, setTargetIndex, setActionType }) => 
                 display="flex"
                 justifyContent="center"
                 alignItems="center"
-                sx={{position: 'relative'}}
+                sx={{ position: 'relative' }}
             >
                 <ReadOnlySlider now={record.page} max={record.book.pages} />
-                <Box sx={{position:'absolute', top: '-10px', left: "56%"}}>
-                <Typography variant="body2">{record.page} / {record.book.pages}</Typography>
+                <Box sx={{ position: 'absolute', top: '-10px', left: "50%" }}>
+                    <Typography variant="body2">{record.page} / {record.book.pages}</Typography>
                 </Box>
             </Box>
         </Box>
