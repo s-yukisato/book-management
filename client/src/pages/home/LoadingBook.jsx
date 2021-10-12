@@ -9,7 +9,14 @@ import Skeleton from '@mui/material/Skeleton';
 const LoadingBook = React.memo(() => {
   return (
     <Grid item>
-      <Card sx={{ width: 210, height: 280, mb: 1, p: 2, boxShadow: 2, bgcolor: "transparent", cursor: "inherit" }}>
+      <Card sx={{
+        width: 210,
+        height: 280,
+        m: 1, p: 2,
+        boxShadow: 2,
+        bgcolor: "transparent",
+        cursor: "inherit"
+      }}>
         <Skeleton variant="rectangular" width={180} height={130} />
         <Box sx={{ pt: 0.5 }}>
           <Skeleton />

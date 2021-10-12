@@ -89,7 +89,7 @@ const DashboardComponent = ({ state }) => {
     }, [dataState])
 
     return (
-        <Grid item flex="auto" width="100%">
+        <Grid item flex="auto" width="100%" pt={3}>
             {editedData && (
                 <>
                     <Grid item sx={{ mx: 3, my: 4, width: { xs: "90%", sm: "80%", md: "70%" } }}>

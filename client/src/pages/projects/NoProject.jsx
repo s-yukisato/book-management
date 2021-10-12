@@ -12,7 +12,7 @@ const NoProject = () => {
             alignItems="center"
             textAlign="center"
             spacing={2}
-            minHeight="100vh"
+            minHeight="82vh"
         >
             <Grid item>
                 <EmptyLogo width="240px" height="120px" />

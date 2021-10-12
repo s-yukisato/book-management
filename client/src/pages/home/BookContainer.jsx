@@ -24,18 +24,20 @@ const Container = React.memo(({ books, loading, currentPage, setCurrentPage, max
                     flex="auto"
                     justifyContent='space-evenly'
                     columnSpacing={2}
-                    m="auto"
+                    rowSpacing={2}
                     sx={{
                         "&:before": {
                             display: "block",
                             content: '""',
                             width: "210px",
+                            m: 1,
                             order: 1
                         },
                         "&:after": {
                             display: "block",
                             content: '""',
                             width: "210px",
+                            m: 1
                         }
                     }}
                 >

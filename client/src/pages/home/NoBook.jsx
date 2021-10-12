@@ -13,7 +13,7 @@ const NoBook = () => {
             alignItems="center"
             textAlign="center"
             spacing={2}
-            minHeight="100vh"
+            minHeight="82vh"
             sx={{ display: { xs: 'block', sm: 'flex' } }}
         >
             <Grid item>

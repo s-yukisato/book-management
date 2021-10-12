@@ -38,7 +38,7 @@ const SignUp = () => {
                 <CssBaseline />
                 <Box
                     sx={{
-                        marginTop: 8,
+                        pt: 8,
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
@@ -90,7 +90,7 @@ const SignUp = () => {
                         </Grid>
                     </Box>
                 </Box>
-                <Copyright sx={{ mt: 5 }} />
+                <Copyright sx={{ pt: 8, pb: 4 }} />
             </Container>
         </ThemeProvider>
     );
