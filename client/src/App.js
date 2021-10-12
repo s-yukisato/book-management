@@ -1,7 +1,7 @@
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import axios from "axios";
-import { API_URI } from "./config";
+// import { API_URI } from "./config";
 
 import Home from "./pages/home/Main";
 import Signin from "./pages/Signin";
@@ -28,13 +28,13 @@ axios.defaults.withCredentials = true;
 
 function App() {
   
-  useEffect(() => {
-    const getCsrfToken = async () => {
-      const { data } = await axios.get(`${API_URI}/csrf-token`);
-      axios.defaults.headers.post["X-CSRF-Token"] = data.csrfToken;
-    };
-    getCsrfToken();
-  }, []);
+  // useEffect(() => {
+  //   const getCsrfToken = async () => {
+  //     const { data } = await axios.get(`${API_URI}/csrf-token`);
+  //     axios.defaults.headers.post["X-CSRF-Token"] = data.csrfToken;
+  //   };
+  //   getCsrfToken();
+  // }, []);
 
   return (
     <>

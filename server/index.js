@@ -61,9 +61,9 @@ const csrfProtection = csrf({
 });
 app.use(csrfProtection);
 
-app.get("/csrf-token", (req, res) => {
-  res.json({ csrfToken: req.csrfToken() });
-});
+// app.get("/csrf-token", (req, res) => {
+//   res.json({ csrfToken: req.csrfToken() });
+// });
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname,'../client/build/index.html'));
