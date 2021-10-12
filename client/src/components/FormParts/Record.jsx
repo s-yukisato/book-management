@@ -2,11 +2,11 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Rating from '@mui/material/Rating';
+
+import { usePageValidate } from '../../hooks/useValidate';
 
 
 export const Memo = ({ values, setValues }) => {
@@ -53,22 +53,49 @@ export const Status = ({ values, setValues }) => {
 }
 
 export const Page = ({ values, setValues }) => {
+    const { error, message, validate } = usePageValidate()
+
     const handleChange = (e) => {
-        setValues({ ...values, "page": e.target.value });
+        const post = e.target.value;
+        setValues({ ...values, "page": post });
+        validate(post)
+    };
+
+    return (
+        <TextField
+            id="page"
+            type="number"
+            variant="outlined"
+            fullWidth
+            value={values.page}
+            label="読み終わったページ数"
+            error={error}
+            helperText={message}
+            onChange={handleChange}
+        />
+    )
+}
+
+export const PagesOfBook = ({ values, setValues }) => {
+    const { error, message, validate } = usePageValidate()
+
+    const handleChange = (e) => {
+        const post = e.target.value;
+        setValues({ ...values, book: { ...values.book, pages: post } });
+        validate(post)
     };
     return (
-        <FormControl fullWidth>
-            <InputLabel id="page">ページ数</InputLabel>
-            <OutlinedInput
-                id="page"
-                type="number"
-                name="page"
-                label="ページ数"
-                value={values.page}
-                onChange={handleChange}
-                endAdornment={<InputAdornment position="end">/300</InputAdornment>}
-            />
-        </FormControl>
+        <TextField
+            id="pages-of-book"
+            type="number"
+            variant="outlined"
+            fullWidth
+            value={values.book.pages}
+            label="書籍のページ数"
+            error={error}
+            helperText={message}
+            onChange={handleChange}
+        />
     )
 }
 
