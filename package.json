@@ -1,0 +1,26 @@
+{
+  "name": "book-manager",
+  "version": "1.0.0",
+  "description": "* 読んでいる書籍の進捗状況を把握すること\r * 目的を持った読書を促す",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/index.js",
+    "heroku-postbuild": "cd client && npm install && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/s-yukisato/book-management.git"
+  },
+  "engines": {
+    "node": "^14.0.x",
+    "npm": "6.14.x"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/s-yukisato/book-management/issues"
+  },
+  "homepage": "https://github.com/s-yukisato/book-management#readme"
+}
