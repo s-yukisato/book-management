@@ -2,10 +2,9 @@
   "name": "book-manager",
   "version": "1.0.0",
   "description": "* 読んでいる書籍の進捗状況を把握すること\r * 目的を持った読書を促す",
-  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server/index.js",
+    "start": "node ./server/index.js",
     "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "repository": {
