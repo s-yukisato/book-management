@@ -17,7 +17,7 @@ const NoRecord = () => {
             alignItems="center"
             textAlign="center"
             spacing={2}
-            minHeight="100vh"
+            minHeight="82vh"
         >
             <Grid item>
                 <BookLoverLogo width="240px" height="120px" />

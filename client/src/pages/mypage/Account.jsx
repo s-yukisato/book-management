@@ -89,9 +89,10 @@ const Account = () => {
         setTarget(prop);
     }
 
-    const logout = () => {
-        document.cookie = "token=;";
-        window.location.reload();
+    const logout = async () => {
+        await axios.get(`${API_URI}/api/v1/auth/signout`)
+            .then(() => window.location.reload())
+            .catch(() => console.error("エラーが発生しました"))
     }
 
     const update = async (e) => {
@@ -166,20 +167,20 @@ const Account = () => {
             <Button
                 startIcon={<ArrowBackIcon />}
                 onClick={toHomePage}
-                sx={{ position: "fixed", top: "70px", left: "20px" }}
+                sx={{ position: "fixed", top: "60px", left: "20px" }}
             >
                 ホームページへ
             </Button>
             <Button
                 startIcon={<LogoutIcon />}
                 onClick={logout}
-                sx={{ position: "fixed", top: "70px", right: "20px" }}
+                sx={{ position: "fixed", top: "60px", right: "20px" }}
             >
                 ログアウト
             </Button>
             <Box
                 sx={{
-                    my: 8,
+                    pt: 10,
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',

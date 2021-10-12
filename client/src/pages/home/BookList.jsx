@@ -13,7 +13,8 @@ import {
     Memo,
     Status,
     RatingPart as Rating,
-    Page
+    Page,
+    PagesOfBook
 } from '../../components/FormParts/Record';
 import Dialog from '../../components/block/Dialog';
 import Snackbar from '../../components/block/Snackbar';
@@ -118,12 +119,12 @@ const BookList = ({ books }) => {
     const title = values.book.title;
 
     const content = (
-        <Box sx={{ mt: 3 }}>
+        <Box sx={{ mt: 2 }}>
             <Grid container spacing={2}>
                 <Grid item xs={12}><Memo values={values} setValues={setValues} /></Grid>
                 <Grid item xs={12}><Status values={values} setValues={setValues} /></Grid>
                 <Grid item xs={12} sm={6}><Page values={values} setValues={setValues} /></Grid>
-                {/* <Grid item xs={12} sm={6}><Page values={values} setValues={setValues} /></Grid> */}
+                <Grid item xs={12} sm={6}><PagesOfBook values={values} setValues={setValues} /></Grid>
                 <Grid item xs={12}><Rating values={values} setValues={setValues} /></Grid>
             </Grid>
             <Typography color="error" sx={{ textAlign: 'center', mt: 2 }}>{error}</Typography>
@@ -144,7 +145,6 @@ const BookList = ({ books }) => {
             <Button onClick={toSignInPage}>サインイン</Button>
         </>
     )
-
 
     return (
         <>

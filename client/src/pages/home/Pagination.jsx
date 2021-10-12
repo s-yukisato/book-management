@@ -22,7 +22,7 @@ const Pagination = ({ currentPage, setCurrentPage, maxPage }) => {
     <Stack spacing={2} p={2}>
       <Typography>Page: {currentPage}</Typography>
       <MuiPagination
-        count={maxPage}
+        count={maxPage ? maxPage : 0}
         page={currentPage}
         variant="outlined"
         color="secondary"

@@ -13,11 +13,13 @@ export const useLogin = (values) => {
   const login = async (e) => {
     e.preventDefault();
     const { data } = await axios.post(
+      // sign in or sign up で処理を分ける
       `${url}${history.location.pathname}`,
       values
     );
 
     if (data.status === 200 || data.status === 201) {
+      // cookie を読み込むため
       window.location.reload();
     } else if (data.status === 400) {
       setError(data.message);

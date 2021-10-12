@@ -89,3 +89,27 @@ export const usePasswordValidate = () => {
 
   return { error, message, validate };
 };
+
+
+export const usePageValidate = () => {
+  const [error, setError] = useState(false);
+  const [message, setMessage] = useState("");
+
+  const validate = (inputValue) => {
+    const regex = /^[0-9]*$/;
+
+    setError(true);
+    if (!inputValue) {
+      setMessage("ページ数を入力してください");
+    } else if (!regex.test(inputValue)) {
+      setMessage(
+        "半角数字のみ使用可能です"
+      );
+    } else {
+      setError(false);
+      setMessage("");
+    }
+  };
+
+  return { error, message, validate };
+};

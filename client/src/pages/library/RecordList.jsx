@@ -26,6 +26,7 @@ const initalValue = {
     status: "",
     rating: 0,
     page: 0,
+    pages: 0
 }
 
 const RecordList = React.memo(({ records, setRecords, filteredRecords }) => {
@@ -77,6 +78,7 @@ const RecordList = React.memo(({ records, setRecords, filteredRecords }) => {
                 status: records[targetIndex].status,
                 rating: records[targetIndex].rating,
                 page: records[targetIndex].page,
+                pages: records[targetIndex].book.pages,
             })
             setOpenDialog(true);
         } else if (actionType === "delete") {
@@ -98,16 +100,32 @@ const RecordList = React.memo(({ records, setRecords, filteredRecords }) => {
         setError(null);
         if (error) return;
 
+        let data;
         await axios.put(`${API_URI}/api/v1/record/${records[targetIndex]._id}`, values)
-            .then(res => console.log(res.data))
+            .then(res => data = res.data)
             .catch(err => setError(err.message))
 
         if (error) return setError("登録に失敗しました");
 
         if (!error) {
             setOpenDialog(false);
+            // 変更したデータを反映
+            setRecords(records.map((item) => {
+                if (item._id === records[targetIndex]._id) {
+                    return {
+                        ...item,
+                        memo: data.memo,
+                        status: data.status,
+                        rating: data.rating,
+                        page: data.page
+                    };
+                }
+                return item
+            }))
+
             setMessage("更新しました");
             setOpenSnackbar(true);
+            setTargetIndex(null);
             setValues(initalValue);
         }
     }
@@ -121,7 +139,9 @@ const RecordList = React.memo(({ records, setRecords, filteredRecords }) => {
                 <Grid item xs={12}><Memo values={values} setValues={setValues} /></Grid>
                 <Grid item xs={12}><Status values={values} setValues={setValues} /></Grid>
                 <Grid item xs={12}><Rating values={values} setValues={setValues} /></Grid>
-                <Grid item xs={12}><ControlledSlider values={values} setValues={setValues} /></Grid>
+                <Grid item xs={12} justifyContent="center">
+                    <ControlledSlider values={values} setValues={setValues} />
+                </Grid>
             </Grid>
             <Typography color="error" sx={{ textAlign: 'center', mt: 2 }}>{error}</Typography>
         </Box>
