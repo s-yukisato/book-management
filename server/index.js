@@ -4,6 +4,7 @@ const cors = require("cors");
 const expressJwt = require("express-jwt");
 const cookieParser = require("cookie-parser");
 const csrf = require("csurf");
+const path = require("path");
 
 const authenticate = require("./authenticate");
 
@@ -38,6 +39,8 @@ app.use(
   })
 );
 
+app.use(express.static(path.join(__dirname, '../client/build')));
+
 app.use("/api/v1/auth", authRoute);
 app.use("/api/data", data);
 app.use("/api/v1/book", book);
@@ -60,6 +63,10 @@ app.use(csrfProtection);
 
 app.get("/csrf-token", (req, res) => {
   res.json({ csrfToken: req.csrfToken() });
+});
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname,'../client/build/index.html'));
 });
 
 app.listen(port, (req, res) => {
