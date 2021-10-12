@@ -11,8 +11,8 @@ const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} {...props} />;
 });
 
-const Snackbar = ({ isOpen, setIsOpen, message }) => {
-    const close = (event, reason) => {
+const Snackbar = React.memo(({ isOpen, setIsOpen, message }) => {
+    const close = (_, reason) => {
         if (reason === 'clickaway') return;
         
         setIsOpen(false);
@@ -35,7 +35,7 @@ const Snackbar = ({ isOpen, setIsOpen, message }) => {
         <div>
             <MuiSnackbar
                 open={isOpen}
-                autoHideDuration={5000}
+                autoHideDuration={3000}
                 onClose={close}
                 action={action}
             >
@@ -46,6 +46,6 @@ const Snackbar = ({ isOpen, setIsOpen, message }) => {
         </div>
     );
 
-};
+});
 
 export default Snackbar;
