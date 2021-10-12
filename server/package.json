@@ -9,7 +9,13 @@
     "devStart": "nodemon index.js",
     "heroku-postbuild": "cd client && yarn install && yarn build"
   },
-  "keywords": [],
+  "keywords": [
+    "heroku"
+  ],
+  "engines": {
+    "node": "^14.0.x",
+    "npm": "6.14.x"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
