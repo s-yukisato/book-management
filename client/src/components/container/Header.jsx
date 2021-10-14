@@ -20,7 +20,7 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 
 import LightTooltip from '../block/LightTooltip';
 
-import NameLogo from '../../assets/name_logo.png';
+import NameLogo from '../../assets/name.png';
 
 
 const Header = React.memo(({ menu }) => {
@@ -117,10 +117,12 @@ const Header = React.memo(({ menu }) => {
                 <Toolbar>
                     <Box sx={{ flexGrow: 1, display: { xs: "block", sm: "none" } }} />
                     <Box sx={{ display: { xs: "block", sm: "none" } }}>{menu}</Box>
-                    <Box sx={{ display: { xs: "none", sm: "block"}}} pl={3} component={"img"} src={NameLogo} width={128} height={32}></Box>
+                    <Box sx={{ display: { xs: "none", sm: "block" } }} component={RouterLink} to={"/"}>
+                        <Box component={"img"} src={NameLogo} width={128} height={40} pl={3} pt={1} />
+                    </Box>
                     <Box sx={{ flexGrow: 1 }} />
                     <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
-                        {listItems.map((item, index) => (
+                        {listItems.map(item => (
                             <LightTooltip title={item.title}>
                                 <IconButton
                                     component={RouterLink}
