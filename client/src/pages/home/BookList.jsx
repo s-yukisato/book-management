@@ -4,6 +4,8 @@ import { API_URI } from "../../config";
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Chip from '@mui/material/Chip';
+import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
@@ -26,7 +28,7 @@ import { useFetchRecordContext } from '../../context/FetchContext';
 import { useRedirect } from '../../hooks/useRedirect';
 
 
-const initalState = {
+const initialState = {
     memo: '',
     status: 'reading',
     rating: 3,
@@ -37,6 +39,15 @@ const initalState = {
         image: "",
         pages: 300,
     }
+}
+
+const initialBookInfo = {
+    title: "",
+    author: "",
+    publisher: "",
+    image: "",
+    price: "",
+    salesDate: "",
 }
 
 const BookList = ({ books }) => {
@@ -50,15 +61,19 @@ const BookList = ({ books }) => {
     const [isRegisteredList, setIsRegisteredList] = useState(Array(books.length).fill(false));
 
     const [openDialog, setOpenDialog] = useState(false);
+    const [openDialogInfo, setOpenDialogInfo] = useState(false);
 
     const [openSnackbar, setOpenSnackbar] = useState(false);
 
     const [error, setError] = useState(null);
 
     const [targetIndex, setTargetIndex] = useState(null);
+    const [actionType, setActionType] = useState(null);
 
     // Recordに登録するデータ内容
-    const [values, setValues] = useState(initalState);
+    const [values, setValues] = useState(initialState);
+
+    const [bookInfo, setBookInfo] = useState(initialBookInfo);
 
     useEffect(() => {
         if (dataState.isLoading) return;
@@ -72,20 +87,34 @@ const BookList = ({ books }) => {
         // 初回にダイアログが開かないように
         if (targetIndex == null) return;
 
-        // 選択された書籍のデータをbooks配列から参照
-        setValues({
-            ...values, book: {
-                isbn: books[targetIndex].isbn,
+        if (actionType === "register") {
+            // 選択された書籍のデータをbooks配列から参照
+            setValues({
+                ...values, book: {
+                    isbn: books[targetIndex].isbn,
+                    title: books[targetIndex].title,
+                    image: books[targetIndex].largeImageUrl,
+                    pages: 300
+                }
+            })
+            setOpenDialog(true);
+        } else {
+            setBookInfo({
                 title: books[targetIndex].title,
+                author: books[targetIndex].author,
+                publisher: books[targetIndex].publisherName,
                 image: books[targetIndex].largeImageUrl,
-                pages: 300
-            }
-        })
-        setOpenDialog(true);
+                price: books[targetIndex].itemPrice,
+                salesDate: books[targetIndex].salesDate,
+            })
+            setOpenDialogInfo(true);
+        }
+
     }, [targetIndex]);
 
     const closeDialog = () => {
         setOpenDialog(false);
+        setOpenDialogInfo(false);
         setTargetIndex(null);
     };
 
@@ -108,7 +137,7 @@ const BookList = ({ books }) => {
 
             setOpenSnackbar(true);
 
-            setValues(initalState);
+            setValues(initialState);
             // 登録済みリストに追加
             setIsRegisteredList(isRegisteredList.map((item, index) => index === targetIndex ? true : item));
             setTargetIndex(null);
@@ -146,6 +175,33 @@ const BookList = ({ books }) => {
         </>
     )
 
+    const infoContent = (
+        <>
+            <Box display="flex" justifyContent="center" mb={2} minWidth="370px" maxWidth="680px">
+                <Box component="img"
+                    src={bookInfo.image}
+                    alt="No image"
+                    sx={{ width: 97, height: 130, display: "block" }} />
+            </Box>
+
+
+            <Divider textAlign="left"><Chip color="info" label="タイトル" /></Divider>
+            <Typography align="right" my={2} pr={4}>{bookInfo.title}</Typography>
+
+            <Divider textAlign="left"><Chip color="info" label="著者" /></Divider>
+            <Typography align="right" my={2} pr={4}>{bookInfo.author ? bookInfo.author : "情報がありません"}</Typography>
+
+            <Divider textAlign="left"><Chip color="info" label="出版社" /></Divider>
+            <Typography align="right" my={2} pr={4}>{bookInfo.publisher}</Typography>
+
+            <Divider textAlign="left"><Chip color="info" label="価格" /></Divider>
+            <Typography align="right" my={2} pr={4}>¥ {bookInfo.price}</Typography>
+
+            <Divider textAlign="left"><Chip color="info" label="発売日" /></Divider>
+            <Typography align="right" mt={2} pr={4}>{bookInfo.salesDate}</Typography>
+        </>
+    )
+
     return (
         <>
             <Grid
@@ -176,6 +232,7 @@ const BookList = ({ books }) => {
                         isRegisteredList={isRegisteredList}
                         index={index}
                         setTargetIndex={setTargetIndex}
+                        setActionType={setActionType}
                         book={book} />
                 ))}
             </Grid>
@@ -189,6 +246,7 @@ const BookList = ({ books }) => {
                     content={<AuthenticationLogo width="80%" height="80%" />}
                     action={authAction} />
             )}
+            <Dialog isOpen={openDialogInfo} close={closeDialog} title={title} content={infoContent} />
             <Snackbar isOpen={openSnackbar} setIsOpen={setOpenSnackbar} message="本棚に登録しました" />
         </>
     )

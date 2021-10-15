@@ -18,14 +18,29 @@ import { BookCard } from './BookCard';
 import { useRedirect } from '../../hooks/useRedirect';
 
 
-const Book = React.memo(({ book, isRegisteredList, index, setTargetIndex }) => {
+const Book = React.memo(({ book, isRegisteredList, index, setTargetIndex, setActionType }) => {
     const { toLibraryPage } = useRedirect();
 
-    const openDialog = () => setTargetIndex(index);
+    const openDialog = () => {
+        setActionType("register");
+        setTargetIndex(index);
+    }
+
+    const openBookInfo = () => {
+        setActionType("info");
+        setTargetIndex(index);
+    }
 
     return (
-        <Grid item>
-            <BookCard sx={{ bgcolor: "transparent", ":hover": { boxShadow: 4 } }}>
+        <Grid item sx={{ position: "relative" }}>
+            <BookCard
+                onClick={openBookInfo}
+                sx={{
+                    bgcolor: "transparent",
+                    ":hover": { boxShadow: 4 },
+                    cursor: "pointer"
+                }}
+            >
                 <CardMedia
                     component="img"
                     image={book.largeImageUrl}
@@ -44,21 +59,25 @@ const Book = React.memo(({ book, isRegisteredList, index, setTargetIndex }) => {
                             precision={0.1}
                             readOnly />
                     </Box>
-                    {isRegisteredList[index] ? (
-                        <LightTooltip title="本棚から削除する">
-                            <IconButton onClick={toLibraryPage}>
-                                <BookmarkAddedIcon color="success" />
-                            </IconButton>
-                        </LightTooltip>
-                    ) : (
-                        <LightTooltip title="本棚に登録する">
-                            <IconButton onClick={openDialog}>
-                                <AddIcon color="primary" />
-                            </IconButton>
-                        </LightTooltip>
-                    )}
                 </CardActions>
             </BookCard>
+            {isRegisteredList[index] ? (
+                <LightTooltip title="本棚から削除する">
+                    <IconButton
+                        onClick={toLibraryPage}
+                        sx={{ position: "absolute", top: "15px", left: "15px", zIndex: 10 }}>
+                        <BookmarkAddedIcon color="info" />
+                    </IconButton>
+                </LightTooltip>
+            ) : (
+                <LightTooltip title="本棚に登録する">
+                    <IconButton
+                        onClick={openDialog}
+                        sx={{ position: "absolute", bottom: "5px", right: "5px", zIndex: 10 }}>
+                        <AddIcon color="primary" />
+                    </IconButton>
+                </LightTooltip>
+            )}
         </Grid>
     )
 })
