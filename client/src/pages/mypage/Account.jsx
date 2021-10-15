@@ -21,6 +21,8 @@ import Table from './UserTable';
 import { useAuthContext } from '../../context/AuthContext';
 import { useRedirect } from '../../hooks/useRedirect';
 
+import { CenterContainer } from './CustmazedContainer'
+
 
 function stringToColor(string) {
     let hash = 0;
@@ -178,22 +180,27 @@ const Account = () => {
             >
                 ログアウト
             </Button>
-            <Box
-                sx={{
-                    pt: 10,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                }}
-            >
-                <Avatar
-                    {...stringAvatar(user.name)}
-                    sx={{ width: '48px', height: '48px', fontSize: '20px', m: 2 }} />
-                <Typography variant="h6">ようこそ {user.name} !</Typography>
-            </Box>
-            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                <Table user={user} handleClick={handleClick} />
-            </Box>
+            
+            <CenterContainer>
+                <Box
+                    sx={{
+                        pt: 10,
+                        pb: 4,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                    }}
+                >
+                    <Avatar
+                        {...stringAvatar(user.name)}
+                        sx={{ width: '48px', height: '48px', fontSize: '20px', m: 2 }} />
+                    <Typography variant="h6">ようこそ {user.name} !</Typography>
+                </Box>
+                <Box maxWidth="680px" sx={{ width: { xs: "90%", sm: "60%"}}}>
+                    <Table user={user} handleClick={handleClick} />
+                </Box>
+            </CenterContainer>
+
             <Dialog isOpen={openDialog} close={closeDialog} title={title} content={content} action={action} />
             <Snackbar isOpen={openSnackbar} setIsOpen={setOpenSnackbar} message={`${displayValue[target]}を変更しました`} />
         </>

@@ -50,8 +50,8 @@ const rows = [
 
 export default function Tables({ user, handleClick }) {
     return (
-        <TableContainer component={Paper} sx={{ display: 'flex', justifyContent: 'center', width: "auto" }}>
-            <Table sx={{ width: { xs: "90vw", sm: '80vw' } }} aria-label="customized table">
+        <TableContainer component={Paper}>
+            <Table aria-label="customized table">
                 <TableHead>
                     <TableRow>
                         {header.map(item => <StyledTableCell>{item}</StyledTableCell>)}
