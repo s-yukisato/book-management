@@ -84,7 +84,7 @@ const SignUp = () => {
                         <Grid container justifyContent="flex-end">
                             <Grid item>
                                 <RouterLink to="/signin">
-                                    アカウントがありますか？ サインインへ
+                                    アカウントをお持ちの場合は、サインイン
                                 </RouterLink>
                             </Grid>
                         </Grid>
