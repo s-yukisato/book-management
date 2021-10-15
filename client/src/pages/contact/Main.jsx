@@ -35,12 +35,8 @@ const listItems = [
         title: "コンタクト",
         contents: [
             {
-                title: "お問い合わせ",
+                title: "サポート",
                 link: "/support"
-            },
-            {
-                title: "ヘルプ",
-                link: "/help"
             },
         ]
     },

@@ -111,6 +111,7 @@ export default function HorizontalLinearStepper({ values, setValues, create }) {
                                 inputProps={{ minLength: 1 }}
                                 error={error}
                                 autoFocus
+                                sx={{ minWidth: 300, maxWidth: 680 }}
                             />
                             <Typography color="error" sx={{ textAlign: 'center', mt: 2 }}>{error}</Typography>
                         </Box>
@@ -139,13 +140,14 @@ export default function HorizontalLinearStepper({ values, setValues, create }) {
                                 value={values.deadline}
                                 onChange={handleChange('deadline')}
                                 autoFocus
+                                sx={{ minWidth: 300, maxWidth: 680 }}
                             />
                         </Box>
                     )}
                     {activeStep === steps.length - 1 && (
-                        <Box mt={3}>
+                        <Box my={3}>
                             <TableContainer component={Paper}>
-                                <Table sx={{ width: { xs: "90vw", sm: '80vw' } }} aria-label="customized table">
+                                <Table aria-label="customized table">
                                     <TableHead>
                                         <TableRow>
                                             <StyledTableCell>属性</StyledTableCell>
@@ -153,7 +155,7 @@ export default function HorizontalLinearStepper({ values, setValues, create }) {
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {rows.map((row, index) => (
+                                        {rows.map(row => (
                                             <StyledTableRow key={row.attributes}>
                                                 <StyledTableCell>
                                                     {row.attributes}
@@ -177,11 +179,10 @@ export default function HorizontalLinearStepper({ values, setValues, create }) {
                             color="inherit"
                             disabled={activeStep === 0}
                             onClick={handleBack}
-                            sx={{ mr: 1 }}
+                            sx={{ mr: 16, display: "flex" }}
                         >
                             戻る
                         </Button>
-                        <Box sx={{ flex: '1 1 auto' }} />
 
                         <Button onClick={handleNext}>
                             {activeStep === steps.length - 1 ? '作成する' : '次へ'}

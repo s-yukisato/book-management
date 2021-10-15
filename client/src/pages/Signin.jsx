@@ -67,7 +67,7 @@ export default function SignIn() {
                         <Grid container justifyContent="flex-end">
                             <Grid item>
                                 <RouterLink to="/signup">
-                                    {"アカウントがありませんか？ サインアップへ"}
+                                    アカウントを作成 サインアップ
                                 </RouterLink>
                             </Grid>
                         </Grid>

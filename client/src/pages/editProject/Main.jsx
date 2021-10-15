@@ -25,7 +25,7 @@ const Main = () => {
         <>
             <Header menu={menu} />
             <Grid container>
-                <Grid item flex={2} sx={{ width: { xs: "100%", sm: "66%" } }}>
+                <Grid item flex={2} ml={2} sx={{ width: { xs: "100%", sm: "66%" } }}>
                     <TextEditor isSave={isSave} setIsSave={setIsSave} setProjectData={setProjectData} setResult={setResult} />
                 </Grid>
                 <Grid item flex={1} sx={{ display: { xs: 'none', sm: 'block' } }}>

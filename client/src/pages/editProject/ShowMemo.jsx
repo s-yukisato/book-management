@@ -46,7 +46,7 @@ function a11yProps(index) {
 
 const ShowMemo = ({ projectData }) => {
     const { dataState } = useFetchRecordContext();
-    
+
     // プロジェクトに登録された書籍のRecord
     const [records, setRecords] = useState([]);
 
@@ -67,7 +67,7 @@ const ShowMemo = ({ projectData }) => {
 
 
     return (
-        <Grid item direction="column" p={2} minWidth={210}>
+        <Grid item direction="column" p={2} minWidth={210} sx={{ position: "sticky", top: "70px" }}>
             <Typography variant="h6" sx={{ maxHeight: 40, overflow: 'hidden' }}>{projectData && projectData.title}</Typography>
             <Box sx={{ my: 2, maxWidth: "33vw", bgcolor: '#fafafa', minHeight: "60vh" }}>
                 <Tabs
