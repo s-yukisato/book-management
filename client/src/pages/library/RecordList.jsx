@@ -29,7 +29,7 @@ const initalValue = {
     pages: 0
 }
 
-const RecordList = React.memo(({ records, setRecords, filteredRecords }) => {
+const RecordList = React.memo(({ filteredRecords, setFilteredRecords }) => {
     const [openDialog, setOpenDialog] = useState(false);
 
     const [openSnackbar, setOpenSnackbar] = useState(false);
@@ -43,11 +43,11 @@ const RecordList = React.memo(({ records, setRecords, filteredRecords }) => {
     const [values, setValues] = useState(initalValue);
 
     const statusChange = async () => {
-        await axios.put(`${API_URI}/api/v1/record/status/${records[targetIndex]._id}`, { status: "read" })
+        await axios.put(`${API_URI}/api/v1/record/status/${filteredRecords[targetIndex]._id}`, { status: "read" })
             .then(res => res)
             .catch(err => console.error(err))
-        setRecords(records.map((item) => {
-            if (item._id === records[targetIndex]._id) {
+        setFilteredRecords(filteredRecords.map((item) => {
+            if (item._id === filteredRecords[targetIndex]._id) {
                 return { ...item, status: "read" }
             }
             return item
@@ -58,10 +58,10 @@ const RecordList = React.memo(({ records, setRecords, filteredRecords }) => {
     }
 
     const deleteRecord = async () => {
-        await axios.delete(`${API_URI}/api/v1/record/${records[targetIndex]._id}`)
+        await axios.delete(`${API_URI}/api/v1/record/${filteredRecords[targetIndex]._id}`)
             .then(res => res)
             .catch(err => console.error(err))
-        setRecords(records.filter(el => el._id !== records[targetIndex]._id))
+        setFilteredRecords(filteredRecords.filter(el => el._id !== filteredRecords[targetIndex]._id))
         setMessage("削除しました");
         setOpenSnackbar(true);
         setTargetIndex(null);
@@ -74,11 +74,11 @@ const RecordList = React.memo(({ records, setRecords, filteredRecords }) => {
         if (actionType === "update") {
             // 選択された書籍のデータをbooks配列から参照
             setValues({
-                memo: records[targetIndex].memo,
-                status: records[targetIndex].status,
-                rating: records[targetIndex].rating,
-                page: records[targetIndex].page,
-                pages: records[targetIndex].book.pages,
+                memo: filteredRecords[targetIndex].memo,
+                status: filteredRecords[targetIndex].status,
+                rating: filteredRecords[targetIndex].rating,
+                page: filteredRecords[targetIndex].page,
+                pages: filteredRecords[targetIndex].book.pages,
             })
             setOpenDialog(true);
         } else if (actionType === "delete") {
@@ -101,7 +101,7 @@ const RecordList = React.memo(({ records, setRecords, filteredRecords }) => {
         if (error) return;
 
         let data;
-        await axios.put(`${API_URI}/api/v1/record/${records[targetIndex]._id}`, values)
+        await axios.put(`${API_URI}/api/v1/record/${filteredRecords[targetIndex]._id}`, values)
             .then(res => data = res.data)
             .catch(err => setError(err.message))
 
@@ -110,8 +110,8 @@ const RecordList = React.memo(({ records, setRecords, filteredRecords }) => {
         if (!error) {
             setOpenDialog(false);
             // 変更したデータを反映
-            setRecords(records.map((item) => {
-                if (item._id === records[targetIndex]._id) {
+            setFilteredRecords(filteredRecords.map((item) => {
+                if (item._id === filteredRecords[targetIndex]._id) {
                     return {
                         ...item,
                         memo: data.memo,
@@ -131,7 +131,7 @@ const RecordList = React.memo(({ records, setRecords, filteredRecords }) => {
     }
 
     // =============================  ダイアログ用　=============================
-    const title = openDialog ? records[targetIndex].book.title : "";
+    const title = openDialog ? filteredRecords[targetIndex].book.title : "";
 
     const content = (
         <Box sx={{ mt: 3 }}>

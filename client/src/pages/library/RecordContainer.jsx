@@ -34,9 +34,8 @@ const RecordComponent = ({ state, setStateCount }) => {
             {dataState.isLoading ? <Backdrop open={dataState.isLoading} />
                 : filteredRecords.length > 0 ? (
                     <RecordList
-                        records={records}
-                        setRecords={setRecords}
                         filteredRecords={filteredRecords}
+                        setFilteredRecords={setFilteredRecords}
                     />
                 ) : <NoRecord />}
             <BackToTop />
