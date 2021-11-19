@@ -115,10 +115,10 @@ const TopBook = () => {
         <>
             <Grid container justifyContent="center">
                 <Grid item flex={3}>
-                    <Search values={values} setValues={setValues} />
+                    <Search values={values} setValues={setValues} sx={{ background: "blue", boxShadow: "2px boild #888"}} />
                 </Grid>
                 <Grid item flex={1}>
-                    <Button onClick={handleClickSearchButton} sx={{ color: "white" }}>検索</Button>
+                    <Button onClick={handleClickSearchButton} sx={{ color: "#888" }}>検索</Button>
                 </Grid>
             </Grid>
         </>

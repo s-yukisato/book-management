@@ -52,8 +52,6 @@ const TopRecord = () => {
 
     const handleChange = (e, value) => setState(value);
 
-    console.log(stateCount)
-
     const MenuTabs = (
         <Tabs
             orientation="vertical"
@@ -70,7 +68,7 @@ const TopRecord = () => {
                     key={item.name}
                     value={item.state}
                     icon={
-                        <StyledBadge badgeContent={stateCount[item.state]} color="secondary">
+                        <StyledBadge badgeContent={stateCount[item.state]}>
                             {item.icon}
                         </StyledBadge>
                     }
@@ -118,3 +116,12 @@ const TopRecord = () => {
 }
 
 export default TopRecord
+
+
+N, M, F = map(int, input().split())
+
+field = [[list(input()) for _ in range(N)] for _ in range(F)]
+
+params = [list(map(int, input().split())) for _ in range(F)]
+
+L = int(input())

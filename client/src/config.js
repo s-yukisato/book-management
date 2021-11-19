@@ -1,1 +1,1 @@
-export const API_URI = "https://teelog.herokuapp.com"
+export const API_URI = "http://localhost:3001"

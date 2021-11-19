@@ -49,7 +49,7 @@ export function AuthProvider({ children }) {
         <AuthContext.Provider value={dataState}>
             {dataState.isLoading ? (
                 <Backdrop open={dataState.isLoading} />
-            ) : dataState.isError ? <>現在メンテナンス中です</> : children}
+            ) : children}
         </AuthContext.Provider>
     )
 }

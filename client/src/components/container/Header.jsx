@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link as RouterLink } from 'react-router-dom'
+import { Link as RouterLink, useHistory } from 'react-router-dom'
 
 import MuiAppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -24,6 +24,8 @@ import NameLogo from '../../assets/name.png';
 
 
 const Header = React.memo(({ menu }) => {
+    const history = useHistory();
+
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
 
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -95,16 +97,29 @@ const Header = React.memo(({ menu }) => {
         >
             {listItems.map((item, index) => (
                 <div>
-                    <MenuItem
-                        component={RouterLink}
-                        to={item.to}
-                        size="large"
-                        aria-label={item.areaLabel}
-                        color="inherit"
-                    >
-                        {item.icon}
-                        <Typography variant="body2" p={1}>{item.title}</Typography>
-                    </MenuItem>
+                    {history.location.pathname === item.to ? (
+                        <MenuItem
+                            component={RouterLink}
+                            to={item.to}
+                            size="large"
+                            aria-label={item.areaLabel}
+                            sx={{ color: "#ff0027" }}
+                        >
+                            {item.icon}
+                            <Typography variant="body2" sx={{ color: "#ff0027" }} p={1}>{item.title}</Typography>
+                        </MenuItem>
+                    ) : (
+                        <MenuItem
+                            component={RouterLink}
+                            to={item.to}
+                            size="large"
+                            aria-label={item.areaLabel}
+                            color="inherit"
+                        >
+                            {item.icon}
+                            <Typography variant="body2" p={1}>{item.title}</Typography>
+                        </MenuItem>
+                    )}
                     {index === 3 && <Divider />}
                 </div>
             ))}
@@ -113,7 +128,7 @@ const Header = React.memo(({ menu }) => {
 
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <MuiAppBar position="fixed" sx={{ bgcolor: "rgb(181, 205, 163)" }}>
+            <MuiAppBar position="fixed" sx={{ bgcolor: "#fff" }}>
                 <Toolbar>
                     <Box sx={{ flexGrow: 1, display: { xs: "block", sm: "none" } }} />
                     <Box sx={{ display: { xs: "block", sm: "none" } }}>{menu}</Box>
@@ -124,14 +139,25 @@ const Header = React.memo(({ menu }) => {
                     <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
                         {listItems.map(item => (
                             <LightTooltip title={item.title}>
-                                <IconButton
-                                    component={RouterLink}
-                                    to={item.to}
-                                    aria-label={item.areaLabel}
-                                    color="inherit"
-                                >
-                                    {item.icon}
-                                </IconButton>
+                                {history.location.pathname === item.to ? (
+                                    <IconButton
+                                        component={RouterLink}
+                                        to={item.to}
+                                        aria-label={item.areaLabel}
+                                        sx={{ color: "#FF0027" }}
+                                    >
+                                        {item.icon}
+                                    </IconButton>
+                                ) : (
+                                    <IconButton
+                                        component={RouterLink}
+                                        to={item.to}
+                                        aria-label={item.areaLabel}
+                                        sx={{ color: "#888" }}
+                                    >
+                                        {item.icon}
+                                    </IconButton>
+                                )}
                             </LightTooltip>
                         ))}
                     </Box>
@@ -142,7 +168,7 @@ const Header = React.memo(({ menu }) => {
                             aria-controls={mobileMenuId}
                             aria-haspopup="true"
                             onClick={handleMobileMenuOpen}
-                            color="inherit"
+                            sx={{ color: "#888" }}
                         >
                             <MoreIcon />
                         </IconButton>
